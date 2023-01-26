@@ -1,0 +1,21 @@
+actions:
+  - repository: central
+    name: hugo-start
+    type: container
+    container:
+      image: quay.io/cidverse/cid-actions-go:latest
+      command: central run hugo-start
+    scope: module
+    rules:
+      - type: cel
+        expression: MODULE_BUILD_SYSTEM == "hugo"
+  - repository: central
+    name: hugo-build
+    type: container
+    container:
+      image: quay.io/cidverse/cid-actions-go:latest
+      command: central run hugo-build
+    scope: module
+    rules:
+      - type: cel
+        expression: MODULE_BUILD_SYSTEM == "hugo"

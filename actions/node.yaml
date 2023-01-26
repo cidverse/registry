@@ -1,0 +1,21 @@
+actions:
+  - repository: central
+    name: node-build
+    type: container
+    container:
+      image: quay.io/cidverse/cid-actions-go:latest
+      command: central run node-build
+    scope: module
+    rules:
+      - type: cel
+        expression: MODULE_BUILD_SYSTEM == "npm"
+  - repository: central
+    name: node-test
+    type: container
+    container:
+      image: quay.io/cidverse/cid-actions-go:latest
+      command: central run node-test
+    scope: module
+    rules:
+      - type: cel
+        expression: MODULE_BUILD_SYSTEM == "npm"

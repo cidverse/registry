@@ -1,0 +1,10 @@
+images:
+  - image: quay.io/cidverse/sonarscannercli:${{TAG}}
+    provides:
+      - binary: sonar-scanner
+        version: ${{VERSION}}
+    cache:
+      - id: sonarscanner-cache
+        dir: /opt/sonar-scanner/.sonar
+    source:
+      registry_url: quay.io/cidverse/sonarscannercli

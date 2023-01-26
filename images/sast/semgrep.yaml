@@ -1,0 +1,10 @@
+images:
+  - image: quay.io/cidverse/semgrep:${{TAG}}
+    provides:
+      - binary: semgrep
+        version: ${{VERSION}}
+    cache:
+      - id: semgrep-cache
+        dir: /app/.cache/semgrep-cache
+    source:
+      registry_url: quay.io/cidverse/semgrep

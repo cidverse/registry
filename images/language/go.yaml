@@ -1,0 +1,10 @@
+images:
+  - image: quay.io/cidverse/build-go:${{TAG}}
+    provides:
+      - binary: go
+        version: ${{VERSION}}
+    cache:
+      - id: go-pkg
+        dir: /go/pkg
+    source:
+      registry_url: quay.io/cidverse/build-go

@@ -1,0 +1,59 @@
+actions:
+  # gitguardian
+  - repository: central
+    name: gitguardian-scan
+    type: container
+    container:
+      image: quay.io/cidverse/cid-actions-go:latest
+      command: central run ggshield-scan
+    scope: project
+    rules:
+      - type: cel
+        expression: ENV["GITGUARDIAN_API_KEY"] != "" && NCI_COMMIT_REF_TYPE == "branch"
+    access:
+      env:
+        - GITGUARDIAN_.*
+  # gitleaks
+  - repository: central
+    name: gitleaks-scan
+    type: container
+    container:
+      image: quay.io/cidverse/cid-actions-go:latest
+      command: central run gitleaks-scan
+    scope: project
+  # gosec
+  - repository: central
+    name: gosec-scan
+    type: container
+    container:
+      image: quay.io/cidverse/cid-actions-go:latest
+      command: central run gosec-scan
+    scope: module
+    rules:
+      - type: cel
+        expression: MODULE_BUILD_SYSTEM == "gomod"
+  # semgrep
+  - repository: central
+    name: semgrep-scan
+    type: container
+    container:
+      image: quay.io/cidverse/cid-actions-go:latest
+      command: central run semgrep-scan
+    scope: project
+    access:
+      env:
+        - SEMGREP_.*
+  # sonarqube
+  - repository: central
+    name: sonarqube-scan
+    type: container
+    container:
+      image: quay.io/cidverse/cid-actions-go:latest
+      command: central run sonarqube-scan
+    scope: project
+    rules:
+      - type: cel
+        expression: ENV["SONAR_TOKEN"] != "" && NCI_COMMIT_REF_TYPE == "branch"
+    access:
+      env:
+        - SONAR_.*

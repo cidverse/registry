@@ -1,0 +1,10 @@
+images:
+  - image: quay.io/cidverse/twitchcli:${{TAG}}
+    provides:
+      - binary: twitch
+        version: ${{VERSION}}
+    cache:
+      - id: twitchcli-config
+        dir: /root/.twitch-cli
+    source:
+      registry_url: quay.io/cidverse/twitchcli

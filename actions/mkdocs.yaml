@@ -1,0 +1,21 @@
+actions:
+  - repository: central
+    name: mkdocs-start
+    type: container
+    container:
+      image: quay.io/cidverse/cid-actions-go:latest
+      command: central run mkdocs-start
+    scope: module
+    rules:
+      - type: cel
+        expression: MODULE_BUILD_SYSTEM == "mkdocs" && MODULE_BUILD_SYSTEM_SYNTAX == "default"
+  - repository: central
+    name: mkdocs-build
+    type: container
+    container:
+      image: quay.io/cidverse/cid-actions-go:latest
+      command: central run mkdocs-build
+    scope: module
+    rules:
+      - type: cel
+        expression: MODULE_BUILD_SYSTEM == "mkdocs" && MODULE_BUILD_SYSTEM_SYNTAX == "default"

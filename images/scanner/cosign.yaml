@@ -1,0 +1,10 @@
+images:
+  - image: quay.io/cidverse/cosign:${{TAG}}
+    provides:
+      - binary: cosign
+        version: ${{VERSION}}
+    cache:
+      - id: docker-auth
+        dir: /app/.docker
+    source:
+      registry_url: quay.io/cidverse/cosign

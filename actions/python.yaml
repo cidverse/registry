@@ -1,0 +1,43 @@
+actions:
+  - repository: central
+    name: python-build
+    type: container
+    container:
+      image: quay.io/cidverse/cid-actions-go:latest
+      command: central run python-build
+    scope: module
+    rules:
+      - type: cel
+        expression: MODULE_BUILD_SYSTEM == "python-requirements.txt"
+      - type: cel
+        expression: MODULE_BUILD_SYSTEM == "pipfile"
+      - type: cel
+        expression: MODULE_BUILD_SYSTEM == "setup.py"
+  - repository: central
+    name: python-test
+    type: container
+    container:
+      image: quay.io/cidverse/cid-actions-go:latest
+      command: central run python-test
+    scope: module
+    rules:
+      - type: cel
+        expression: MODULE_BUILD_SYSTEM == "python-requirements.txt"
+      - type: cel
+        expression: MODULE_BUILD_SYSTEM == "pipfile"
+      - type: cel
+        expression: MODULE_BUILD_SYSTEM == "setup.py"
+  - repository: central
+    name: python-lint
+    type: container
+    container:
+      image: quay.io/cidverse/cid-actions-go:latest
+      command: central run python-lint
+    scope: module
+    rules:
+      - type: cel
+        expression: MODULE_BUILD_SYSTEM == "python-requirements.txt"
+      - type: cel
+        expression: MODULE_BUILD_SYSTEM == "pipfile"
+      - type: cel
+        expression: MODULE_BUILD_SYSTEM == "setup.py"

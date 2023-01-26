@@ -1,0 +1,41 @@
+actions:
+  - repository: central
+    name: helm-build
+    type: container
+    container:
+      image: quay.io/cidverse/cid-actions-go:latest
+      command: central run helm-build
+    scope: module
+    rules:
+      - type: cel
+        expression: MODULE_BUILD_SYSTEM == "helm"
+  - repository: central
+    name: helm-test
+    type: container
+    container:
+      image: quay.io/cidverse/cid-actions-go:latest
+      command: central run helm-test
+    scope: module
+    rules:
+      - type: cel
+        expression: MODULE_BUILD_SYSTEM == "helm"
+  - repository: central
+    name: helm-lint
+    type: container
+    container:
+      image: quay.io/cidverse/cid-actions-go:latest
+      command: central run helm-lint
+    scope: module
+    rules:
+      - type: cel
+        expression: MODULE_BUILD_SYSTEM == "helm"
+  - repository: central
+    name: helm-publish-nexus
+    type: container
+    container:
+      image: quay.io/cidverse/cid-actions-go:latest
+      command: central run helm-publish-nexus
+    scope: module
+    rules:
+      - type: cel
+        expression: MODULE_BUILD_SYSTEM == "helm" && ENV["HELM_NEXUS_URL"] != ""

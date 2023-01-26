@@ -1,0 +1,11 @@
+actions:
+  - repository: central
+    name: upx-optimize
+    type: container
+    container:
+      image: quay.io/cidverse/cid-actions-go:latest
+      command: central run upx-optimize
+    scope: module
+    rules:
+      - type: cel
+        expression: ENV["UPX_ENABLED"] == "true"

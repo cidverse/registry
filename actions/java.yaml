@@ -1,0 +1,37 @@
+actions:
+  - repository: central
+    name: java-build
+    type: container
+    container:
+      image: quay.io/cidverse/cid-actions-go:latest
+      command: central run java-build
+    scope: module
+    rules:
+      - type: cel
+        expression: MODULE_BUILD_SYSTEM == "gradle"
+      - type: cel
+        expression: MODULE_BUILD_SYSTEM == "maven"
+  - repository: central
+    name: java-test
+    type: container
+    container:
+      image: quay.io/cidverse/cid-actions-go:latest
+      command: central run java-test
+    scope: module
+    rules:
+      - type: cel
+        expression: MODULE_BUILD_SYSTEM == "gradle"
+      - type: cel
+        expression: MODULE_BUILD_SYSTEM == "maven"
+  - repository: central
+    name: java-publish
+    type: container
+    container:
+      image: quay.io/cidverse/cid-actions-go:latest
+      command: central run java-publish
+    scope: module
+    rules:
+      - type: cel
+        expression: MODULE_BUILD_SYSTEM == "gradle"
+      - type: cel
+        expression: MODULE_BUILD_SYSTEM == "maven"

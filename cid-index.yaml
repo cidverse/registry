@@ -1,0 +1,1832 @@
+actions:
+    - repository: central
+      name: buildah-build
+      type: container
+      container:
+        image: quay.io/cidverse/cid-actions-go:latest
+        command: central run buildah-build
+      scope: module
+      rules:
+        - type: cel
+          expression: MODULE_BUILD_SYSTEM == "container" && (MODULE_BUILD_SYSTEM_SYNTAX == "buildah-script" || MODULE_BUILD_SYSTEM_SYNTAX == "containerfile")
+    - repository: central
+      name: buildah-publish
+      type: container
+      container:
+        image: quay.io/cidverse/cid-actions-go:latest
+        command: central run buildah-publish
+      scope: module
+      rules:
+        - type: cel
+          expression: MODULE_BUILD_SYSTEM == "container" && (MODULE_BUILD_SYSTEM_SYNTAX == "buildah-script" || MODULE_BUILD_SYSTEM_SYNTAX == "containerfile")
+    - repository: central
+      name: container-sign
+      type: container
+      container:
+        image: quay.io/cidverse/cid-actions-go:latest
+        command: central run container-sign
+      scope: module
+      rules:
+        - type: cel
+          expression: MODULE_BUILD_SYSTEM == "container" && getMapValue(ENV, "COSIGN_KEY") != "" && getMapValue(ENV, "COSIGN_PASSWORD") != ""
+      access:
+        env:
+            - COSIGN_.*
+    - repository: central
+      name: go-build
+      type: container
+      container:
+        image: quay.io/cidverse/cid-actions-go:latest
+        command: central run go-build
+      scope: module
+      rules:
+        - type: cel
+          expression: MODULE_BUILD_SYSTEM == "gomod"
+    - repository: central
+      name: go-test
+      type: container
+      container:
+        image: quay.io/cidverse/cid-actions-go:latest
+        command: central run go-test
+      scope: module
+      rules:
+        - type: cel
+          expression: MODULE_BUILD_SYSTEM == "gomod"
+    - repository: central
+      name: go-lint
+      type: container
+      container:
+        image: quay.io/cidverse/cid-actions-go:latest
+        command: central run go-lint
+      scope: module
+      rules:
+        - type: cel
+          expression: MODULE_BUILD_SYSTEM == "gomod"
+    - repository: central
+      name: helm-build
+      type: container
+      container:
+        image: quay.io/cidverse/cid-actions-go:latest
+        command: central run helm-build
+      scope: module
+      rules:
+        - type: cel
+          expression: MODULE_BUILD_SYSTEM == "helm"
+    - repository: central
+      name: helm-test
+      type: container
+      container:
+        image: quay.io/cidverse/cid-actions-go:latest
+        command: central run helm-test
+      scope: module
+      rules:
+        - type: cel
+          expression: MODULE_BUILD_SYSTEM == "helm"
+    - repository: central
+      name: helm-lint
+      type: container
+      container:
+        image: quay.io/cidverse/cid-actions-go:latest
+        command: central run helm-lint
+      scope: module
+      rules:
+        - type: cel
+          expression: MODULE_BUILD_SYSTEM == "helm"
+    - repository: central
+      name: helm-publish-nexus
+      type: container
+      container:
+        image: quay.io/cidverse/cid-actions-go:latest
+        command: central run helm-publish-nexus
+      scope: module
+      rules:
+        - type: cel
+          expression: MODULE_BUILD_SYSTEM == "helm" && ENV["HELM_NEXUS_URL"] != ""
+    - repository: central
+      name: hugo-start
+      type: container
+      container:
+        image: quay.io/cidverse/cid-actions-go:latest
+        command: central run hugo-start
+      scope: module
+      rules:
+        - type: cel
+          expression: MODULE_BUILD_SYSTEM == "hugo"
+    - repository: central
+      name: hugo-build
+      type: container
+      container:
+        image: quay.io/cidverse/cid-actions-go:latest
+        command: central run hugo-build
+      scope: module
+      rules:
+        - type: cel
+          expression: MODULE_BUILD_SYSTEM == "hugo"
+    - repository: central
+      name: java-build
+      type: container
+      container:
+        image: quay.io/cidverse/cid-actions-go:latest
+        command: central run java-build
+      scope: module
+      rules:
+        - type: cel
+          expression: MODULE_BUILD_SYSTEM == "gradle"
+        - type: cel
+          expression: MODULE_BUILD_SYSTEM == "maven"
+    - repository: central
+      name: java-test
+      type: container
+      container:
+        image: quay.io/cidverse/cid-actions-go:latest
+        command: central run java-test
+      scope: module
+      rules:
+        - type: cel
+          expression: MODULE_BUILD_SYSTEM == "gradle"
+        - type: cel
+          expression: MODULE_BUILD_SYSTEM == "maven"
+    - repository: central
+      name: java-publish
+      type: container
+      container:
+        image: quay.io/cidverse/cid-actions-go:latest
+        command: central run java-publish
+      scope: module
+      rules:
+        - type: cel
+          expression: MODULE_BUILD_SYSTEM == "gradle"
+        - type: cel
+          expression: MODULE_BUILD_SYSTEM == "maven"
+    - repository: central
+      name: mkdocs-start
+      type: container
+      container:
+        image: quay.io/cidverse/cid-actions-go:latest
+        command: central run mkdocs-start
+      scope: module
+      rules:
+        - type: cel
+          expression: MODULE_BUILD_SYSTEM == "mkdocs" && MODULE_BUILD_SYSTEM_SYNTAX == "default"
+    - repository: central
+      name: mkdocs-build
+      type: container
+      container:
+        image: quay.io/cidverse/cid-actions-go:latest
+        command: central run mkdocs-build
+      scope: module
+      rules:
+        - type: cel
+          expression: MODULE_BUILD_SYSTEM == "mkdocs" && MODULE_BUILD_SYSTEM_SYNTAX == "default"
+    - repository: central
+      name: node-build
+      type: container
+      container:
+        image: quay.io/cidverse/cid-actions-go:latest
+        command: central run node-build
+      scope: module
+      rules:
+        - type: cel
+          expression: MODULE_BUILD_SYSTEM == "npm"
+    - repository: central
+      name: node-test
+      type: container
+      container:
+        image: quay.io/cidverse/cid-actions-go:latest
+        command: central run node-test
+      scope: module
+      rules:
+        - type: cel
+          expression: MODULE_BUILD_SYSTEM == "npm"
+    - repository: central
+      name: upx-optimize
+      type: container
+      container:
+        image: quay.io/cidverse/cid-actions-go:latest
+        command: central run upx-optimize
+      scope: module
+      rules:
+        - type: cel
+          expression: ENV["UPX_ENABLED"] == "true"
+    - repository: central
+      name: python-build
+      type: container
+      container:
+        image: quay.io/cidverse/cid-actions-go:latest
+        command: central run python-build
+      scope: module
+      rules:
+        - type: cel
+          expression: MODULE_BUILD_SYSTEM == "python-requirements.txt"
+        - type: cel
+          expression: MODULE_BUILD_SYSTEM == "pipfile"
+        - type: cel
+          expression: MODULE_BUILD_SYSTEM == "setup.py"
+    - repository: central
+      name: python-test
+      type: container
+      container:
+        image: quay.io/cidverse/cid-actions-go:latest
+        command: central run python-test
+      scope: module
+      rules:
+        - type: cel
+          expression: MODULE_BUILD_SYSTEM == "python-requirements.txt"
+        - type: cel
+          expression: MODULE_BUILD_SYSTEM == "pipfile"
+        - type: cel
+          expression: MODULE_BUILD_SYSTEM == "setup.py"
+    - repository: central
+      name: python-lint
+      type: container
+      container:
+        image: quay.io/cidverse/cid-actions-go:latest
+        command: central run python-lint
+      scope: module
+      rules:
+        - type: cel
+          expression: MODULE_BUILD_SYSTEM == "python-requirements.txt"
+        - type: cel
+          expression: MODULE_BUILD_SYSTEM == "pipfile"
+        - type: cel
+          expression: MODULE_BUILD_SYSTEM == "setup.py"
+    - repository: central
+      name: gitguardian-scan
+      type: container
+      container:
+        image: quay.io/cidverse/cid-actions-go:latest
+        command: central run ggshield-scan
+      scope: project
+      rules:
+        - type: cel
+          expression: ENV["GITGUARDIAN_API_KEY"] != "" && NCI_COMMIT_REF_TYPE == "branch"
+      access:
+        env:
+            - GITGUARDIAN_.*
+    - repository: central
+      name: gitleaks-scan
+      type: container
+      container:
+        image: quay.io/cidverse/cid-actions-go:latest
+        command: central run gitleaks-scan
+      scope: project
+    - repository: central
+      name: gosec-scan
+      type: container
+      container:
+        image: quay.io/cidverse/cid-actions-go:latest
+        command: central run gosec-scan
+      scope: module
+      rules:
+        - type: cel
+          expression: MODULE_BUILD_SYSTEM == "gomod"
+    - repository: central
+      name: semgrep-scan
+      type: container
+      container:
+        image: quay.io/cidverse/cid-actions-go:latest
+        command: central run semgrep-scan
+      scope: project
+      access:
+        env:
+            - SEMGREP_.*
+    - repository: central
+      name: sonarqube-scan
+      type: container
+      container:
+        image: quay.io/cidverse/cid-actions-go:latest
+        command: central run sonarqube-scan
+      scope: project
+      rules:
+        - type: cel
+          expression: ENV["SONAR_TOKEN"] != "" && NCI_COMMIT_REF_TYPE == "branch"
+      access:
+        env:
+            - SONAR_.*
+    - repository: central
+      name: techdocs-start
+      type: container
+      container:
+        image: quay.io/cidverse/cid-actions-go:latest
+        command: central run techdocs-start
+      scope: module
+      rules:
+        - type: cel
+          expression: MODULE_BUILD_SYSTEM == "mkdocs" && MODULE_BUILD_SYSTEM_SYNTAX == "mkdocs-techdocs"
+    - repository: central
+      name: techdocs-build
+      type: container
+      container:
+        image: quay.io/cidverse/cid-actions-go:latest
+        command: central run techdocs-build
+      scope: module
+      rules:
+        - type: cel
+          expression: MODULE_BUILD_SYSTEM == "mkdocs" && MODULE_BUILD_SYSTEM_SYNTAX == "mkdocs-techdocs"
+    - repository: central
+      name: techdocs-publish
+      type: container
+      container:
+        image: quay.io/cidverse/cid-actions-go:latest
+        command: central run techdocs-publish
+      scope: module
+      rules:
+        - type: cel
+          expression: MODULE_BUILD_SYSTEM == "mkdocs" && MODULE_BUILD_SYSTEM_SYNTAX == "mkdocs-techdocs"
+images:
+    - image: quay.io/cidverse/pipenv:2022.11.30
+      provides:
+        - binary: pipenv
+          version: 2022.11.30
+      cache:
+        - id: pipenv-virtualenvs
+          dir: /app/.local/share/virtualenvs
+        - id: pipenv-cache
+          dir: /app/.cache/pipenv
+      source:
+        registry_url: quay.io/cidverse/pipenv
+    - image: quay.io/cidverse/pipenv:2022.12.19
+      provides:
+        - binary: pipenv
+          version: 2022.12.19
+      cache:
+        - id: pipenv-virtualenvs
+          dir: /app/.local/share/virtualenvs
+        - id: pipenv-cache
+          dir: /app/.cache/pipenv
+      source:
+        registry_url: quay.io/cidverse/pipenv
+    - image: quay.io/cidverse/poetry:1.2.2
+      provides:
+        - binary: poetry
+          version: 1.2.2
+      cache:
+        - id: poetry-cache
+          dir: /app/.cache
+      source:
+        registry_url: quay.io/cidverse/poetry
+    - image: quay.io/cidverse/githubcli:2.13.0
+      provides:
+        - binary: gh
+          version: 2.13.0
+      source:
+        registry_url: quay.io/cidverse/githubcli
+    - image: quay.io/cidverse/githubcli:2.14.0
+      provides:
+        - binary: gh
+          version: 2.14.0
+      source:
+        registry_url: quay.io/cidverse/githubcli
+    - image: quay.io/cidverse/githubcli:2.14.1
+      provides:
+        - binary: gh
+          version: 2.14.1
+      source:
+        registry_url: quay.io/cidverse/githubcli
+    - image: quay.io/cidverse/githubcli:2.14.2
+      provides:
+        - binary: gh
+          version: 2.14.2
+      source:
+        registry_url: quay.io/cidverse/githubcli
+    - image: quay.io/cidverse/githubcli:2.14.3
+      provides:
+        - binary: gh
+          version: 2.14.3
+      source:
+        registry_url: quay.io/cidverse/githubcli
+    - image: quay.io/cidverse/githubcli:2.14.4
+      provides:
+        - binary: gh
+          version: 2.14.4
+      source:
+        registry_url: quay.io/cidverse/githubcli
+    - image: quay.io/cidverse/githubcli:2.14.6
+      provides:
+        - binary: gh
+          version: 2.14.6
+      source:
+        registry_url: quay.io/cidverse/githubcli
+    - image: quay.io/cidverse/githubcli:2.14.7
+      provides:
+        - binary: gh
+          version: 2.14.7
+      source:
+        registry_url: quay.io/cidverse/githubcli
+    - image: quay.io/cidverse/githubcli:2.15.0
+      provides:
+        - binary: gh
+          version: 2.15.0
+      source:
+        registry_url: quay.io/cidverse/githubcli
+    - image: quay.io/cidverse/githubcli:2.16.0
+      provides:
+        - binary: gh
+          version: 2.16.0
+      source:
+        registry_url: quay.io/cidverse/githubcli
+    - image: quay.io/cidverse/githubcli:2.17.0
+      provides:
+        - binary: gh
+          version: 2.17.0
+      source:
+        registry_url: quay.io/cidverse/githubcli
+    - image: quay.io/cidverse/githubcli:2.18.0
+      provides:
+        - binary: gh
+          version: 2.18.0
+      source:
+        registry_url: quay.io/cidverse/githubcli
+    - image: quay.io/cidverse/githubcli:2.19.0
+      provides:
+        - binary: gh
+          version: 2.19.0
+      source:
+        registry_url: quay.io/cidverse/githubcli
+    - image: quay.io/cidverse/githubcli:2.20.0
+      provides:
+        - binary: gh
+          version: 2.20.0
+      source:
+        registry_url: quay.io/cidverse/githubcli
+    - image: quay.io/cidverse/githubcli:2.21.1
+      provides:
+        - binary: gh
+          version: 2.21.1
+      source:
+        registry_url: quay.io/cidverse/githubcli
+    - image: quay.io/cidverse/runpodctl:1.7.0
+      provides:
+        - binary: runpodctl
+          version: 1.7.0
+      source:
+        registry_url: quay.io/cidverse/runpodctl
+    - image: quay.io/cidverse/runpodctl:1.8.0
+      provides:
+        - binary: runpodctl
+          version: 1.8.0
+      source:
+        registry_url: quay.io/cidverse/runpodctl
+    - image: quay.io/cidverse/buildah:1.28.0
+      provides:
+        - binary: buildah
+          version: 1.28.0
+        - binary: buildah-script
+          version: 1.28.0
+      cache:
+        - id: libcontainers-storage
+          dir: /var/lib/containers/storage
+        - id: container-auth
+          dir: /app/.auth
+      security:
+        privileged: true
+      source:
+        registry_url: quay.io/cidverse/buildah
+    - image: quay.io/cidverse/buildah:1.28.2
+      provides:
+        - binary: buildah
+          version: 1.28.2
+        - binary: buildah-script
+          version: 1.28.2
+      cache:
+        - id: libcontainers-storage
+          dir: /var/lib/containers/storage
+        - id: container-auth
+          dir: /app/.auth
+      security:
+        privileged: true
+      source:
+        registry_url: quay.io/cidverse/buildah
+    - image: quay.io/cidverse/helm:3.9.0
+      provides:
+        - binary: helm
+          version: 3.9.0
+      cache:
+        - id: helm-config
+          dir: /app/.config/helm
+        - id: helm-cache
+          dir: /app/.cache/helm/cache
+        - id: helm-plugins
+          dir: /app/.cache/helm/plugins
+        - id: helm-repository
+          dir: /app/.cache/helm/repository
+      source:
+        registry_url: quay.io/cidverse/helm
+    - image: quay.io/cidverse/helm:3.9.1
+      provides:
+        - binary: helm
+          version: 3.9.1
+      cache:
+        - id: helm-config
+          dir: /app/.config/helm
+        - id: helm-cache
+          dir: /app/.cache/helm/cache
+        - id: helm-plugins
+          dir: /app/.cache/helm/plugins
+        - id: helm-repository
+          dir: /app/.cache/helm/repository
+      source:
+        registry_url: quay.io/cidverse/helm
+    - image: quay.io/cidverse/helm:3.9.2
+      provides:
+        - binary: helm
+          version: 3.9.2
+      cache:
+        - id: helm-config
+          dir: /app/.config/helm
+        - id: helm-cache
+          dir: /app/.cache/helm/cache
+        - id: helm-plugins
+          dir: /app/.cache/helm/plugins
+        - id: helm-repository
+          dir: /app/.cache/helm/repository
+      source:
+        registry_url: quay.io/cidverse/helm
+    - image: quay.io/cidverse/helm:3.9.3
+      provides:
+        - binary: helm
+          version: 3.9.3
+      cache:
+        - id: helm-config
+          dir: /app/.config/helm
+        - id: helm-cache
+          dir: /app/.cache/helm/cache
+        - id: helm-plugins
+          dir: /app/.cache/helm/plugins
+        - id: helm-repository
+          dir: /app/.cache/helm/repository
+      source:
+        registry_url: quay.io/cidverse/helm
+    - image: quay.io/cidverse/helm:3.9.4
+      provides:
+        - binary: helm
+          version: 3.9.4
+      cache:
+        - id: helm-config
+          dir: /app/.config/helm
+        - id: helm-cache
+          dir: /app/.cache/helm/cache
+        - id: helm-plugins
+          dir: /app/.cache/helm/plugins
+        - id: helm-repository
+          dir: /app/.cache/helm/repository
+      source:
+        registry_url: quay.io/cidverse/helm
+    - image: quay.io/cidverse/helm:3.10.0
+      provides:
+        - binary: helm
+          version: 3.10.0
+      cache:
+        - id: helm-config
+          dir: /app/.config/helm
+        - id: helm-cache
+          dir: /app/.cache/helm/cache
+        - id: helm-plugins
+          dir: /app/.cache/helm/plugins
+        - id: helm-repository
+          dir: /app/.cache/helm/repository
+      source:
+        registry_url: quay.io/cidverse/helm
+    - image: quay.io/cidverse/helm:3.10.1
+      provides:
+        - binary: helm
+          version: 3.10.1
+      cache:
+        - id: helm-config
+          dir: /app/.config/helm
+        - id: helm-cache
+          dir: /app/.cache/helm/cache
+        - id: helm-plugins
+          dir: /app/.cache/helm/plugins
+        - id: helm-repository
+          dir: /app/.cache/helm/repository
+      source:
+        registry_url: quay.io/cidverse/helm
+    - image: quay.io/cidverse/helm:3.10.2
+      provides:
+        - binary: helm
+          version: 3.10.2
+      cache:
+        - id: helm-config
+          dir: /app/.config/helm
+        - id: helm-cache
+          dir: /app/.cache/helm/cache
+        - id: helm-plugins
+          dir: /app/.cache/helm/plugins
+        - id: helm-repository
+          dir: /app/.cache/helm/repository
+      source:
+        registry_url: quay.io/cidverse/helm
+    - image: quay.io/cidverse/helm:3.11.0
+      provides:
+        - binary: helm
+          version: 3.11.0
+      cache:
+        - id: helm-config
+          dir: /app/.config/helm
+        - id: helm-cache
+          dir: /app/.cache/helm/cache
+        - id: helm-plugins
+          dir: /app/.cache/helm/plugins
+        - id: helm-repository
+          dir: /app/.cache/helm/repository
+      source:
+        registry_url: quay.io/cidverse/helm
+    - image: quay.io/cidverse/kubectl:1.23.8
+      provides:
+        - binary: kubectl
+          version: 1.23.8
+      source:
+        registry_url: quay.io/cidverse/kubectl
+    - image: quay.io/cidverse/kubectl:1.24.2
+      provides:
+        - binary: kubectl
+          version: 1.24.2
+      source:
+        registry_url: quay.io/cidverse/kubectl
+    - image: quay.io/cidverse/kubectl:1.24.3
+      provides:
+        - binary: kubectl
+          version: 1.24.3
+      source:
+        registry_url: quay.io/cidverse/kubectl
+    - image: quay.io/cidverse/kubectl:1.24.4
+      provides:
+        - binary: kubectl
+          version: 1.24.4
+      source:
+        registry_url: quay.io/cidverse/kubectl
+    - image: quay.io/cidverse/kubectl:1.25.0
+      provides:
+        - binary: kubectl
+          version: 1.25.0
+      source:
+        registry_url: quay.io/cidverse/kubectl
+    - image: quay.io/cidverse/kubectl:1.25.1
+      provides:
+        - binary: kubectl
+          version: 1.25.1
+      source:
+        registry_url: quay.io/cidverse/kubectl
+    - image: quay.io/cidverse/kubectl:1.25.2
+      provides:
+        - binary: kubectl
+          version: 1.25.2
+      source:
+        registry_url: quay.io/cidverse/kubectl
+    - image: quay.io/cidverse/kubectl:1.25.3
+      provides:
+        - binary: kubectl
+          version: 1.25.3
+      source:
+        registry_url: quay.io/cidverse/kubectl
+    - image: quay.io/cidverse/kubectl:1.25.4
+      provides:
+        - binary: kubectl
+          version: 1.25.4
+      source:
+        registry_url: quay.io/cidverse/kubectl
+    - image: quay.io/cidverse/kubectl:1.25.5
+      provides:
+        - binary: kubectl
+          version: 1.25.5
+      source:
+        registry_url: quay.io/cidverse/kubectl
+    - image: quay.io/cidverse/kubectl:1.26.0
+      provides:
+        - binary: kubectl
+          version: 1.26.0
+      source:
+        registry_url: quay.io/cidverse/kubectl
+    - image: quay.io/cidverse/kubectl:1.26.1
+      provides:
+        - binary: kubectl
+          version: 1.26.1
+      source:
+        registry_url: quay.io/cidverse/kubectl
+    - image: quay.io/cidverse/oras:0.16.0
+      provides:
+        - binary: oras
+          version: 0.16.0
+      source:
+        registry_url: quay.io/cidverse/oras
+    - image: quay.io/cidverse/rke:1.3.12
+      provides:
+        - binary: rke
+          version: 1.3.12
+      source:
+        registry_url: quay.io/cidverse/rke
+    - image: quay.io/cidverse/rke:1.3.13
+      provides:
+        - binary: rke
+          version: 1.3.13
+      source:
+        registry_url: quay.io/cidverse/rke
+    - image: quay.io/cidverse/rke:1.3.14
+      provides:
+        - binary: rke
+          version: 1.3.14
+      source:
+        registry_url: quay.io/cidverse/rke
+    - image: quay.io/cidverse/rke:1.3.15
+      provides:
+        - binary: rke
+          version: 1.3.15
+      source:
+        registry_url: quay.io/cidverse/rke
+    - image: quay.io/cidverse/rke2:1.25.3
+      provides:
+        - binary: rke2
+          version: 1.25.3
+      source:
+        registry_url: quay.io/cidverse/rke2
+    - image: quay.io/cidverse/rke2:1.26.0
+      provides:
+        - binary: rke2
+          version: 1.26.0
+      source:
+        registry_url: quay.io/cidverse/rke2
+    - image: quay.io/cidverse/liquibase:4.19.0
+      provides:
+        - binary: liquibase
+          version: 4.19.0
+      source:
+        registry_url: quay.io/cidverse/liquibase
+    - image: quay.io/cidverse/build-go:1.19.3
+      provides:
+        - binary: go
+          version: 1.19.3
+      cache:
+        - id: go-pkg
+          dir: /go/pkg
+      source:
+        registry_url: quay.io/cidverse/build-go
+    - image: quay.io/cidverse/base-coretto-8:8.352.08.1
+      provides:
+        - binary: java
+          version: 8.352.08.1
+      cache:
+        - id: java-gradle
+          dir: /root/.gradle
+        - id: java-maven
+          dir: /root/.m2
+      source:
+        registry_url: quay.io/cidverse/base-coretto-8
+    - image: quay.io/cidverse/base-coretto-8:8.362.08.1
+      provides:
+        - binary: java
+          version: 8.362.08.1
+      cache:
+        - id: java-gradle
+          dir: /root/.gradle
+        - id: java-maven
+          dir: /root/.m2
+      source:
+        registry_url: quay.io/cidverse/base-coretto-8
+    - image: quay.io/cidverse/base-coretto-11:11.0.16.8.1
+      provides:
+        - binary: java
+          version: 11.0.16.8.1
+      cache:
+        - id: java-gradle
+          dir: /root/.gradle
+        - id: java-maven
+          dir: /root/.m2
+      source:
+        registry_url: quay.io/cidverse/base-coretto-11
+    - image: quay.io/cidverse/base-coretto-11:11.0.16.9.1
+      provides:
+        - binary: java
+          version: 11.0.16.9.1
+      cache:
+        - id: java-gradle
+          dir: /root/.gradle
+        - id: java-maven
+          dir: /root/.m2
+      source:
+        registry_url: quay.io/cidverse/base-coretto-11
+    - image: quay.io/cidverse/base-coretto-11:11.0.17.8.1
+      provides:
+        - binary: java
+          version: 11.0.17.8.1
+      cache:
+        - id: java-gradle
+          dir: /root/.gradle
+        - id: java-maven
+          dir: /root/.m2
+      source:
+        registry_url: quay.io/cidverse/base-coretto-11
+    - image: quay.io/cidverse/base-coretto-11:11.0.18.10.1
+      provides:
+        - binary: java
+          version: 11.0.18.10.1
+      cache:
+        - id: java-gradle
+          dir: /root/.gradle
+        - id: java-maven
+          dir: /root/.m2
+      source:
+        registry_url: quay.io/cidverse/base-coretto-11
+    - image: quay.io/cidverse/base-coretto-17:17.0.4.8.1
+      provides:
+        - binary: java
+          version: 17.0.4.8.1
+      cache:
+        - id: java-gradle
+          dir: /root/.gradle
+        - id: java-maven
+          dir: /root/.m2
+      source:
+        registry_url: quay.io/cidverse/base-coretto-17
+    - image: quay.io/cidverse/base-coretto-17:17.0.4.9.1
+      provides:
+        - binary: java
+          version: 17.0.4.9.1
+      cache:
+        - id: java-gradle
+          dir: /root/.gradle
+        - id: java-maven
+          dir: /root/.m2
+      source:
+        registry_url: quay.io/cidverse/base-coretto-17
+    - image: quay.io/cidverse/base-coretto-17:17.0.5.8.1
+      provides:
+        - binary: java
+          version: 17.0.5.8.1
+      cache:
+        - id: java-gradle
+          dir: /root/.gradle
+        - id: java-maven
+          dir: /root/.m2
+      source:
+        registry_url: quay.io/cidverse/base-coretto-17
+    - image: quay.io/cidverse/base-coretto-17:17.0.6.10.1
+      provides:
+        - binary: java
+          version: 17.0.6.10.1
+      cache:
+        - id: java-gradle
+          dir: /root/.gradle
+        - id: java-maven
+          dir: /root/.m2
+      source:
+        registry_url: quay.io/cidverse/base-coretto-17
+    - image: quay.io/cidverse/native-image:22.3.0
+      provides:
+        - binary: native-image
+          version: 22.3.0
+      source:
+        registry_url: quay.io/cidverse/native-image
+    - image: quay.io/cidverse/base-node:18.8.0
+      provides:
+        - binary: node
+          version: 18.8.0
+      cache:
+        - id: node-npm
+          dir: /root/.npm
+        - id: node-yarn-cache-v6
+          dir: /usr/local/share/.cache/yarn/v6
+        - id: node-yarn-config
+          dir: /root/.config/yarn
+      source:
+        registry_url: quay.io/cidverse/base-node
+    - image: quay.io/cidverse/base-node:18.9.0
+      provides:
+        - binary: node
+          version: 18.9.0
+      cache:
+        - id: node-npm
+          dir: /root/.npm
+        - id: node-yarn-cache-v6
+          dir: /usr/local/share/.cache/yarn/v6
+        - id: node-yarn-config
+          dir: /root/.config/yarn
+      source:
+        registry_url: quay.io/cidverse/base-node
+    - image: quay.io/cidverse/base-node:18.9.1
+      provides:
+        - binary: node
+          version: 18.9.1
+      cache:
+        - id: node-npm
+          dir: /root/.npm
+        - id: node-yarn-cache-v6
+          dir: /usr/local/share/.cache/yarn/v6
+        - id: node-yarn-config
+          dir: /root/.config/yarn
+      source:
+        registry_url: quay.io/cidverse/base-node
+    - image: quay.io/cidverse/base-node:18.11.0
+      provides:
+        - binary: node
+          version: 18.11.0
+      cache:
+        - id: node-npm
+          dir: /root/.npm
+        - id: node-yarn-cache-v6
+          dir: /usr/local/share/.cache/yarn/v6
+        - id: node-yarn-config
+          dir: /root/.config/yarn
+      source:
+        registry_url: quay.io/cidverse/base-node
+    - image: quay.io/cidverse/base-node:19.0.1
+      provides:
+        - binary: node
+          version: 19.0.1
+      cache:
+        - id: node-npm
+          dir: /root/.npm
+        - id: node-yarn-cache-v6
+          dir: /usr/local/share/.cache/yarn/v6
+        - id: node-yarn-config
+          dir: /root/.config/yarn
+      source:
+        registry_url: quay.io/cidverse/base-node
+    - image: quay.io/cidverse/base-node:19.4.0
+      provides:
+        - binary: node
+          version: 19.4.0
+      cache:
+        - id: node-npm
+          dir: /root/.npm
+        - id: node-yarn-cache-v6
+          dir: /usr/local/share/.cache/yarn/v6
+        - id: node-yarn-config
+          dir: /root/.config/yarn
+      source:
+        registry_url: quay.io/cidverse/base-node
+    - image: quay.io/cidverse/base-node:19.5.0
+      provides:
+        - binary: node
+          version: 19.5.0
+      cache:
+        - id: node-npm
+          dir: /root/.npm
+        - id: node-yarn-cache-v6
+          dir: /usr/local/share/.cache/yarn/v6
+        - id: node-yarn-config
+          dir: /root/.config/yarn
+      source:
+        registry_url: quay.io/cidverse/base-node
+    - image: quay.io/cidverse/rekor:0.10.0
+      provides:
+        - binary: rekor
+          version: 0.10.0
+      source:
+        registry_url: quay.io/cidverse/rekor
+    - image: quay.io/cidverse/rekor:0.11.0
+      provides:
+        - binary: rekor
+          version: 0.11.0
+      source:
+        registry_url: quay.io/cidverse/rekor
+    - image: quay.io/cidverse/rekor:0.12.0
+      provides:
+        - binary: rekor
+          version: 0.12.0
+      source:
+        registry_url: quay.io/cidverse/rekor
+    - image: quay.io/cidverse/rekor:0.12.1
+      provides:
+        - binary: rekor
+          version: 0.12.1
+      source:
+        registry_url: quay.io/cidverse/rekor
+    - image: quay.io/cidverse/rekor:0.12.2
+      provides:
+        - binary: rekor
+          version: 0.12.2
+      source:
+        registry_url: quay.io/cidverse/rekor
+    - image: quay.io/cidverse/rekor:1.0.0
+      provides:
+        - binary: rekor
+          version: 1.0.0
+      source:
+        registry_url: quay.io/cidverse/rekor
+    - image: quay.io/cidverse/rekor:1.0.1
+      provides:
+        - binary: rekor
+          version: 1.0.1
+      source:
+        registry_url: quay.io/cidverse/rekor
+    - image: quay.io/cidverse/reposync:0.2.0
+      provides:
+        - binary: reposync
+          version: 0.2.0
+      source:
+        registry_url: quay.io/cidverse/reposync
+    - image: quay.io/cidverse/twitchcli:1.1.6
+      provides:
+        - binary: twitch
+          version: 1.1.6
+      cache:
+        - id: twitchcli-config
+          dir: /root/.twitch-cli
+      source:
+        registry_url: quay.io/cidverse/twitchcli
+    - image: quay.io/cidverse/twitchcli:1.1.7
+      provides:
+        - binary: twitch
+          version: 1.1.7
+      cache:
+        - id: twitchcli-config
+          dir: /root/.twitch-cli
+      source:
+        registry_url: quay.io/cidverse/twitchcli
+    - image: quay.io/cidverse/twitchcli:1.1.8
+      provides:
+        - binary: twitch
+          version: 1.1.8
+      cache:
+        - id: twitchcli-config
+          dir: /root/.twitch-cli
+      source:
+        registry_url: quay.io/cidverse/twitchcli
+    - image: quay.io/cidverse/twitchcli:1.1.12
+      provides:
+        - binary: twitch
+          version: 1.1.12
+      cache:
+        - id: twitchcli-config
+          dir: /root/.twitch-cli
+      source:
+        registry_url: quay.io/cidverse/twitchcli
+    - image: quay.io/cidverse/upx:3.96
+      provides:
+        - binary: upx
+          version: "3.96"
+      source:
+        registry_url: quay.io/cidverse/upx
+    - image: quay.io/cidverse/upx:4.0.1
+      provides:
+        - binary: upx
+          version: 4.0.1
+      source:
+        registry_url: quay.io/cidverse/upx
+    - image: quay.io/cidverse/ggshield:1.13.0
+      provides:
+        - binary: ggshield
+          version: 1.13.0
+      source:
+        registry_url: quay.io/cidverse/ggshield
+    - image: quay.io/cidverse/ggshield:1.13.3
+      provides:
+        - binary: ggshield
+          version: 1.13.3
+      source:
+        registry_url: quay.io/cidverse/ggshield
+    - image: quay.io/cidverse/ggshield:1.13.5
+      provides:
+        - binary: ggshield
+          version: 1.13.5
+      source:
+        registry_url: quay.io/cidverse/ggshield
+    - image: quay.io/cidverse/ggshield:1.13.6
+      provides:
+        - binary: ggshield
+          version: 1.13.6
+      source:
+        registry_url: quay.io/cidverse/ggshield
+    - image: quay.io/cidverse/ggshield:1.14.1
+      provides:
+        - binary: ggshield
+          version: 1.14.1
+      source:
+        registry_url: quay.io/cidverse/ggshield
+    - image: quay.io/cidverse/ggshield:1.14.2
+      provides:
+        - binary: ggshield
+          version: 1.14.2
+      source:
+        registry_url: quay.io/cidverse/ggshield
+    - image: quay.io/cidverse/gitleaks:8.8.12
+      provides:
+        - binary: gitleaks
+          version: 8.8.12
+      source:
+        registry_url: quay.io/cidverse/gitleaks
+    - image: quay.io/cidverse/gitleaks:8.9.0
+      provides:
+        - binary: gitleaks
+          version: 8.9.0
+      source:
+        registry_url: quay.io/cidverse/gitleaks
+    - image: quay.io/cidverse/gitleaks:8.10.1
+      provides:
+        - binary: gitleaks
+          version: 8.10.1
+      source:
+        registry_url: quay.io/cidverse/gitleaks
+    - image: quay.io/cidverse/gitleaks:8.10.2
+      provides:
+        - binary: gitleaks
+          version: 8.10.2
+      source:
+        registry_url: quay.io/cidverse/gitleaks
+    - image: quay.io/cidverse/gitleaks:8.10.3
+      provides:
+        - binary: gitleaks
+          version: 8.10.3
+      source:
+        registry_url: quay.io/cidverse/gitleaks
+    - image: quay.io/cidverse/gitleaks:8.11.0
+      provides:
+        - binary: gitleaks
+          version: 8.11.0
+      source:
+        registry_url: quay.io/cidverse/gitleaks
+    - image: quay.io/cidverse/gitleaks:8.11.1
+      provides:
+        - binary: gitleaks
+          version: 8.11.1
+      source:
+        registry_url: quay.io/cidverse/gitleaks
+    - image: quay.io/cidverse/gitleaks:8.11.2
+      provides:
+        - binary: gitleaks
+          version: 8.11.2
+      source:
+        registry_url: quay.io/cidverse/gitleaks
+    - image: quay.io/cidverse/gitleaks:8.12.0
+      provides:
+        - binary: gitleaks
+          version: 8.12.0
+      source:
+        registry_url: quay.io/cidverse/gitleaks
+    - image: quay.io/cidverse/gitleaks:8.13.0
+      provides:
+        - binary: gitleaks
+          version: 8.13.0
+      source:
+        registry_url: quay.io/cidverse/gitleaks
+    - image: quay.io/cidverse/gitleaks:8.14.1
+      provides:
+        - binary: gitleaks
+          version: 8.14.1
+      source:
+        registry_url: quay.io/cidverse/gitleaks
+    - image: quay.io/cidverse/gitleaks:8.15.0
+      provides:
+        - binary: gitleaks
+          version: 8.15.0
+      source:
+        registry_url: quay.io/cidverse/gitleaks
+    - image: quay.io/cidverse/gitleaks:8.15.1
+      provides:
+        - binary: gitleaks
+          version: 8.15.1
+      source:
+        registry_url: quay.io/cidverse/gitleaks
+    - image: quay.io/cidverse/gitleaks:8.15.2
+      provides:
+        - binary: gitleaks
+          version: 8.15.2
+      source:
+        registry_url: quay.io/cidverse/gitleaks
+    - image: quay.io/cidverse/gitleaks:8.15.3
+      provides:
+        - binary: gitleaks
+          version: 8.15.3
+      source:
+        registry_url: quay.io/cidverse/gitleaks
+    - image: quay.io/cidverse/gosec:2.14.0
+      provides:
+        - binary: gosec
+          version: 2.14.0
+      source:
+        registry_url: quay.io/cidverse/gosec
+    - image: quay.io/cidverse/hadolint:2.10.0
+      provides:
+        - binary: hadolint
+          version: 2.10.0
+      source:
+        registry_url: quay.io/cidverse/hadolint
+    - image: quay.io/cidverse/hadolint:2.12.0
+      provides:
+        - binary: hadolint
+          version: 2.12.0
+      source:
+        registry_url: quay.io/cidverse/hadolint
+    - image: quay.io/cidverse/semgrep:1.5.1
+      provides:
+        - binary: semgrep
+          version: 1.5.1
+      cache:
+        - id: semgrep-cache
+          dir: /app/.cache/semgrep-cache
+      source:
+        registry_url: quay.io/cidverse/semgrep
+    - image: quay.io/cidverse/cosign:1.3.12
+      provides:
+        - binary: cosign
+          version: 1.3.12
+      cache:
+        - id: docker-auth
+          dir: /app/.docker
+      source:
+        registry_url: quay.io/cidverse/cosign
+    - image: quay.io/cidverse/cosign:1.9.0
+      provides:
+        - binary: cosign
+          version: 1.9.0
+      cache:
+        - id: docker-auth
+          dir: /app/.docker
+      source:
+        registry_url: quay.io/cidverse/cosign
+    - image: quay.io/cidverse/cosign:1.10.0
+      provides:
+        - binary: cosign
+          version: 1.10.0
+      cache:
+        - id: docker-auth
+          dir: /app/.docker
+      source:
+        registry_url: quay.io/cidverse/cosign
+    - image: quay.io/cidverse/cosign:1.10.1
+      provides:
+        - binary: cosign
+          version: 1.10.1
+      cache:
+        - id: docker-auth
+          dir: /app/.docker
+      source:
+        registry_url: quay.io/cidverse/cosign
+    - image: quay.io/cidverse/cosign:1.11.0
+      provides:
+        - binary: cosign
+          version: 1.11.0
+      cache:
+        - id: docker-auth
+          dir: /app/.docker
+      source:
+        registry_url: quay.io/cidverse/cosign
+    - image: quay.io/cidverse/cosign:1.11.1
+      provides:
+        - binary: cosign
+          version: 1.11.1
+      cache:
+        - id: docker-auth
+          dir: /app/.docker
+      source:
+        registry_url: quay.io/cidverse/cosign
+    - image: quay.io/cidverse/cosign:1.12.0
+      provides:
+        - binary: cosign
+          version: 1.12.0
+      cache:
+        - id: docker-auth
+          dir: /app/.docker
+      source:
+        registry_url: quay.io/cidverse/cosign
+    - image: quay.io/cidverse/cosign:1.12.1
+      provides:
+        - binary: cosign
+          version: 1.12.1
+      cache:
+        - id: docker-auth
+          dir: /app/.docker
+      source:
+        registry_url: quay.io/cidverse/cosign
+    - image: quay.io/cidverse/cosign:1.13.0
+      provides:
+        - binary: cosign
+          version: 1.13.0
+      cache:
+        - id: docker-auth
+          dir: /app/.docker
+      source:
+        registry_url: quay.io/cidverse/cosign
+    - image: quay.io/cidverse/cosign:1.13.1
+      provides:
+        - binary: cosign
+          version: 1.13.1
+      cache:
+        - id: docker-auth
+          dir: /app/.docker
+      source:
+        registry_url: quay.io/cidverse/cosign
+    - image: quay.io/cidverse/fossacli:2.7.2
+      provides:
+        - binary: fossa
+          version: 2.7.2
+      source:
+        registry_url: quay.io/cidverse/fossacli
+    - image: quay.io/cidverse/fossacli:2.19.9
+      provides:
+        - binary: fossa
+          version: 2.19.9
+      source:
+        registry_url: quay.io/cidverse/fossacli
+    - image: quay.io/cidverse/fossacli:3.3.8
+      provides:
+        - binary: fossa
+          version: 3.3.8
+      source:
+        registry_url: quay.io/cidverse/fossacli
+    - image: quay.io/cidverse/fossacli:3.3.9
+      provides:
+        - binary: fossa
+          version: 3.3.9
+      source:
+        registry_url: quay.io/cidverse/fossacli
+    - image: quay.io/cidverse/fossacli:3.3.11
+      provides:
+        - binary: fossa
+          version: 3.3.11
+      source:
+        registry_url: quay.io/cidverse/fossacli
+    - image: quay.io/cidverse/fossacli:3.3.12
+      provides:
+        - binary: fossa
+          version: 3.3.12
+      source:
+        registry_url: quay.io/cidverse/fossacli
+    - image: quay.io/cidverse/fossacli:3.4.1
+      provides:
+        - binary: fossa
+          version: 3.4.1
+      source:
+        registry_url: quay.io/cidverse/fossacli
+    - image: quay.io/cidverse/fossacli:3.4.5
+      provides:
+        - binary: fossa
+          version: 3.4.5
+      source:
+        registry_url: quay.io/cidverse/fossacli
+    - image: quay.io/cidverse/fossacli:3.4.7
+      provides:
+        - binary: fossa
+          version: 3.4.7
+      source:
+        registry_url: quay.io/cidverse/fossacli
+    - image: quay.io/cidverse/fossacli:3.4.8
+      provides:
+        - binary: fossa
+          version: 3.4.8
+      source:
+        registry_url: quay.io/cidverse/fossacli
+    - image: quay.io/cidverse/fossacli:3.4.9
+      provides:
+        - binary: fossa
+          version: 3.4.9
+      source:
+        registry_url: quay.io/cidverse/fossacli
+    - image: quay.io/cidverse/fossacli:3.4.11
+      provides:
+        - binary: fossa
+          version: 3.4.11
+      source:
+        registry_url: quay.io/cidverse/fossacli
+    - image: quay.io/cidverse/fossacli:3.5.2
+      provides:
+        - binary: fossa
+          version: 3.5.2
+      source:
+        registry_url: quay.io/cidverse/fossacli
+    - image: quay.io/cidverse/fossacli:3.6.2
+      provides:
+        - binary: fossa
+          version: 3.6.2
+      source:
+        registry_url: quay.io/cidverse/fossacli
+    - image: quay.io/cidverse/fossacli:3.6.9
+      provides:
+        - binary: fossa
+          version: 3.6.9
+      source:
+        registry_url: quay.io/cidverse/fossacli
+    - image: quay.io/cidverse/grype:0.43.0
+      provides:
+        - binary: grype
+          version: 0.43.0
+      cache:
+        - id: grype-cache
+          dir: /app/.cache/grype
+      source:
+        registry_url: quay.io/cidverse/grype
+    - image: quay.io/cidverse/grype:0.44.0
+      provides:
+        - binary: grype
+          version: 0.44.0
+      cache:
+        - id: grype-cache
+          dir: /app/.cache/grype
+      source:
+        registry_url: quay.io/cidverse/grype
+    - image: quay.io/cidverse/grype:0.45.0
+      provides:
+        - binary: grype
+          version: 0.45.0
+      cache:
+        - id: grype-cache
+          dir: /app/.cache/grype
+      source:
+        registry_url: quay.io/cidverse/grype
+    - image: quay.io/cidverse/grype:0.46.0
+      provides:
+        - binary: grype
+          version: 0.46.0
+      cache:
+        - id: grype-cache
+          dir: /app/.cache/grype
+      source:
+        registry_url: quay.io/cidverse/grype
+    - image: quay.io/cidverse/grype:0.47.0
+      provides:
+        - binary: grype
+          version: 0.47.0
+      cache:
+        - id: grype-cache
+          dir: /app/.cache/grype
+      source:
+        registry_url: quay.io/cidverse/grype
+    - image: quay.io/cidverse/grype:0.48.0
+      provides:
+        - binary: grype
+          version: 0.48.0
+      cache:
+        - id: grype-cache
+          dir: /app/.cache/grype
+      source:
+        registry_url: quay.io/cidverse/grype
+    - image: quay.io/cidverse/grype:0.49.0
+      provides:
+        - binary: grype
+          version: 0.49.0
+      cache:
+        - id: grype-cache
+          dir: /app/.cache/grype
+      source:
+        registry_url: quay.io/cidverse/grype
+    - image: quay.io/cidverse/grype:0.50.0
+      provides:
+        - binary: grype
+          version: 0.50.0
+      cache:
+        - id: grype-cache
+          dir: /app/.cache/grype
+      source:
+        registry_url: quay.io/cidverse/grype
+    - image: quay.io/cidverse/grype:0.50.1
+      provides:
+        - binary: grype
+          version: 0.50.1
+      cache:
+        - id: grype-cache
+          dir: /app/.cache/grype
+      source:
+        registry_url: quay.io/cidverse/grype
+    - image: quay.io/cidverse/grype:0.50.2
+      provides:
+        - binary: grype
+          version: 0.50.2
+      cache:
+        - id: grype-cache
+          dir: /app/.cache/grype
+      source:
+        registry_url: quay.io/cidverse/grype
+    - image: quay.io/cidverse/grype:0.51.0
+      provides:
+        - binary: grype
+          version: 0.51.0
+      cache:
+        - id: grype-cache
+          dir: /app/.cache/grype
+      source:
+        registry_url: quay.io/cidverse/grype
+    - image: quay.io/cidverse/grype:0.53.0
+      provides:
+        - binary: grype
+          version: 0.53.0
+      cache:
+        - id: grype-cache
+          dir: /app/.cache/grype
+      source:
+        registry_url: quay.io/cidverse/grype
+    - image: quay.io/cidverse/grype:0.54.0
+      provides:
+        - binary: grype
+          version: 0.54.0
+      cache:
+        - id: grype-cache
+          dir: /app/.cache/grype
+      source:
+        registry_url: quay.io/cidverse/grype
+    - image: quay.io/cidverse/grype:0.55.0
+      provides:
+        - binary: grype
+          version: 0.55.0
+      cache:
+        - id: grype-cache
+          dir: /app/.cache/grype
+      source:
+        registry_url: quay.io/cidverse/grype
+    - image: quay.io/cidverse/shellcheck:0.8.0
+      provides:
+        - binary: shellcheck
+          version: 0.8.0
+      source:
+        registry_url: quay.io/cidverse/shellcheck
+    - image: quay.io/cidverse/sonarscannercli:4.7.0.2747
+      provides:
+        - binary: sonar-scanner
+          version: 4.7.0.2747
+      cache:
+        - id: sonarscanner-cache
+          dir: /opt/sonar-scanner/.sonar
+      source:
+        registry_url: quay.io/cidverse/sonarscannercli
+    - image: quay.io/cidverse/syft:0.52.0
+      provides:
+        - binary: syft
+          version: 0.52.0
+      source:
+        registry_url: quay.io/cidverse/syft
+    - image: quay.io/cidverse/syft:0.53.2
+      provides:
+        - binary: syft
+          version: 0.53.2
+      source:
+        registry_url: quay.io/cidverse/syft
+    - image: quay.io/cidverse/syft:0.53.4
+      provides:
+        - binary: syft
+          version: 0.53.4
+      source:
+        registry_url: quay.io/cidverse/syft
+    - image: quay.io/cidverse/syft:0.54.0
+      provides:
+        - binary: syft
+          version: 0.54.0
+      source:
+        registry_url: quay.io/cidverse/syft
+    - image: quay.io/cidverse/syft:0.55.0
+      provides:
+        - binary: syft
+          version: 0.55.0
+      source:
+        registry_url: quay.io/cidverse/syft
+    - image: quay.io/cidverse/syft:0.56.0
+      provides:
+        - binary: syft
+          version: 0.56.0
+      source:
+        registry_url: quay.io/cidverse/syft
+    - image: quay.io/cidverse/syft:0.57.0
+      provides:
+        - binary: syft
+          version: 0.57.0
+      source:
+        registry_url: quay.io/cidverse/syft
+    - image: quay.io/cidverse/syft:0.58.0
+      provides:
+        - binary: syft
+          version: 0.58.0
+      source:
+        registry_url: quay.io/cidverse/syft
+    - image: quay.io/cidverse/syft:0.59.0
+      provides:
+        - binary: syft
+          version: 0.59.0
+      source:
+        registry_url: quay.io/cidverse/syft
+    - image: quay.io/cidverse/syft:0.60.2
+      provides:
+        - binary: syft
+          version: 0.60.2
+      source:
+        registry_url: quay.io/cidverse/syft
+    - image: quay.io/cidverse/syft:0.60.3
+      provides:
+        - binary: syft
+          version: 0.60.3
+      source:
+        registry_url: quay.io/cidverse/syft
+    - image: quay.io/cidverse/syft:0.61.0
+      provides:
+        - binary: syft
+          version: 0.61.0
+      source:
+        registry_url: quay.io/cidverse/syft
+    - image: quay.io/cidverse/syft:0.62.0
+      provides:
+        - binary: syft
+          version: 0.62.0
+      source:
+        registry_url: quay.io/cidverse/syft
+    - image: quay.io/cidverse/syft:0.62.1
+      provides:
+        - binary: syft
+          version: 0.62.1
+      source:
+        registry_url: quay.io/cidverse/syft
+    - image: quay.io/cidverse/syft:0.62.3
+      provides:
+        - binary: syft
+          version: 0.62.3
+      source:
+        registry_url: quay.io/cidverse/syft
+    - image: quay.io/cidverse/syft:0.63.0
+      provides:
+        - binary: syft
+          version: 0.63.0
+      source:
+        registry_url: quay.io/cidverse/syft
+    - image: quay.io/cidverse/syft:0.64.0
+      provides:
+        - binary: syft
+          version: 0.64.0
+      source:
+        registry_url: quay.io/cidverse/syft
+    - image: quay.io/cidverse/syft:0.65.0
+      provides:
+        - binary: syft
+          version: 0.65.0
+      source:
+        registry_url: quay.io/cidverse/syft
+    - image: quay.io/cidverse/syft:0.66.1
+      provides:
+        - binary: syft
+          version: 0.66.1
+      source:
+        registry_url: quay.io/cidverse/syft
+    - image: quay.io/cidverse/hugo:0.101.0
+      provides:
+        - binary: hugo
+          version: 0.101.0
+      source:
+        registry_url: quay.io/cidverse/hugo
+    - image: quay.io/cidverse/hugo:0.102.1
+      provides:
+        - binary: hugo
+          version: 0.102.1
+      source:
+        registry_url: quay.io/cidverse/hugo
+    - image: quay.io/cidverse/hugo:0.102.3
+      provides:
+        - binary: hugo
+          version: 0.102.3
+      source:
+        registry_url: quay.io/cidverse/hugo
+    - image: quay.io/cidverse/hugo:0.103.0
+      provides:
+        - binary: hugo
+          version: 0.103.0
+      source:
+        registry_url: quay.io/cidverse/hugo
+    - image: quay.io/cidverse/hugo:0.103.1
+      provides:
+        - binary: hugo
+          version: 0.103.1
+      source:
+        registry_url: quay.io/cidverse/hugo
+    - image: quay.io/cidverse/hugo:0.104.0
+      provides:
+        - binary: hugo
+          version: 0.104.0
+      source:
+        registry_url: quay.io/cidverse/hugo
+    - image: quay.io/cidverse/hugo:0.104.2
+      provides:
+        - binary: hugo
+          version: 0.104.2
+      source:
+        registry_url: quay.io/cidverse/hugo
+    - image: quay.io/cidverse/hugo:0.104.3
+      provides:
+        - binary: hugo
+          version: 0.104.3
+      source:
+        registry_url: quay.io/cidverse/hugo
+    - image: quay.io/cidverse/hugo:0.105.0
+      provides:
+        - binary: hugo
+          version: 0.105.0
+      source:
+        registry_url: quay.io/cidverse/hugo
+    - image: quay.io/cidverse/hugo:0.106.0
+      provides:
+        - binary: hugo
+          version: 0.106.0
+      source:
+        registry_url: quay.io/cidverse/hugo
+    - image: quay.io/cidverse/hugo:0.109.0
+      provides:
+        - binary: hugo
+          version: 0.109.0
+      source:
+        registry_url: quay.io/cidverse/hugo
+    - image: quay.io/cidverse/hugo:0.110.0
+      provides:
+        - binary: hugo
+          version: 0.110.0
+      source:
+        registry_url: quay.io/cidverse/hugo
+    - image: quay.io/cidverse/mkdocs:1.3.1
+      provides:
+        - binary: mkdocs
+          version: 1.3.1
+      source:
+        registry_url: quay.io/cidverse/mkdocs
+    - image: quay.io/cidverse/mkdocs:1.4.2
+      provides:
+        - binary: mkdocs
+          version: 1.4.2
+      source:
+        registry_url: quay.io/cidverse/mkdocs
+    - image: quay.io/cidverse/techdocscli:1.2.1
+      provides:
+        - binary: techdocs-cli
+          version: 1.2.1
+      source:
+        registry_url: quay.io/cidverse/techdocscli
+    - image: quay.io/cidverse/techdocscli:1.2.2
+      provides:
+        - binary: techdocs-cli
+          version: 1.2.2
+      source:
+        registry_url: quay.io/cidverse/techdocscli
+    - image: quay.io/cidverse/techdocscli:1.2.4
+      provides:
+        - binary: techdocs-cli
+          version: 1.2.4
+      source:
+        registry_url: quay.io/cidverse/techdocscli
+workflows:
+    - name: main
+      stages:
+        - name: build
+          actions:
+            - id: central/go-build
+              config:
+                platform:
+                    - goarch: amd64
+                      goos: windows
+                    - goarch: amd64
+                      goos: linux
+                    - goarch: amd64
+                      goos: darwin
+            - id: central/java-build
+            - id: central/python-build
+            - id: central/node-build
+            - id: central/hugo-build
+            - id: central/helm-build
+            - id: central/mkdocs-build
+            - id: central/techdocs-build
+        - name: test
+          actions:
+            - id: central/go-test
+            - id: central/java-test
+            - id: central/helm-test
+        - name: package
+          actions:
+            - id: central/upx-optimize
+            - id: central/buildah-build
+              config:
+                no-cache: false
+                rebuild: true
+                squash: true
+        - name: lint
+          actions:
+            - id: central/go-lint-golangci
+            - id: central/python-lint
+            - id: central/helm-lint
+        - name: scan
+          actions:
+            - id: central/semgrep-scan
+            - id: central/sonarqube-scan
+        - name: report
+          actions:
+            - id: central/syft-container-sbom
+            - id: central/grype-scan-sbom
+            - id: central/repo-changelog-generate
+              config:
+                commit_pattern:
+                    - (?P<type>[A-Za-z]+)((?:\((?P<scope>[^()\r\n]*)\)|\()?(?P<breaking>!)?)(:\s?(?P<subject>.*))?
+                note_keywords:
+                    - keyword: NOTE
+                      title: Notes
+                    - keyword: BREAKING CHANGE
+                      title: Breaking Changes
+                templates:
+                    - github.changelog
+                    - discord.changelog
+                title_maps:
+                    build: Build System
+                    chore: Internal
+                    ci: CI
+                    docs: Documentation
+                    feat: Features
+                    fix: Bug Fixes
+                    perf: Performance
+                    refactor: Refactor
+                    style: Style
+                    test: Test
+        - name: publish
+          actions:
+            - id: central/buildah-publish
+            - id: central/container-sign
+            - id: central/helm-publish-nexus
+            - id: central/techdocs-publish

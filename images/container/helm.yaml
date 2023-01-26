@@ -1,0 +1,16 @@
+images:
+  - image: quay.io/cidverse/helm:${{TAG}}
+    provides:
+      - binary: helm
+        version: ${{VERSION}}
+    cache:
+      - id: helm-config
+        dir: /app/.config/helm
+      - id: helm-cache
+        dir: /app/.cache/helm/cache
+      - id: helm-plugins
+        dir: /app/.cache/helm/plugins
+      - id: helm-repository
+        dir: /app/.cache/helm/repository
+    source:
+      registry_url: quay.io/cidverse/helm

@@ -1,0 +1,10 @@
+images:
+  - image: quay.io/cidverse/grype:${{TAG}}
+    provides:
+      - binary: grype
+        version: ${{VERSION}}
+    cache:
+      - id: grype-cache
+        dir: /app/.cache/grype
+    source:
+      registry_url: quay.io/cidverse/grype

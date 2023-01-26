@@ -1,0 +1,31 @@
+actions:
+  - repository: central
+    name: techdocs-start
+    type: container
+    container:
+      image: quay.io/cidverse/cid-actions-go:latest
+      command: central run techdocs-start
+    scope: module
+    rules:
+      - type: cel
+        expression: MODULE_BUILD_SYSTEM == "mkdocs" && MODULE_BUILD_SYSTEM_SYNTAX == "mkdocs-techdocs"
+  - repository: central
+    name: techdocs-build
+    type: container
+    container:
+      image: quay.io/cidverse/cid-actions-go:latest
+      command: central run techdocs-build
+    scope: module
+    rules:
+      - type: cel
+        expression: MODULE_BUILD_SYSTEM == "mkdocs" && MODULE_BUILD_SYSTEM_SYNTAX == "mkdocs-techdocs"
+  - repository: central
+    name: techdocs-publish
+    type: container
+    container:
+      image: quay.io/cidverse/cid-actions-go:latest
+      command: central run techdocs-publish
+    scope: module
+    rules:
+      - type: cel
+        expression: MODULE_BUILD_SYSTEM == "mkdocs" && MODULE_BUILD_SYSTEM_SYNTAX == "mkdocs-techdocs"

@@ -1,0 +1,7 @@
+images:
+  - image: quay.io/cidverse/techdocscli:${{TAG}}
+    provides:
+      - binary: techdocs-cli
+        version: ${{VERSION}}
+    source:
+      registry_url: quay.io/cidverse/techdocscli
