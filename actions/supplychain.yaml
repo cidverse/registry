@@ -1,0 +1,42 @@
+actions:
+  # container - cosign
+  - repository: central
+    name: cosign-container-sign
+    type: container
+    container:
+      image: quay.io/cidverse/cid-actions-go:latest
+      command: central run cosign-container-sign
+    scope: module
+    rules:
+      - type: cel
+        expression: MODULE_BUILD_SYSTEM == "container" && getMapValue(ENV, "COSIGN_KEY") != "" && getMapValue(ENV, "COSIGN_PASSWORD") != ""
+    access:
+      env:
+        - COSIGN_.*
+  - repository: central
+    name: cosign-container-sbom-attach
+    type: container
+    container:
+      image: quay.io/cidverse/cid-actions-go:latest
+      command: central run cosign-container-sbom-attach
+    scope: module
+    rules:
+      - type: cel
+        expression: MODULE_BUILD_SYSTEM == "container" && getMapValue(ENV, "COSIGN_KEY") != "" && getMapValue(ENV, "COSIGN_PASSWORD") != ""
+    access:
+      env:
+        - COSIGN_.*
+  # container - syft - sbom
+  - repository: central
+    name: syft-container-sbom-scan
+    type: container
+    container:
+      image: quay.io/cidverse/cid-actions-go:latest
+      command: central run syft-container-sbom-scan
+    scope: module
+    rules:
+      - type: cel
+        expression: MODULE_BUILD_SYSTEM == "container"
+    access:
+      env:
+        - SYFT_.*

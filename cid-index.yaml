@@ -20,19 +20,6 @@ actions:
         - type: cel
           expression: MODULE_BUILD_SYSTEM == "container" && (MODULE_BUILD_SYSTEM_SYNTAX == "buildah-script" || MODULE_BUILD_SYSTEM_SYNTAX == "containerfile")
     - repository: central
-      name: container-sign
-      type: container
-      container:
-        image: quay.io/cidverse/cid-actions-go:latest
-        command: central run container-sign
-      scope: module
-      rules:
-        - type: cel
-          expression: MODULE_BUILD_SYSTEM == "container" && getMapValue(ENV, "COSIGN_KEY") != "" && getMapValue(ENV, "COSIGN_PASSWORD") != ""
-      access:
-        env:
-            - COSIGN_.*
-    - repository: central
       name: go-build
       type: container
       container:
@@ -303,6 +290,45 @@ actions:
       access:
         env:
             - SONAR_.*
+    - repository: central
+      name: cosign-container-sign
+      type: container
+      container:
+        image: quay.io/cidverse/cid-actions-go:latest
+        command: central run cosign-container-sign
+      scope: module
+      rules:
+        - type: cel
+          expression: MODULE_BUILD_SYSTEM == "container" && getMapValue(ENV, "COSIGN_KEY") != "" && getMapValue(ENV, "COSIGN_PASSWORD") != ""
+      access:
+        env:
+            - COSIGN_.*
+    - repository: central
+      name: cosign-container-sbom-attach
+      type: container
+      container:
+        image: quay.io/cidverse/cid-actions-go:latest
+        command: central run cosign-container-sbom-attach
+      scope: module
+      rules:
+        - type: cel
+          expression: MODULE_BUILD_SYSTEM == "container" && getMapValue(ENV, "COSIGN_KEY") != "" && getMapValue(ENV, "COSIGN_PASSWORD") != ""
+      access:
+        env:
+            - COSIGN_.*
+    - repository: central
+      name: syft-container-sbom-scan
+      type: container
+      container:
+        image: quay.io/cidverse/cid-actions-go:latest
+        command: central run syft-container-sbom-scan
+      scope: module
+      rules:
+        - type: cel
+          expression: MODULE_BUILD_SYSTEM == "container"
+      access:
+        env:
+            - SYFT_.*
     - repository: central
       name: techdocs-start
       type: container
@@ -1797,10 +1823,9 @@ workflows:
           actions:
             - id: central/semgrep-scan
             - id: central/sonarqube-scan
+            - id: central/syft-container-sbom-scan
         - name: report
           actions:
-            - id: central/syft-container-sbom
-            - id: central/grype-scan-sbom
             - id: central/repo-changelog-generate
               config:
                 commit_pattern:
@@ -1827,6 +1852,6 @@ workflows:
         - name: publish
           actions:
             - id: central/buildah-publish
-            - id: central/container-sign
+            - id: central/cosign-container-sign
             - id: central/helm-publish-nexus
             - id: central/techdocs-publish

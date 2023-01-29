@@ -19,16 +19,3 @@ actions:
     rules:
       - type: cel
         expression: MODULE_BUILD_SYSTEM == "container" && (MODULE_BUILD_SYSTEM_SYNTAX == "buildah-script" || MODULE_BUILD_SYSTEM_SYNTAX == "containerfile")
-  - repository: central
-    name: container-sign
-    type: container
-    container:
-      image: quay.io/cidverse/cid-actions-go:latest
-      command: central run container-sign
-    scope: module
-    rules:
-      - type: cel
-        expression: MODULE_BUILD_SYSTEM == "container" && getMapValue(ENV, "COSIGN_KEY") != "" && getMapValue(ENV, "COSIGN_PASSWORD") != ""
-    access:
-      env:
-        - COSIGN_.*
