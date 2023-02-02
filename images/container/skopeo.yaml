@@ -1,10 +1,10 @@
 images:
-  - image: quay.io/cidverse/oras:${{TAG}}
+  - image: quay.io/cidverse/skopeo:${{TAG}}
     provides:
-      - binary: oras
+      - binary: skopeo
         version: ${{VERSION}}
     cache:
       - id: docker-auth
         dir: /app/.docker
     source:
-      registry_url: quay.io/cidverse/oras
+      registry_url: quay.io/cidverse/skopeo

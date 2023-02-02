@@ -78,11 +78,11 @@ workflows:
           # container - publish to registry
           - id: central/buildah-publish
           # container - sign image
-          - id: central/cosign-container-sign
+          #- id: central/cosign-container-sign
           # container - attach and sign sbom
           #- id: central/cosign-container-sbom-attach
+          # helm chart - publish - nexus
           - id: central/helm-publish-nexus
+          # docs - techdocs - publish
           - id: central/techdocs-publish
-          #- id: central/repo-tag-create
-          #- id: central/repo-release-github
           #- id: central/java-publish
