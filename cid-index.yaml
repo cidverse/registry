@@ -1600,6 +1600,15 @@ images:
           dir: /opt/sonar-scanner/.sonar
       source:
         registry_url: quay.io/cidverse/sonarscannercli
+    - image: quay.io/cidverse/sonarscannercli:4.8.0.2856
+      provides:
+        - binary: sonar-scanner
+          version: 4.8.0.2856
+      cache:
+        - id: sonarscanner-cache
+          dir: /opt/sonar-scanner/.sonar
+      source:
+        registry_url: quay.io/cidverse/sonarscannercli
     - image: quay.io/cidverse/syft:0.52.0
       provides:
         - binary: syft
