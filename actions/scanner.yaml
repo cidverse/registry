@@ -57,3 +57,5 @@ actions:
     access:
       env:
         - SONAR_.*
+        - NCI_PROJECT_.*
+        - NCI_COMMIT_.*

@@ -290,6 +290,8 @@ actions:
       access:
         env:
             - SONAR_.*
+            - NCI_PROJECT_.*
+            - NCI_COMMIT_.*
     - repository: central
       name: cosign-container-sign
       type: container
