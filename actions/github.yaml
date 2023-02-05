@@ -1,0 +1,24 @@
+
+actions:
+  # github release
+  - repository: central
+    name: github-release-publish
+    type: container
+    container:
+      image: quay.io/cidverse/cid-actions-go:latest
+      command: central run github-release-publish
+    scope: project
+    rules:
+      - type: cel
+        expression: NCI_COMMIT_REF_TYPE == "tag" && hasPrefix(ENV["NCI_REPOSITORY_REMOTE"], "https://github.com/")
+  # github sarif upload
+  - repository: central
+    name: github-sarif-upload
+    type: container
+    container:
+      image: quay.io/cidverse/cid-actions-go:latest
+      command: central run github-sarif-upload
+    scope: project
+    rules:
+      - type: cel
+        expression: hasPrefix(ENV["NCI_REPOSITORY_REMOTE"], "https://github.com/")

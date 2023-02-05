@@ -1,5 +1,15 @@
 actions:
     - repository: central
+      name: changelog-generate
+      type: container
+      container:
+        image: quay.io/cidverse/cid-actions-go:latest
+        command: central run changelog-generate
+      scope: project
+      rules:
+        - type: cel
+          expression: NCI_COMMIT_REF_TYPE == "tag"
+    - repository: central
       name: buildah-build
       type: container
       container:
@@ -19,6 +29,26 @@ actions:
       rules:
         - type: cel
           expression: MODULE_BUILD_SYSTEM == "container" && (MODULE_BUILD_SYSTEM_SYNTAX == "buildah-script" || MODULE_BUILD_SYSTEM_SYNTAX == "containerfile")
+    - repository: central
+      name: github-release-publish
+      type: container
+      container:
+        image: quay.io/cidverse/cid-actions-go:latest
+        command: central run github-release-publish
+      scope: project
+      rules:
+        - type: cel
+          expression: NCI_COMMIT_REF_TYPE == "tag" && hasPrefix(ENV["NCI_REPOSITORY_REMOTE"], "https://github.com/")
+    - repository: central
+      name: github-sarif-upload
+      type: container
+      container:
+        image: quay.io/cidverse/cid-actions-go:latest
+        command: central run github-sarif-upload
+      scope: project
+      rules:
+        - type: cel
+          expression: hasPrefix(ENV["NCI_REPOSITORY_REMOTE"], "https://github.com/")
     - repository: central
       name: go-build
       type: container
@@ -237,26 +267,6 @@ actions:
           expression: MODULE_BUILD_SYSTEM == "pipfile"
         - type: cel
           expression: MODULE_BUILD_SYSTEM == "setup.py"
-    - repository: central
-      name: changelog-generate
-      type: container
-      container:
-        image: quay.io/cidverse/cid-actions-go:latest
-        command: central run changelog-generate
-      scope: project
-      rules:
-        - type: cel
-          expression: NCI_COMMIT_REF_TYPE == "tag"
-    - repository: central
-      name: github-release-publish
-      type: container
-      container:
-        image: quay.io/cidverse/cid-actions-go:latest
-        command: central run github-release-publish
-      scope: project
-      rules:
-        - type: cel
-          expression: NCI_COMMIT_REF_TYPE == "tag" && hasPrefix(ENV["NCI_REPOSITORY_REMOTE"], "https://github.com/")
     - repository: central
       name: gitguardian-scan
       type: container
