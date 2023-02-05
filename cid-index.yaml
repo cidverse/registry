@@ -1911,7 +1911,6 @@ workflows:
                 squash: true
         - name: scan
           actions:
-            - id: central/go-lint-golangci
             - id: central/python-lint
             - id: central/helm-lint
             - id: central/semgrep-scan
