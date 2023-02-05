@@ -238,6 +238,26 @@ actions:
         - type: cel
           expression: MODULE_BUILD_SYSTEM == "setup.py"
     - repository: central
+      name: changelog-generate
+      type: container
+      container:
+        image: quay.io/cidverse/cid-actions-go:latest
+        command: central run changelog-generate
+      scope: project
+      rules:
+        - type: cel
+          expression: NCI_COMMIT_REF_TYPE == "tag"
+    - repository: central
+      name: github-release-publish
+      type: container
+      container:
+        image: quay.io/cidverse/cid-actions-go:latest
+        command: central run github-release-publish
+      scope: project
+      rules:
+        - type: cel
+          expression: NCI_COMMIT_REF_TYPE == "tag" && hasPrefix(ENV["NCI_REPOSITORY_REMOTE"], "https://github.com/")
+    - repository: central
       name: gitguardian-scan
       type: container
       container:
@@ -481,6 +501,12 @@ images:
       provides:
         - binary: gh
           version: 2.21.1
+      source:
+        registry_url: quay.io/cidverse/githubcli
+    - image: quay.io/cidverse/githubcli:2.22.1
+      provides:
+        - binary: gh
+          version: 2.22.1
       source:
         registry_url: quay.io/cidverse/githubcli
     - image: quay.io/cidverse/runpodctl:1.7.0
@@ -1729,6 +1755,12 @@ images:
           version: 0.69.1
       source:
         registry_url: quay.io/cidverse/syft
+    - image: quay.io/cidverse/syft:0.70.0
+      provides:
+        - binary: syft
+          version: 0.70.0
+      source:
+        registry_url: quay.io/cidverse/syft
     - image: quay.io/cidverse/scorecard:4.10.2
       provides:
         - binary: scorecard
@@ -1877,43 +1909,19 @@ workflows:
                 no-cache: false
                 rebuild: true
                 squash: true
-        - name: lint
+        - name: scan
           actions:
             - id: central/go-lint-golangci
             - id: central/python-lint
             - id: central/helm-lint
-        - name: scan
-          actions:
             - id: central/semgrep-scan
             - id: central/sonarqube-scan
             - id: central/syft-container-sbom-scan
-        - name: report
-          actions:
-            - id: central/repo-changelog-generate
-              config:
-                commit_pattern:
-                    - (?P<type>[A-Za-z]+)((?:\((?P<scope>[^()\r\n]*)\)|\()?(?P<breaking>!)?)(:\s?(?P<subject>.*))?
-                note_keywords:
-                    - keyword: NOTE
-                      title: Notes
-                    - keyword: BREAKING CHANGE
-                      title: Breaking Changes
-                templates:
-                    - github.changelog
-                    - discord.changelog
-                title_maps:
-                    build: Build System
-                    chore: Internal
-                    ci: CI
-                    docs: Documentation
-                    feat: Features
-                    fix: Bug Fixes
-                    perf: Performance
-                    refactor: Refactor
-                    style: Style
-                    test: Test
         - name: publish
           actions:
             - id: central/buildah-publish
+            - id: central/java-publish
             - id: central/helm-publish-nexus
             - id: central/techdocs-publish
+            - id: central/changelog-generate
+            - id: central/github-release-publish

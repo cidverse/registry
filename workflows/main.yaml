@@ -35,48 +35,22 @@ workflows:
               no-cache: false
               squash: true
               rebuild: true
-      - name: lint
+      - name: scan
         actions:
           - id: central/go-lint-golangci
           - id: central/python-lint
           - id: central/helm-lint
-      - name: scan
-        actions:
           #- id: central/gitleaks-scan
           - id: central/semgrep-scan
           #- id: central/fossa-source-scan
           - id: central/sonarqube-scan
           - id: central/syft-container-sbom-scan
-      - name: report
-        actions:
-          - id: central/repo-changelog-generate
-            config:
-              # changelog generator configuration
-              templates:
-                - github.changelog
-                - discord.changelog
-              commit_pattern:
-                - (?P<type>[A-Za-z]+)((?:\((?P<scope>[^()\r\n]*)\)|\()?(?P<breaking>!)?)(:\s?(?P<subject>.*))?
-              title_maps:
-                build: "Build System"
-                ci: "CI"
-                docs: "Documentation"
-                feat: "Features"
-                fix: "Bug Fixes"
-                perf: "Performance"
-                refactor: "Refactor"
-                style: "Style"
-                test: "Test"
-                chore: "Internal"
-              note_keywords:
-                - keyword: NOTE
-                  title: Notes
-                - keyword: BREAKING CHANGE
-                  title: Breaking Changes
       - name: publish
         actions:
           # container - publish to registry
           - id: central/buildah-publish
+          # java library - publish
+          - id: central/java-publish
           # container - sign image
           #- id: central/cosign-container-sign
           # container - attach and sign sbom
@@ -85,4 +59,7 @@ workflows:
           - id: central/helm-publish-nexus
           # docs - techdocs - publish
           - id: central/techdocs-publish
-          #- id: central/java-publish
+          # changelog
+          - id: central/changelog-generate
+          # release - github
+          - id: central/github-release-publish
