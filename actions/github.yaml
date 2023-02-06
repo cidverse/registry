@@ -11,6 +11,9 @@ actions:
     rules:
       - type: cel
         expression: NCI_COMMIT_REF_TYPE == "tag" && hasPrefix(ENV["NCI_REPOSITORY_REMOTE"], "https://github.com/")
+    access:
+      env:
+        - GITHUB_TOKEN
   # github sarif upload
   - repository: central
     name: github-sarif-upload
@@ -22,3 +25,6 @@ actions:
     rules:
       - type: cel
         expression: hasPrefix(ENV["NCI_REPOSITORY_REMOTE"], "https://github.com/")
+    access:
+      env:
+        - GITHUB_TOKEN
