@@ -40,3 +40,15 @@ actions:
     access:
       env:
         - SYFT_.*
+  # artifact - syft - sbom
+  - repository: central
+    name: syft-artifact-sbom-generate
+    type: container
+    container:
+      image: quay.io/cidverse/cid-actions-go:latest
+      command: central run syft-artifact-sbom-generate
+    scope: module
+    rules: []
+    access:
+      env:
+        - SYFT_.*

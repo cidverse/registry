@@ -362,6 +362,16 @@ actions:
         env:
             - SYFT_.*
     - repository: central
+      name: syft-artifact-sbom-generate
+      type: container
+      container:
+        image: quay.io/cidverse/cid-actions-go:latest
+        command: central run syft-artifact-sbom-generate
+      scope: module
+      access:
+        env:
+            - SYFT_.*
+    - repository: central
       name: techdocs-start
       type: container
       container:
@@ -1937,7 +1947,6 @@ workflows:
             - id: central/helm-lint
             - id: central/semgrep-scan
             - id: central/sonarqube-scan
-            - id: central/syft-artifact-sbom-generate
             - id: central/syft-container-sbom-generate
         - name: publish
           actions:
