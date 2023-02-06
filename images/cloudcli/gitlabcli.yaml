@@ -1,0 +1,7 @@
+images:
+  - image: quay.io/cidverse/glab:${{TAG}}
+    provides:
+      - binary: glab
+        version: ${{VERSION}}
+    source:
+      registry_url: quay.io/cidverse/glab

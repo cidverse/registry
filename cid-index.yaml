@@ -519,6 +519,18 @@ images:
           version: 2.22.1
       source:
         registry_url: quay.io/cidverse/githubcli
+    - image: quay.io/cidverse/glab:1.22.0
+      provides:
+        - binary: glab
+          version: 1.22.0
+      source:
+        registry_url: quay.io/cidverse/glab
+    - image: quay.io/cidverse/glab:1.25.0
+      provides:
+        - binary: glab
+          version: 1.25.0
+      source:
+        registry_url: quay.io/cidverse/glab
     - image: quay.io/cidverse/runpodctl:1.7.0
       provides:
         - binary: runpodctl
