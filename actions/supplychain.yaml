@@ -28,11 +28,11 @@ actions:
         - COSIGN_.*
   # container - syft - sbom
   - repository: central
-    name: syft-container-sbom-scan
+    name: syft-container-sbom-generate
     type: container
     container:
       image: quay.io/cidverse/cid-actions-go:latest
-      command: central run syft-container-sbom-scan
+      command: central run syft-container-sbom-generate
     scope: module
     rules:
       - type: cel

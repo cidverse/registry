@@ -21,7 +21,6 @@ workflows:
           - id: central/helm-build
           - id: central/mkdocs-build
           - id: central/techdocs-build
-          #- id: central/test-action
       - name: test
         actions:
           - id: central/go-test
@@ -43,7 +42,8 @@ workflows:
           - id: central/semgrep-scan
           #- id: central/fossa-source-scan
           - id: central/sonarqube-scan
-          - id: central/syft-container-sbom-scan
+          - id: central/syft-artifact-sbom-generate
+          - id: central/syft-container-sbom-generate
       - name: publish
         actions:
           # container - publish to registry
