@@ -329,6 +329,21 @@ actions:
             - NCI_PROJECT_.*
             - NCI_COMMIT_.*
     - repository: central
+      name: qodana-scan
+      type: container
+      container:
+        image: quay.io/cidverse/cid-actions-go:latest
+        command: central run qodana-scan
+      scope: module
+      rules:
+        - type: cel
+          expression: ENV["QODANA_TOKEN"] != "" && NCI_COMMIT_REF_TYPE == "branch"
+      access:
+        env:
+            - QODANA_TOKEN
+            - NCI_REPOSITORY_.*
+            - NCI_COMMIT_.*
+    - repository: central
       name: cosign-container-sign
       type: container
       container:
@@ -539,12 +554,18 @@ images:
       provides:
         - binary: glab
           version: 1.22.0
+      cache:
+        - id: glab-auth
+          dir: /app/.config/glab-cli
       source:
         registry_url: quay.io/cidverse/glab
     - image: quay.io/cidverse/glab:1.25.0
       provides:
         - binary: glab
           version: 1.25.0
+      cache:
+        - id: glab-auth
+          dir: /app/.config/glab-cli
       source:
         registry_url: quay.io/cidverse/glab
     - image: quay.io/cidverse/runpodctl:1.7.0
@@ -1658,6 +1679,55 @@ images:
           dir: /app/.cache/grype
       source:
         registry_url: quay.io/cidverse/grype
+    - image: docker.io/jetbrains/qodana-jvm:latest
+      provides:
+        - binary: qodana
+          version: 1.0.0
+          alias:
+            - qodana-jvm
+      entrypoint: ""
+    - image: docker.io/jetbrains/qodana-jvm-android:latest
+      provides:
+        - binary: qodana
+          version: 1.0.0
+          alias:
+            - qodana-jvm-android
+      entrypoint: ""
+    - image: docker.io/jetbrains/qodana-php:latest
+      provides:
+        - binary: qodana
+          version: 1.0.0
+          alias:
+            - qodana-php
+      entrypoint: ""
+    - image: docker.io/jetbrains/qodana-python:latest
+      provides:
+        - binary: qodana
+          version: 1.0.0
+          alias:
+            - qodana-python
+      entrypoint: ""
+    - image: docker.io/jetbrains/qodana-js:latest
+      provides:
+        - binary: qodana
+          version: 1.0.0
+          alias:
+            - qodana-js
+      entrypoint: ""
+    - image: docker.io/jetbrains/qodana-go:latest
+      provides:
+        - binary: qodana
+          version: 1.0.0
+          alias:
+            - qodana-go
+      entrypoint: ""
+    - image: docker.io/jetbrains/qodana-dotnet:latest
+      provides:
+        - binary: qodana
+          version: 1.0.0
+          alias:
+            - qodana-dotnet
+      entrypoint: ""
     - image: quay.io/cidverse/shellcheck:0.8.0
       provides:
         - binary: shellcheck
@@ -1962,6 +2032,7 @@ workflows:
             - id: central/helm-lint
             - id: central/semgrep-scan
             - id: central/sonarqube-scan
+            - id: central/qodana-scan
             - id: central/syft-container-sbom-generate
         - name: publish
           actions:

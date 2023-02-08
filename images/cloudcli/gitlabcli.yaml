@@ -3,5 +3,8 @@ images:
     provides:
       - binary: glab
         version: ${{VERSION}}
+    cache:
+      - id: glab-auth
+        dir: /app/.config/glab-cli
     source:
       registry_url: quay.io/cidverse/glab

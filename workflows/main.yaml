@@ -42,6 +42,7 @@ workflows:
           - id: central/semgrep-scan
           #- id: central/fossa-source-scan
           - id: central/sonarqube-scan
+          - id: central/qodana-scan
           #- id: central/syft-artifact-sbom-generate
           - id: central/syft-container-sbom-generate
       - name: publish

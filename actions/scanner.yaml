@@ -59,3 +59,19 @@ actions:
         - SONAR_.*
         - NCI_PROJECT_.*
         - NCI_COMMIT_.*
+  # qodana
+  - repository: central
+    name: qodana-scan
+    type: container
+    container:
+      image: quay.io/cidverse/cid-actions-go:latest
+      command: central run qodana-scan
+    scope: module
+    rules:
+      - type: cel
+        expression: ENV["QODANA_TOKEN"] != "" && NCI_COMMIT_REF_TYPE == "branch"
+    access:
+      env:
+        - QODANA_TOKEN
+        - NCI_REPOSITORY_.*
+        - NCI_COMMIT_.*
