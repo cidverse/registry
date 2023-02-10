@@ -8,6 +8,9 @@ on:
       cid-workflow:
         required: true
         type: string
+      cid-version:
+        required: true
+        type: string
     secrets:
       # qodana
       QODANA_TOKEN:
@@ -22,7 +25,18 @@ on:
 
 # permissions, see https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#permissions and https://docs.github.com/en/rest/overview/permissions-required-for-github-apps
 permissions:
+  actions: none
+  checks: none
   contents: read
+  deployments: none
+  id-token: none
+  issues: none
+  packages: none
+  pages: none
+  pull-requests: none
+  repository-projects: none
+  security-events: none
+  statuses: none
 
 # jobs
 jobs:
@@ -33,6 +47,10 @@ jobs:
     steps:
       - name: prepare environment
         uses: cidverse/ghact-cid-setup@main
+        with:
+          version: ${{ inputs.cid-version }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: checkout
         uses: actions/checkout@v3
         with:
@@ -52,6 +70,10 @@ jobs:
     steps:
       - name: prepare environment
         uses: cidverse/ghact-cid-setup@main
+        with:
+          version: ${{ inputs.cid-version }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: checkout
         uses: actions/checkout@v3
         with:
@@ -75,6 +97,10 @@ jobs:
     steps:
       - name: prepare environment
         uses: cidverse/ghact-cid-setup@main
+        with:
+          version: ${{ inputs.cid-version }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: checkout
         uses: actions/checkout@v3
         with:
@@ -99,6 +125,10 @@ jobs:
     steps:
       - name: prepare environment
         uses: cidverse/ghact-cid-setup@main
+        with:
+          version: ${{ inputs.cid-version }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: checkout
         uses: actions/checkout@v3
         with:
@@ -133,6 +163,10 @@ jobs:
     steps:
       - name: prepare environment
         uses: cidverse/ghact-cid-setup@main
+        with:
+          version: ${{ inputs.cid-version }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: checkout
         uses: actions/checkout@v3
         with:
@@ -166,6 +200,10 @@ jobs:
     steps:
       - name: prepare environment
         uses: cidverse/ghact-cid-setup@main
+        with:
+          version: ${{ inputs.cid-version }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: checkout
         uses: actions/checkout@v3
         with:
