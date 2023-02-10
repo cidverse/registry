@@ -6,5 +6,8 @@ images:
     cache:
       - id: sonarscanner-cache
         dir: /opt/sonar-scanner/.sonar
+    certs:
+      - type: java-keystore
+        dir: /app/sonarscanner/jre/lib/security/cacerts
     source:
       registry_url: quay.io/cidverse/sonarscannercli
