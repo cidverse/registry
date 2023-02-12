@@ -358,6 +358,19 @@ actions:
             - NCI_REPOSITORY_.*
             - NCI_COMMIT_.*
     - repository: central
+      name: ossf-scorecard-scan
+      type: container
+      container:
+        image: quay.io/cidverse/cid-actions-go:latest
+        command: central run ossf-scorecard-scan
+      scope: project
+      rules:
+        - type: cel
+          expression: hasPrefix(ENV["NCI_REPOSITORY_REMOTE"], "https://github.com/")
+      access:
+        env:
+            - GITHUB_TOKEN
+    - repository: central
       name: cosign-container-sign
       type: container
       container:
