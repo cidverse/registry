@@ -8,9 +8,11 @@ on:
       cid-workflow:
         required: true
         type: string
+        default: "main"
       cid-version:
         required: true
         type: string
+        default: "0.1.0"
     secrets:
       # qodana
       QODANA_TOKEN:
@@ -122,6 +124,8 @@ jobs:
     name: Scan
     runs-on: ubuntu-latest
     needs: [build, test]
+    permissions:
+      security-events: write
     steps:
       - name: prepare environment
         uses: cidverse/ghact-cid-setup@main
@@ -197,6 +201,7 @@ jobs:
     permissions:
       # create release
       contents: write
+    if: github.event.name != 'pull_request'
     steps:
       - name: prepare environment
         uses: cidverse/ghact-cid-setup@main
