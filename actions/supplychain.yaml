@@ -9,7 +9,7 @@ actions:
     scope: project
     rules:
       - type: cel
-        expression: hasPrefix(ENV["NCI_REPOSITORY_REMOTE"], "https://github.com/")
+        expression: NCI_REPOSITORY_HOST_TYPE == "github"
     access:
       env:
         - GITHUB_TOKEN

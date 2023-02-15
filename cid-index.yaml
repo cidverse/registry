@@ -366,7 +366,7 @@ actions:
       scope: project
       rules:
         - type: cel
-          expression: hasPrefix(ENV["NCI_REPOSITORY_REMOTE"], "https://github.com/")
+          expression: NCI_REPOSITORY_HOST_TYPE == "github"
       access:
         env:
             - GITHUB_TOKEN
@@ -449,6 +449,13 @@ actions:
       rules:
         - type: cel
           expression: MODULE_BUILD_SYSTEM == "mkdocs" && MODULE_BUILD_SYSTEM_SYNTAX == "mkdocs-techdocs"
+    - repository: central
+      name: kotlin-hello
+      type: container
+      container:
+        image: quay.io/cidverse/cid-actions-kotlin:latest
+        command: cid-actions-kotlin kotlin-hello
+      scope: project
 images:
     - image: quay.io/cidverse/pipenv:2022.11.30
       provides:
@@ -625,6 +632,21 @@ images:
           version: 1.29.0
         - binary: buildah-script
           version: 1.29.0
+      cache:
+        - id: libcontainers-storage
+          dir: /var/lib/containers/storage
+        - id: docker-auth
+          dir: /app/.docker
+      security:
+        privileged: true
+      source:
+        registry_url: quay.io/cidverse/buildah
+    - image: quay.io/cidverse/buildah:1.29.1
+      provides:
+        - binary: buildah
+          version: 1.29.1
+        - binary: buildah-script
+          version: 1.29.1
       cache:
         - id: libcontainers-storage
           dir: /var/lib/containers/storage
@@ -910,6 +932,15 @@ images:
           dir: /app/.docker
       source:
         registry_url: quay.io/cidverse/skopeo
+    - image: quay.io/cidverse/skopeo:1.11.1
+      provides:
+        - binary: skopeo
+          version: 1.11.1
+      cache:
+        - id: docker-auth
+          dir: /app/.docker
+      source:
+        registry_url: quay.io/cidverse/skopeo
     - image: quay.io/cidverse/liquibase:4.19.0
       provides:
         - binary: liquibase
@@ -1145,6 +1176,19 @@ images:
       provides:
         - binary: node
           version: 19.6.0
+      cache:
+        - id: node-npm
+          dir: /root/.npm
+        - id: node-yarn-cache-v6
+          dir: /usr/local/share/.cache/yarn/v6
+        - id: node-yarn-config
+          dir: /root/.config/yarn
+      source:
+        registry_url: quay.io/cidverse/base-node
+    - image: quay.io/cidverse/base-node:19.6.1
+      provides:
+        - binary: node
+          version: 19.6.1
       cache:
         - id: node-npm
           dir: /root/.npm
@@ -1431,6 +1475,24 @@ images:
       provides:
         - binary: semgrep
           version: 1.11.0
+      cache:
+        - id: semgrep-cache
+          dir: /app/.cache/semgrep-cache
+      source:
+        registry_url: quay.io/cidverse/semgrep
+    - image: quay.io/cidverse/semgrep:1.12.0
+      provides:
+        - binary: semgrep
+          version: 1.12.0
+      cache:
+        - id: semgrep-cache
+          dir: /app/.cache/semgrep-cache
+      source:
+        registry_url: quay.io/cidverse/semgrep
+    - image: quay.io/cidverse/semgrep:1.12.1
+      provides:
+        - binary: semgrep
+          version: 1.12.1
       cache:
         - id: semgrep-cache
           dir: /app/.cache/semgrep-cache
@@ -1737,6 +1799,15 @@ images:
       provides:
         - binary: grype
           version: 0.55.0
+      cache:
+        - id: grype-cache
+          dir: /app/.cache/grype
+      source:
+        registry_url: quay.io/cidverse/grype
+    - image: quay.io/cidverse/grype:0.57.1
+      provides:
+        - binary: grype
+          version: 0.57.1
       cache:
         - id: grype-cache
           dir: /app/.cache/grype
@@ -2113,7 +2184,6 @@ workflows:
         - name: publish
           actions:
             - id: central/buildah-publish
-            - id: central/java-publish
             - id: central/helm-publish-nexus
             - id: central/techdocs-publish
             - id: central/changelog-generate

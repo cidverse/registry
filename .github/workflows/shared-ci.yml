@@ -51,8 +51,6 @@ jobs:
         uses: cidverse/ghact-cid-setup@main
         with:
           version: ${{ inputs.cid-version }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: checkout
         uses: actions/checkout@v3
         with:
@@ -74,8 +72,6 @@ jobs:
         uses: cidverse/ghact-cid-setup@main
         with:
           version: ${{ inputs.cid-version }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: checkout
         uses: actions/checkout@v3
         with:
@@ -101,8 +97,6 @@ jobs:
         uses: cidverse/ghact-cid-setup@main
         with:
           version: ${{ inputs.cid-version }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: checkout
         uses: actions/checkout@v3
         with:
@@ -131,8 +125,6 @@ jobs:
         uses: cidverse/ghact-cid-setup@main
         with:
           version: ${{ inputs.cid-version }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: checkout
         uses: actions/checkout@v3
         with:
@@ -169,8 +161,6 @@ jobs:
         uses: cidverse/ghact-cid-setup@main
         with:
           version: ${{ inputs.cid-version }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: checkout
         uses: actions/checkout@v3
         with:
@@ -207,8 +197,6 @@ jobs:
         uses: cidverse/ghact-cid-setup@main
         with:
           version: ${{ inputs.cid-version }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: checkout
         uses: actions/checkout@v3
         with:
