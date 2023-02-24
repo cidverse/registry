@@ -333,6 +333,9 @@ actions:
       container:
         image: quay.io/cidverse/cid-actions-go:latest
         command: central run sonarqube-scan
+        certs:
+            - type: ca-bundle
+              dir: /etc/ssl/certs/ca-certificates.crt
       scope: project
       rules:
         - type: cel
@@ -1874,8 +1877,10 @@ images:
           version: 4.7.0.2747
       cache:
         - id: sonarscanner-cache
-          dir: /opt/sonar-scanner/.sonar
+          dir: /app/.sonar/cache
       certs:
+        - type: ca-bundle
+          dir: /etc/ssl/certs/ca-certificates.crt
         - type: java-keystore
           dir: /app/sonarscanner/jre/lib/security/cacerts
       source:
@@ -1886,8 +1891,10 @@ images:
           version: 4.8.0.2856
       cache:
         - id: sonarscanner-cache
-          dir: /opt/sonar-scanner/.sonar
+          dir: /app/.sonar/cache
       certs:
+        - type: ca-bundle
+          dir: /etc/ssl/certs/ca-certificates.crt
         - type: java-keystore
           dir: /app/sonarscanner/jre/lib/security/cacerts
       source:
@@ -2022,6 +2029,12 @@ images:
       provides:
         - binary: syft
           version: 0.71.0
+      source:
+        registry_url: quay.io/cidverse/syft
+    - image: quay.io/cidverse/syft:0.73.0
+      provides:
+        - binary: syft
+          version: 0.73.0
       source:
         registry_url: quay.io/cidverse/syft
     - image: quay.io/cidverse/scorecard:4.10.2

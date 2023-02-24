@@ -50,6 +50,9 @@ actions:
     container:
       image: quay.io/cidverse/cid-actions-go:latest
       command: central run sonarqube-scan
+      certs:
+        - type: ca-bundle
+          dir: /etc/ssl/certs/ca-certificates.crt
     scope: project
     rules:
       - type: cel

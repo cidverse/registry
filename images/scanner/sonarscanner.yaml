@@ -5,8 +5,10 @@ images:
         version: ${{VERSION}}
     cache:
       - id: sonarscanner-cache
-        dir: /opt/sonar-scanner/.sonar
+        dir: /app/.sonar/cache
     certs:
+      - type: ca-bundle
+        dir: /etc/ssl/certs/ca-certificates.crt
       - type: java-keystore
         dir: /app/sonarscanner/jre/lib/security/cacerts
     source:
