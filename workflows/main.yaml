@@ -1,5 +1,6 @@
 workflows:
   - name: main
+    version: 0.1.0
     rules: []
     stages:
       - name: build

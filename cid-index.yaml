@@ -2153,6 +2153,7 @@ images:
         registry_url: quay.io/cidverse/techdocscli
 workflows:
     - name: main
+      version: 0.1.0
       stages:
         - name: build
           actions:
