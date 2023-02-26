@@ -1298,6 +1298,12 @@ images:
           version: 1.14.2
       source:
         registry_url: quay.io/cidverse/ggshield
+    - image: quay.io/cidverse/ggshield:1.14.4
+      provides:
+        - binary: ggshield
+          version: 1.14.4
+      source:
+        registry_url: quay.io/cidverse/ggshield
     - image: quay.io/cidverse/gitleaks:8.8.12
       provides:
         - binary: gitleaks
@@ -1388,6 +1394,12 @@ images:
           version: 8.15.3
       source:
         registry_url: quay.io/cidverse/gitleaks
+    - image: quay.io/cidverse/gitleaks:8.16.0
+      provides:
+        - binary: gitleaks
+          version: 8.16.0
+      source:
+        registry_url: quay.io/cidverse/gitleaks
     - image: quay.io/cidverse/gosec:2.14.0
       provides:
         - binary: gosec
@@ -1455,6 +1467,15 @@ images:
       provides:
         - binary: semgrep
           version: 1.12.1
+      cache:
+        - id: semgrep-cache
+          dir: /app/.cache/semgrep-cache
+      source:
+        registry_url: quay.io/cidverse/semgrep
+    - image: quay.io/cidverse/semgrep:1.13.0
+      provides:
+        - binary: semgrep
+          version: 1.13.0
       cache:
         - id: semgrep-cache
           dir: /app/.cache/semgrep-cache
@@ -1551,6 +1572,15 @@ images:
       provides:
         - binary: cosign
           version: 1.13.1
+      cache:
+        - id: docker-auth
+          dir: /app/.docker
+      source:
+        registry_url: quay.io/cidverse/cosign
+    - image: quay.io/cidverse/cosign:2.0.0
+      provides:
+        - binary: cosign
+          version: 2.0.0
       cache:
         - id: docker-auth
           dir: /app/.docker
