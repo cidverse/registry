@@ -1,6 +1,5 @@
 actions:
-    - repository: central
-      name: changelog-generate
+    - name: changelog-generate
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
@@ -9,8 +8,7 @@ actions:
       rules:
         - type: cel
           expression: NCI_COMMIT_REF_TYPE == "tag"
-    - repository: central
-      name: buildah-build
+    - name: buildah-build
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
@@ -19,8 +17,7 @@ actions:
       rules:
         - type: cel
           expression: MODULE_BUILD_SYSTEM == "container" && (MODULE_BUILD_SYSTEM_SYNTAX == "buildah-script" || MODULE_BUILD_SYSTEM_SYNTAX == "containerfile")
-    - repository: central
-      name: buildah-publish
+    - name: buildah-publish
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
@@ -29,8 +26,7 @@ actions:
       rules:
         - type: cel
           expression: MODULE_BUILD_SYSTEM == "container" && (MODULE_BUILD_SYSTEM_SYNTAX == "buildah-script" || MODULE_BUILD_SYSTEM_SYNTAX == "containerfile")
-    - repository: central
-      name: github-release-publish
+    - name: github-release-publish
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
@@ -42,8 +38,7 @@ actions:
       access:
         env:
             - GITHUB_TOKEN
-    - repository: central
-      name: github-sarif-upload
+    - name: github-sarif-upload
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
@@ -55,8 +50,7 @@ actions:
       access:
         env:
             - GITHUB_TOKEN
-    - repository: central
-      name: gitlab-release-publish
+    - name: gitlab-release-publish
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
@@ -69,8 +63,7 @@ actions:
         env:
             - GITLAB_TOKEN
             - GITLAB_BOT_TOKEN
-    - repository: central
-      name: go-build
+    - name: go-build
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
@@ -79,8 +72,7 @@ actions:
       rules:
         - type: cel
           expression: MODULE_BUILD_SYSTEM == "gomod"
-    - repository: central
-      name: go-test
+    - name: go-test
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
@@ -89,8 +81,7 @@ actions:
       rules:
         - type: cel
           expression: MODULE_BUILD_SYSTEM == "gomod"
-    - repository: central
-      name: go-lint
+    - name: go-lint
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
@@ -99,8 +90,7 @@ actions:
       rules:
         - type: cel
           expression: MODULE_BUILD_SYSTEM == "gomod"
-    - repository: central
-      name: helm-build
+    - name: helm-build
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
@@ -109,8 +99,7 @@ actions:
       rules:
         - type: cel
           expression: MODULE_BUILD_SYSTEM == "helm"
-    - repository: central
-      name: helm-test
+    - name: helm-test
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
@@ -119,8 +108,7 @@ actions:
       rules:
         - type: cel
           expression: MODULE_BUILD_SYSTEM == "helm"
-    - repository: central
-      name: helm-lint
+    - name: helm-lint
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
@@ -129,8 +117,7 @@ actions:
       rules:
         - type: cel
           expression: MODULE_BUILD_SYSTEM == "helm"
-    - repository: central
-      name: helm-publish-nexus
+    - name: helm-publish-nexus
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
@@ -139,8 +126,7 @@ actions:
       rules:
         - type: cel
           expression: MODULE_BUILD_SYSTEM == "helm" && ENV["HELM_NEXUS_URL"] != ""
-    - repository: central
-      name: hugo-start
+    - name: hugo-start
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
@@ -149,8 +135,7 @@ actions:
       rules:
         - type: cel
           expression: MODULE_BUILD_SYSTEM == "hugo"
-    - repository: central
-      name: hugo-build
+    - name: hugo-build
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
@@ -159,8 +144,7 @@ actions:
       rules:
         - type: cel
           expression: MODULE_BUILD_SYSTEM == "hugo"
-    - repository: central
-      name: java-build
+    - name: java-build
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
@@ -171,8 +155,7 @@ actions:
           expression: MODULE_BUILD_SYSTEM == "gradle"
         - type: cel
           expression: MODULE_BUILD_SYSTEM == "maven"
-    - repository: central
-      name: java-test
+    - name: java-test
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
@@ -183,8 +166,7 @@ actions:
           expression: MODULE_BUILD_SYSTEM == "gradle"
         - type: cel
           expression: MODULE_BUILD_SYSTEM == "maven"
-    - repository: central
-      name: java-publish
+    - name: java-publish
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
@@ -195,8 +177,7 @@ actions:
           expression: MODULE_BUILD_SYSTEM == "gradle"
         - type: cel
           expression: MODULE_BUILD_SYSTEM == "maven"
-    - repository: central
-      name: mkdocs-start
+    - name: mkdocs-start
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
@@ -205,8 +186,7 @@ actions:
       rules:
         - type: cel
           expression: MODULE_BUILD_SYSTEM == "mkdocs" && MODULE_BUILD_SYSTEM_SYNTAX == "default"
-    - repository: central
-      name: mkdocs-build
+    - name: mkdocs-build
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
@@ -215,8 +195,7 @@ actions:
       rules:
         - type: cel
           expression: MODULE_BUILD_SYSTEM == "mkdocs" && MODULE_BUILD_SYSTEM_SYNTAX == "default"
-    - repository: central
-      name: node-build
+    - name: node-build
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
@@ -225,8 +204,7 @@ actions:
       rules:
         - type: cel
           expression: MODULE_BUILD_SYSTEM == "npm"
-    - repository: central
-      name: node-test
+    - name: node-test
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
@@ -235,8 +213,7 @@ actions:
       rules:
         - type: cel
           expression: MODULE_BUILD_SYSTEM == "npm"
-    - repository: central
-      name: upx-optimize
+    - name: upx-optimize
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
@@ -245,8 +222,7 @@ actions:
       rules:
         - type: cel
           expression: ENV["UPX_ENABLED"] == "true"
-    - repository: central
-      name: python-build
+    - name: python-build
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
@@ -259,8 +235,7 @@ actions:
           expression: MODULE_BUILD_SYSTEM == "pipfile"
         - type: cel
           expression: MODULE_BUILD_SYSTEM == "setup.py"
-    - repository: central
-      name: python-test
+    - name: python-test
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
@@ -273,8 +248,7 @@ actions:
           expression: MODULE_BUILD_SYSTEM == "pipfile"
         - type: cel
           expression: MODULE_BUILD_SYSTEM == "setup.py"
-    - repository: central
-      name: python-lint
+    - name: python-lint
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
@@ -287,8 +261,7 @@ actions:
           expression: MODULE_BUILD_SYSTEM == "pipfile"
         - type: cel
           expression: MODULE_BUILD_SYSTEM == "setup.py"
-    - repository: central
-      name: gitguardian-scan
+    - name: gitguardian-scan
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
@@ -300,15 +273,13 @@ actions:
       access:
         env:
             - GITGUARDIAN_.*
-    - repository: central
-      name: gitleaks-scan
+    - name: gitleaks-scan
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
         command: central run gitleaks-scan
       scope: project
-    - repository: central
-      name: gosec-scan
+    - name: gosec-scan
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
@@ -317,8 +288,7 @@ actions:
       rules:
         - type: cel
           expression: MODULE_BUILD_SYSTEM == "gomod"
-    - repository: central
-      name: semgrep-scan
+    - name: semgrep-scan
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
@@ -327,8 +297,7 @@ actions:
       access:
         env:
             - SEMGREP_.*
-    - repository: central
-      name: sonarqube-scan
+    - name: sonarqube-scan
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
@@ -345,8 +314,7 @@ actions:
             - SONAR_.*
             - NCI_PROJECT_.*
             - NCI_COMMIT_.*
-    - repository: central
-      name: qodana-scan
+    - name: qodana-scan
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
@@ -360,8 +328,7 @@ actions:
             - QODANA_TOKEN
             - NCI_REPOSITORY_.*
             - NCI_COMMIT_.*
-    - repository: central
-      name: ossf-scorecard-scan
+    - name: ossf-scorecard-scan
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
@@ -373,8 +340,7 @@ actions:
       access:
         env:
             - GITHUB_TOKEN
-    - repository: central
-      name: cosign-container-sign
+    - name: cosign-container-sign
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
@@ -386,8 +352,7 @@ actions:
       access:
         env:
             - COSIGN_.*
-    - repository: central
-      name: cosign-container-sbom-attach
+    - name: cosign-container-sbom-attach
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
@@ -399,8 +364,7 @@ actions:
       access:
         env:
             - COSIGN_.*
-    - repository: central
-      name: syft-container-sbom-generate
+    - name: syft-container-sbom-generate
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
@@ -412,8 +376,7 @@ actions:
       access:
         env:
             - SYFT_.*
-    - repository: central
-      name: syft-artifact-sbom-generate
+    - name: syft-artifact-sbom-generate
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
@@ -422,8 +385,7 @@ actions:
       access:
         env:
             - SYFT_.*
-    - repository: central
-      name: techdocs-start
+    - name: techdocs-start
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
@@ -432,8 +394,7 @@ actions:
       rules:
         - type: cel
           expression: MODULE_BUILD_SYSTEM == "mkdocs" && MODULE_BUILD_SYSTEM_SYNTAX == "mkdocs-techdocs"
-    - repository: central
-      name: techdocs-build
+    - name: techdocs-build
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
@@ -442,8 +403,7 @@ actions:
       rules:
         - type: cel
           expression: MODULE_BUILD_SYSTEM == "mkdocs" && MODULE_BUILD_SYSTEM_SYNTAX == "mkdocs-techdocs"
-    - repository: central
-      name: techdocs-publish
+    - name: techdocs-publish
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
@@ -452,8 +412,7 @@ actions:
       rules:
         - type: cel
           expression: MODULE_BUILD_SYSTEM == "mkdocs" && MODULE_BUILD_SYSTEM_SYNTAX == "mkdocs-techdocs"
-    - repository: central
-      name: kotlin-hello
+    - name: kotlin-hello
       type: container
       container:
         image: quay.io/cidverse/cid-actions-kotlin:latest
@@ -1501,6 +1460,12 @@ images:
           dir: /app/.cache/semgrep-cache
       source:
         registry_url: quay.io/cidverse/semgrep
+    - image: quay.io/cidverse/codeql:2.12.2
+      provides:
+        - binary: codeql
+          version: 2.12.2
+      source:
+        registry_url: quay.io/cidverse/codeql
     - image: quay.io/cidverse/cosign:1.3.12
       provides:
         - binary: cosign
@@ -2157,7 +2122,7 @@ workflows:
       stages:
         - name: build
           actions:
-            - id: central/go-build
+            - id: cid/go-build
               config:
                 platform:
                     - goarch: amd64
@@ -2166,39 +2131,39 @@ workflows:
                       goos: linux
                     - goarch: amd64
                       goos: darwin
-            - id: central/java-build
-            - id: central/python-build
-            - id: central/node-build
-            - id: central/hugo-build
-            - id: central/helm-build
-            - id: central/mkdocs-build
-            - id: central/techdocs-build
+            - id: cid/java-build
+            - id: cid/python-build
+            - id: cid/node-build
+            - id: cid/hugo-build
+            - id: cid/helm-build
+            - id: cid/mkdocs-build
+            - id: cid/techdocs-build
         - name: test
           actions:
-            - id: central/go-test
-            - id: central/java-test
-            - id: central/helm-test
+            - id: cid/go-test
+            - id: cid/java-test
+            - id: cid/helm-test
         - name: package
           actions:
-            - id: central/upx-optimize
-            - id: central/buildah-build
+            - id: cid/upx-optimize
+            - id: cid/buildah-build
               config:
                 no-cache: false
                 rebuild: true
                 squash: true
         - name: scan
           actions:
-            - id: central/python-lint
-            - id: central/helm-lint
-            - id: central/semgrep-scan
-            - id: central/sonarqube-scan
-            - id: central/qodana-scan
-            - id: central/syft-container-sbom-generate
-            - id: central/github-sarif-upload
+            - id: cid/python-lint
+            - id: cid/helm-lint
+            - id: cid/semgrep-scan
+            - id: cid/sonarqube-scan
+            - id: cid/qodana-scan
+            - id: cid/syft-container-sbom-generate
+            - id: cid/github-sarif-upload
         - name: publish
           actions:
-            - id: central/buildah-publish
-            - id: central/helm-publish-nexus
-            - id: central/techdocs-publish
-            - id: central/changelog-generate
-            - id: central/github-release-publish
+            - id: cid/buildah-publish
+            - id: cid/helm-publish-nexus
+            - id: cid/techdocs-publish
+            - id: cid/changelog-generate
+            - id: cid/github-release-publish

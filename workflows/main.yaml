@@ -5,7 +5,7 @@ workflows:
     stages:
       - name: build
         actions:
-          - id: central/go-build
+          - id: cid/go-build
             config:
               # cross-platform build
               platform:
@@ -15,53 +15,54 @@ workflows:
                   goarch: amd64
                 - goos: darwin
                   goarch: amd64
-          - id: central/java-build
-          - id: central/python-build
-          - id: central/node-build
-          - id: central/hugo-build
-          - id: central/helm-build
-          - id: central/mkdocs-build
-          - id: central/techdocs-build
+          - id: cid/java-build
+          - id: cid/python-build
+          - id: cid/node-build
+          - id: cid/hugo-build
+          - id: cid/helm-build
+          - id: cid/mkdocs-build
+          - id: cid/techdocs-build
       - name: test
         actions:
-          - id: central/go-test
-          - id: central/java-test
-          - id: central/helm-test
+          - id: cid/go-test
+          - id: cid/java-test
+          - id: cid/helm-test
       - name: package
         actions:
-          - id: central/upx-optimize
-          - id: central/buildah-build
+          - id: cid/upx-optimize
+          - id: cid/buildah-build
             config:
               no-cache: false
               squash: true
               rebuild: true
       - name: scan
         actions:
-          - id: central/python-lint
-          - id: central/helm-lint
-          #- id: central/gitleaks-scan
-          - id: central/semgrep-scan
-          #- id: central/fossa-source-scan
-          - id: central/sonarqube-scan
-          - id: central/qodana-scan
-          #- id: central/syft-artifact-sbom-generate
-          - id: central/syft-container-sbom-generate
-          - id: central/github-sarif-upload
+          - id: cid/python-lint
+          - id: cid/helm-lint
+          #- id: cid/ossf-scorecard-scan
+          #- id: cid/gitleaks-scan
+          - id: cid/semgrep-scan
+          #- id: cid/fossa-source-scan
+          - id: cid/sonarqube-scan
+          - id: cid/qodana-scan
+          #- id: cid/syft-artifact-sbom-generate
+          - id: cid/syft-container-sbom-generate
+          - id: cid/github-sarif-upload
       - name: publish
         actions:
           # container - publish to registry
-          - id: central/buildah-publish
+          - id: cid/buildah-publish
           # java library - publish
-          #- id: central/java-publish
+          #- id: cid/java-publish
           # container - sign image
-          #- id: central/cosign-container-sign
+          #- id: cid/cosign-container-sign
           # container - attach and sign sbom
-          #- id: central/cosign-container-sbom-attach
+          #- id: cid/cosign-container-sbom-attach
           # helm chart - publish - nexus
-          - id: central/helm-publish-nexus
+          - id: cid/helm-publish-nexus
           # docs - techdocs - publish
-          - id: central/techdocs-publish
+          - id: cid/techdocs-publish
           # changelog
-          - id: central/changelog-generate
+          - id: cid/changelog-generate
           # release - github
-          - id: central/github-release-publish
+          - id: cid/github-release-publish
