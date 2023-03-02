@@ -1,8 +1,7 @@
 
 actions:
   # changelog
-  - repository: central
-    name: changelog-generate
+  - name: changelog-generate
     type: container
     container:
       image: quay.io/cidverse/cid-actions-go:latest

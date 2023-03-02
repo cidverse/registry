@@ -1,6 +1,5 @@
 actions:
-  - repository: central
-    name: python-build
+  - name: python-build
     type: container
     container:
       image: quay.io/cidverse/cid-actions-go:latest
@@ -13,8 +12,7 @@ actions:
         expression: MODULE_BUILD_SYSTEM == "pipfile"
       - type: cel
         expression: MODULE_BUILD_SYSTEM == "setup.py"
-  - repository: central
-    name: python-test
+  - name: python-test
     type: container
     container:
       image: quay.io/cidverse/cid-actions-go:latest
@@ -27,8 +25,7 @@ actions:
         expression: MODULE_BUILD_SYSTEM == "pipfile"
       - type: cel
         expression: MODULE_BUILD_SYSTEM == "setup.py"
-  - repository: central
-    name: python-lint
+  - name: python-lint
     type: container
     container:
       image: quay.io/cidverse/cid-actions-go:latest

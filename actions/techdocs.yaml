@@ -1,6 +1,5 @@
 actions:
-  - repository: central
-    name: techdocs-start
+  - name: techdocs-start
     type: container
     container:
       image: quay.io/cidverse/cid-actions-go:latest
@@ -9,8 +8,7 @@ actions:
     rules:
       - type: cel
         expression: MODULE_BUILD_SYSTEM == "mkdocs" && MODULE_BUILD_SYSTEM_SYNTAX == "mkdocs-techdocs"
-  - repository: central
-    name: techdocs-build
+  - name: techdocs-build
     type: container
     container:
       image: quay.io/cidverse/cid-actions-go:latest
@@ -19,8 +17,7 @@ actions:
     rules:
       - type: cel
         expression: MODULE_BUILD_SYSTEM == "mkdocs" && MODULE_BUILD_SYSTEM_SYNTAX == "mkdocs-techdocs"
-  - repository: central
-    name: techdocs-publish
+  - name: techdocs-publish
     type: container
     container:
       image: quay.io/cidverse/cid-actions-go:latest

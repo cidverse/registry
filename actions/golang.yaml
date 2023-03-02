@@ -1,6 +1,5 @@
   actions:
-    - repository: central
-      name: go-build
+    - name: go-build
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
@@ -9,8 +8,7 @@
       rules:
         - type: cel
           expression: MODULE_BUILD_SYSTEM == "gomod"
-    - repository: central
-      name: go-test
+    - name: go-test
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
@@ -19,8 +17,7 @@
       rules:
         - type: cel
           expression: MODULE_BUILD_SYSTEM == "gomod"
-    - repository: central
-      name: go-lint
+    - name: go-lint
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest

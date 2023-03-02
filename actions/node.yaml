@@ -1,6 +1,5 @@
 actions:
-  - repository: central
-    name: node-build
+  - name: node-build
     type: container
     container:
       image: quay.io/cidverse/cid-actions-go:latest
@@ -9,8 +8,7 @@ actions:
     rules:
       - type: cel
         expression: MODULE_BUILD_SYSTEM == "npm"
-  - repository: central
-    name: node-test
+  - name: node-test
     type: container
     container:
       image: quay.io/cidverse/cid-actions-go:latest

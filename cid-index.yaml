@@ -328,6 +328,16 @@ actions:
             - QODANA_TOKEN
             - NCI_REPOSITORY_.*
             - NCI_COMMIT_.*
+    - name: applicationinspector-scan
+      type: container
+      container:
+        image: quay.io/cidverse/cid-actions-go:latest
+        command: central run applicationinspector-scan
+      scope: project
+      access:
+        env:
+            - NCI_REPOSITORY_.*
+            - NCI_COMMIT_.*
     - name: ossf-scorecard-scan
       type: container
       container:
@@ -840,6 +850,12 @@ images:
           version: 1.26.1
       source:
         registry_url: quay.io/cidverse/kubectl
+    - image: quay.io/cidverse/kubectl:1.26.2
+      provides:
+        - binary: kubectl
+          version: 1.26.2
+      source:
+        registry_url: quay.io/cidverse/kubectl
     - image: quay.io/cidverse/oras:0.16.0
       provides:
         - binary: oras
@@ -1244,6 +1260,15 @@ images:
           dir: /root/.twitch-cli
       source:
         registry_url: quay.io/cidverse/twitchcli
+    - image: quay.io/cidverse/twitchcli:1.1.16
+      provides:
+        - binary: twitch
+          version: 1.1.16
+      cache:
+        - id: twitchcli-config
+          dir: /root/.twitch-cli
+      source:
+        registry_url: quay.io/cidverse/twitchcli
     - image: quay.io/cidverse/upx:3.96
       provides:
         - binary: upx
@@ -1481,6 +1506,75 @@ images:
           dir: /app/.cache/semgrep-cache
       source:
         registry_url: quay.io/cidverse/semgrep
+    - image: quay.io/cidverse/semgrep:1.14.0
+      provides:
+        - binary: semgrep
+          version: 1.14.0
+      cache:
+        - id: semgrep-cache
+          dir: /app/.cache/semgrep-cache
+      source:
+        registry_url: quay.io/cidverse/semgrep
+    - image: quay.io/cidverse/applicationinspector:1.5.13
+      provides:
+        - binary: appinspector
+          version: 1.5.13
+      source:
+        registry_url: quay.io/cidverse/applicationinspector
+    - image: quay.io/cidverse/applicationinspector:1.5.18
+      provides:
+        - binary: appinspector
+          version: 1.5.18
+      source:
+        registry_url: quay.io/cidverse/applicationinspector
+    - image: quay.io/cidverse/applicationinspector:1.5.20
+      provides:
+        - binary: appinspector
+          version: 1.5.20
+      source:
+        registry_url: quay.io/cidverse/applicationinspector
+    - image: quay.io/cidverse/applicationinspector:1.6.19
+      provides:
+        - binary: appinspector
+          version: 1.6.19
+      source:
+        registry_url: quay.io/cidverse/applicationinspector
+    - image: quay.io/cidverse/applicationinspector:1.6.23
+      provides:
+        - binary: appinspector
+          version: 1.6.23
+      source:
+        registry_url: quay.io/cidverse/applicationinspector
+    - image: quay.io/cidverse/applicationinspector:1.6.24
+      provides:
+        - binary: appinspector
+          version: 1.6.24
+      source:
+        registry_url: quay.io/cidverse/applicationinspector
+    - image: quay.io/cidverse/applicationinspector:1.6.25
+      provides:
+        - binary: appinspector
+          version: 1.6.25
+      source:
+        registry_url: quay.io/cidverse/applicationinspector
+    - image: quay.io/cidverse/applicationinspector:1.6.27
+      provides:
+        - binary: appinspector
+          version: 1.6.27
+      source:
+        registry_url: quay.io/cidverse/applicationinspector
+    - image: quay.io/cidverse/applicationinspector:1.7.3
+      provides:
+        - binary: appinspector
+          version: 1.7.3
+      source:
+        registry_url: quay.io/cidverse/applicationinspector
+    - image: quay.io/cidverse/applicationinspector:1.7.4
+      provides:
+        - binary: appinspector
+          version: 1.7.4
+      source:
+        registry_url: quay.io/cidverse/applicationinspector
     - image: quay.io/cidverse/codeql:2.12.2
       provides:
         - binary: codeql
@@ -1674,6 +1768,12 @@ images:
       provides:
         - binary: fossa
           version: 3.6.9
+      source:
+        registry_url: quay.io/cidverse/fossacli
+    - image: quay.io/cidverse/fossacli:3.7.1
+      provides:
+        - binary: fossa
+          version: 3.7.1
       source:
         registry_url: quay.io/cidverse/fossacli
     - image: quay.io/cidverse/grype:0.43.0
@@ -2032,6 +2132,12 @@ images:
           version: 0.73.0
       source:
         registry_url: quay.io/cidverse/syft
+    - image: quay.io/cidverse/syft:0.74.0
+      provides:
+        - binary: syft
+          version: 0.74.0
+      source:
+        registry_url: quay.io/cidverse/syft
     - image: quay.io/cidverse/scorecard:4.10.2
       provides:
         - binary: scorecard
@@ -2114,6 +2220,12 @@ images:
       provides:
         - binary: hugo
           version: 0.110.0
+      source:
+        registry_url: quay.io/cidverse/hugo
+    - image: quay.io/cidverse/hugo:0.111.1
+      provides:
+        - binary: hugo
+          version: 0.111.1
       source:
         registry_url: quay.io/cidverse/hugo
     - image: quay.io/cidverse/mkdocs:1.3.1

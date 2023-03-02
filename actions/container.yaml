@@ -1,6 +1,5 @@
 actions:
-  - repository: central
-    name: buildah-build
+  - name: buildah-build
     type: container
     container:
       image: quay.io/cidverse/cid-actions-go:latest
@@ -9,8 +8,7 @@ actions:
     rules:
       - type: cel
         expression: MODULE_BUILD_SYSTEM == "container" && (MODULE_BUILD_SYSTEM_SYNTAX == "buildah-script" || MODULE_BUILD_SYSTEM_SYNTAX == "containerfile")
-  - repository: central
-    name: buildah-publish
+  - name: buildah-publish
     type: container
     container:
       image: quay.io/cidverse/cid-actions-go:latest

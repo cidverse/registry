@@ -1,6 +1,5 @@
 actions:
-  - repository: central
-    name: helm-build
+  - name: helm-build
     type: container
     container:
       image: quay.io/cidverse/cid-actions-go:latest
@@ -9,8 +8,7 @@ actions:
     rules:
       - type: cel
         expression: MODULE_BUILD_SYSTEM == "helm"
-  - repository: central
-    name: helm-test
+  - name: helm-test
     type: container
     container:
       image: quay.io/cidverse/cid-actions-go:latest
@@ -19,8 +17,7 @@ actions:
     rules:
       - type: cel
         expression: MODULE_BUILD_SYSTEM == "helm"
-  - repository: central
-    name: helm-lint
+  - name: helm-lint
     type: container
     container:
       image: quay.io/cidverse/cid-actions-go:latest
@@ -29,8 +26,7 @@ actions:
     rules:
       - type: cel
         expression: MODULE_BUILD_SYSTEM == "helm"
-  - repository: central
-    name: helm-publish-nexus
+  - name: helm-publish-nexus
     type: container
     container:
       image: quay.io/cidverse/cid-actions-go:latest

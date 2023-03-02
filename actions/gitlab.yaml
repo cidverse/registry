@@ -1,8 +1,7 @@
 
 actions:
   # gitlab release
-  - repository: central
-    name: gitlab-release-publish
+  - name: gitlab-release-publish
     type: container
     container:
       image: quay.io/cidverse/cid-actions-go:latest

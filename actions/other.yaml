@@ -1,6 +1,5 @@
 actions:
-  - repository: central
-    name: upx-optimize
+  - name: upx-optimize
     type: container
     container:
       image: quay.io/cidverse/cid-actions-go:latest

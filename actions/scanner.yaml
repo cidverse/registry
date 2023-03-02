@@ -1,7 +1,6 @@
 actions:
   # gitguardian
-  - repository: central
-    name: gitguardian-scan
+  - name: gitguardian-scan
     type: container
     container:
       image: quay.io/cidverse/cid-actions-go:latest
@@ -22,8 +21,7 @@ actions:
       command: central run gitleaks-scan
     scope: project
   # gosec
-  - repository: central
-    name: gosec-scan
+  - name: gosec-scan
     type: container
     container:
       image: quay.io/cidverse/cid-actions-go:latest
@@ -33,8 +31,7 @@ actions:
       - type: cel
         expression: MODULE_BUILD_SYSTEM == "gomod"
   # semgrep
-  - repository: central
-    name: semgrep-scan
+  - name: semgrep-scan
     type: container
     container:
       image: quay.io/cidverse/cid-actions-go:latest
@@ -44,8 +41,7 @@ actions:
       env:
         - SEMGREP_.*
   # sonarqube
-  - repository: central
-    name: sonarqube-scan
+  - name: sonarqube-scan
     type: container
     container:
       image: quay.io/cidverse/cid-actions-go:latest
@@ -63,8 +59,7 @@ actions:
         - NCI_PROJECT_.*
         - NCI_COMMIT_.*
   # qodana
-  - repository: central
-    name: qodana-scan
+  - name: qodana-scan
     type: container
     container:
       image: quay.io/cidverse/cid-actions-go:latest
@@ -76,5 +71,16 @@ actions:
     access:
       env:
         - QODANA_TOKEN
+        - NCI_REPOSITORY_.*
+        - NCI_COMMIT_.*
+  # applicationinspector
+  - name: applicationinspector-scan
+    type: container
+    container:
+      image: quay.io/cidverse/cid-actions-go:latest
+      command: central run applicationinspector-scan
+    scope: project
+    access:
+      env:
         - NCI_REPOSITORY_.*
         - NCI_COMMIT_.*

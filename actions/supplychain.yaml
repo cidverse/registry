@@ -1,7 +1,6 @@
 actions:
   # ossf - scorecard
-  - repository: central
-    name: ossf-scorecard-scan
+  - name: ossf-scorecard-scan
     type: container
     container:
       image: quay.io/cidverse/cid-actions-go:latest
@@ -14,8 +13,7 @@ actions:
       env:
         - GITHUB_TOKEN
   # container - cosign
-  - repository: central
-    name: cosign-container-sign
+  - name: cosign-container-sign
     type: container
     container:
       image: quay.io/cidverse/cid-actions-go:latest
@@ -27,8 +25,7 @@ actions:
     access:
       env:
         - COSIGN_.*
-  - repository: central
-    name: cosign-container-sbom-attach
+  - name: cosign-container-sbom-attach
     type: container
     container:
       image: quay.io/cidverse/cid-actions-go:latest
@@ -41,8 +38,7 @@ actions:
       env:
         - COSIGN_.*
   # container - syft - sbom
-  - repository: central
-    name: syft-container-sbom-generate
+  - name: syft-container-sbom-generate
     type: container
     container:
       image: quay.io/cidverse/cid-actions-go:latest
@@ -55,8 +51,7 @@ actions:
       env:
         - SYFT_.*
   # artifact - syft - sbom
-  - repository: central
-    name: syft-artifact-sbom-generate
+  - name: syft-artifact-sbom-generate
     type: container
     container:
       image: quay.io/cidverse/cid-actions-go:latest

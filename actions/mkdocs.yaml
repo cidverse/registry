@@ -1,6 +1,5 @@
 actions:
-  - repository: central
-    name: mkdocs-start
+  - name: mkdocs-start
     type: container
     container:
       image: quay.io/cidverse/cid-actions-go:latest
@@ -9,8 +8,7 @@ actions:
     rules:
       - type: cel
         expression: MODULE_BUILD_SYSTEM == "mkdocs" && MODULE_BUILD_SYSTEM_SYNTAX == "default"
-  - repository: central
-    name: mkdocs-build
+  - name: mkdocs-build
     type: container
     container:
       image: quay.io/cidverse/cid-actions-go:latest

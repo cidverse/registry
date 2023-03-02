@@ -1,7 +1,6 @@
 actions:
   # kotlin - hello world
-  - repository: central
-    name: kotlin-hello
+  - name: kotlin-hello
     type: container
     container:
       image: quay.io/cidverse/cid-actions-kotlin:latest

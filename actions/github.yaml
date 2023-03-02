@@ -1,8 +1,7 @@
 
 actions:
   # github release
-  - repository: central
-    name: github-release-publish
+  - name: github-release-publish
     type: container
     container:
       image: quay.io/cidverse/cid-actions-go:latest
@@ -15,8 +14,7 @@ actions:
       env:
         - GITHUB_TOKEN
   # github sarif upload
-  - repository: central
-    name: github-sarif-upload
+  - name: github-sarif-upload
     type: container
     container:
       image: quay.io/cidverse/cid-actions-go:latest

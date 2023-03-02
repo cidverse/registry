@@ -1,6 +1,5 @@
 actions:
-  - repository: central
-    name: hugo-start
+  - name: hugo-start
     type: container
     container:
       image: quay.io/cidverse/cid-actions-go:latest
@@ -9,8 +8,7 @@ actions:
     rules:
       - type: cel
         expression: MODULE_BUILD_SYSTEM == "hugo"
-  - repository: central
-    name: hugo-build
+  - name: hugo-build
     type: container
     container:
       image: quay.io/cidverse/cid-actions-go:latest
