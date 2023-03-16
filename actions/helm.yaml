@@ -8,15 +8,6 @@ actions:
     rules:
       - type: cel
         expression: MODULE_BUILD_SYSTEM == "helm"
-  - name: helm-test
-    type: container
-    container:
-      image: quay.io/cidverse/cid-actions-go:latest
-      command: central run helm-test
-    scope: module
-    rules:
-      - type: cel
-        expression: MODULE_BUILD_SYSTEM == "helm"
   - name: helm-lint
     type: container
     container:
@@ -35,3 +26,12 @@ actions:
     rules:
       - type: cel
         expression: MODULE_BUILD_SYSTEM == "helm" && ENV["HELM_NEXUS_URL"] != ""
+  - name: helm-publish-registry
+    type: container
+    container:
+      image: quay.io/cidverse/cid-actions-go:latest
+      command: central run helm-publish-registry
+    scope: module
+    rules:
+      - type: cel
+        expression: MODULE_BUILD_SYSTEM == "helm" && ENV["HELM_OCI_REPOSITORY"] != ""

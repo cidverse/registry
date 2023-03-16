@@ -4,7 +4,7 @@ images:
       - binary: oras
         version: ${{VERSION}}
     cache:
-      - id: docker-auth
+      - id: registry-auth
         dir: /app/.docker
     source:
       registry_url: quay.io/cidverse/oras

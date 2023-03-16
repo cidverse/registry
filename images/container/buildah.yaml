@@ -13,7 +13,7 @@ images:
     cache:
       - id: libcontainers-storage
         dir: /var/lib/containers/storage
-      - id: docker-auth
+      - id: registry-auth
         dir: /app/.docker
     source:
       registry_url: quay.io/cidverse/buildah

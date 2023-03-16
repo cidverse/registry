@@ -26,7 +26,6 @@ workflows:
         actions:
           - id: cid/go-test
           - id: cid/java-test
-          - id: cid/helm-test
       - name: package
         actions:
           - id: cid/upx-optimize
@@ -58,8 +57,9 @@ workflows:
           #- id: cid/cosign-container-sign
           # container - attach and sign sbom
           #- id: cid/cosign-container-sbom-attach
-          # helm chart - publish - nexus
+          # helm charts
           - id: cid/helm-publish-nexus
+          - id: cid/helm-publish-registry
           # docs - techdocs - publish
           - id: cid/techdocs-publish
           # changelog

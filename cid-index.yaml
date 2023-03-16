@@ -99,15 +99,6 @@ actions:
       rules:
         - type: cel
           expression: MODULE_BUILD_SYSTEM == "helm"
-    - name: helm-test
-      type: container
-      container:
-        image: quay.io/cidverse/cid-actions-go:latest
-        command: central run helm-test
-      scope: module
-      rules:
-        - type: cel
-          expression: MODULE_BUILD_SYSTEM == "helm"
     - name: helm-lint
       type: container
       container:
@@ -126,6 +117,15 @@ actions:
       rules:
         - type: cel
           expression: MODULE_BUILD_SYSTEM == "helm" && ENV["HELM_NEXUS_URL"] != ""
+    - name: helm-publish-registry
+      type: container
+      container:
+        image: quay.io/cidverse/cid-actions-go:latest
+        command: central run helm-publish-registry
+      scope: module
+      rules:
+        - type: cel
+          expression: MODULE_BUILD_SYSTEM == "helm" && ENV["HELM_OCI_REPOSITORY"] != ""
     - name: hugo-start
       type: container
       container:
@@ -607,7 +607,7 @@ images:
       cache:
         - id: libcontainers-storage
           dir: /var/lib/containers/storage
-        - id: docker-auth
+        - id: registry-auth
           dir: /app/.docker
       security:
         privileged: true
@@ -622,7 +622,7 @@ images:
       cache:
         - id: libcontainers-storage
           dir: /var/lib/containers/storage
-        - id: docker-auth
+        - id: registry-auth
           dir: /app/.docker
       security:
         privileged: true
@@ -633,6 +633,8 @@ images:
         - binary: helm
           version: 3.9.0
       cache:
+        - id: registry-auth
+          dir: /app/.config/helm/registry
         - id: helm-config
           dir: /app/.config/helm
         - id: helm-cache
@@ -648,6 +650,8 @@ images:
         - binary: helm
           version: 3.9.1
       cache:
+        - id: registry-auth
+          dir: /app/.config/helm/registry
         - id: helm-config
           dir: /app/.config/helm
         - id: helm-cache
@@ -663,6 +667,8 @@ images:
         - binary: helm
           version: 3.9.2
       cache:
+        - id: registry-auth
+          dir: /app/.config/helm/registry
         - id: helm-config
           dir: /app/.config/helm
         - id: helm-cache
@@ -678,6 +684,8 @@ images:
         - binary: helm
           version: 3.9.3
       cache:
+        - id: registry-auth
+          dir: /app/.config/helm/registry
         - id: helm-config
           dir: /app/.config/helm
         - id: helm-cache
@@ -693,6 +701,8 @@ images:
         - binary: helm
           version: 3.9.4
       cache:
+        - id: registry-auth
+          dir: /app/.config/helm/registry
         - id: helm-config
           dir: /app/.config/helm
         - id: helm-cache
@@ -708,6 +718,8 @@ images:
         - binary: helm
           version: 3.10.0
       cache:
+        - id: registry-auth
+          dir: /app/.config/helm/registry
         - id: helm-config
           dir: /app/.config/helm
         - id: helm-cache
@@ -723,6 +735,8 @@ images:
         - binary: helm
           version: 3.10.1
       cache:
+        - id: registry-auth
+          dir: /app/.config/helm/registry
         - id: helm-config
           dir: /app/.config/helm
         - id: helm-cache
@@ -738,6 +752,8 @@ images:
         - binary: helm
           version: 3.10.2
       cache:
+        - id: registry-auth
+          dir: /app/.config/helm/registry
         - id: helm-config
           dir: /app/.config/helm
         - id: helm-cache
@@ -753,6 +769,8 @@ images:
         - binary: helm
           version: 3.11.0
       cache:
+        - id: registry-auth
+          dir: /app/.config/helm/registry
         - id: helm-config
           dir: /app/.config/helm
         - id: helm-cache
@@ -768,6 +786,8 @@ images:
         - binary: helm
           version: 3.11.1
       cache:
+        - id: registry-auth
+          dir: /app/.config/helm/registry
         - id: helm-config
           dir: /app/.config/helm
         - id: helm-cache
@@ -861,7 +881,7 @@ images:
         - binary: oras
           version: 0.16.0
       cache:
-        - id: docker-auth
+        - id: registry-auth
           dir: /app/.docker
       source:
         registry_url: quay.io/cidverse/oras
@@ -906,7 +926,7 @@ images:
         - binary: skopeo
           version: 1.11.0
       cache:
-        - id: docker-auth
+        - id: registry-auth
           dir: /app/.docker
       source:
         registry_url: quay.io/cidverse/skopeo
@@ -915,7 +935,7 @@ images:
         - binary: skopeo
           version: 1.11.1
       cache:
-        - id: docker-auth
+        - id: registry-auth
           dir: /app/.docker
       source:
         registry_url: quay.io/cidverse/skopeo
@@ -1176,6 +1196,32 @@ images:
           dir: /root/.config/yarn
       source:
         registry_url: quay.io/cidverse/base-node
+    - image: quay.io/cidverse/base-node:19.8.0
+      provides:
+        - binary: node
+          version: 19.8.0
+      cache:
+        - id: node-npm
+          dir: /root/.npm
+        - id: node-yarn-cache-v6
+          dir: /usr/local/share/.cache/yarn/v6
+        - id: node-yarn-config
+          dir: /root/.config/yarn
+      source:
+        registry_url: quay.io/cidverse/base-node
+    - image: quay.io/cidverse/base-node:19.8.1
+      provides:
+        - binary: node
+          version: 19.8.1
+      cache:
+        - id: node-npm
+          dir: /root/.npm
+        - id: node-yarn-cache-v6
+          dir: /usr/local/share/.cache/yarn/v6
+        - id: node-yarn-config
+          dir: /root/.config/yarn
+      source:
+        registry_url: quay.io/cidverse/base-node
     - image: quay.io/cidverse/rekor:0.10.0
       provides:
         - binary: rekor
@@ -1425,6 +1471,12 @@ images:
           version: 8.16.0
       source:
         registry_url: quay.io/cidverse/gitleaks
+    - image: quay.io/cidverse/gitleaks:8.16.1
+      provides:
+        - binary: gitleaks
+          version: 8.16.1
+      source:
+        registry_url: quay.io/cidverse/gitleaks
     - image: quay.io/cidverse/gosec:2.14.0
       provides:
         - binary: gosec
@@ -1515,6 +1567,15 @@ images:
           dir: /app/.cache/semgrep-cache
       source:
         registry_url: quay.io/cidverse/semgrep
+    - image: quay.io/cidverse/semgrep:1.15.0
+      provides:
+        - binary: semgrep
+          version: 1.15.0
+      cache:
+        - id: semgrep-cache
+          dir: /app/.cache/semgrep-cache
+      source:
+        registry_url: quay.io/cidverse/semgrep
     - image: quay.io/cidverse/applicationinspector:1.5.13
       provides:
         - binary: appinspector
@@ -1575,6 +1636,12 @@ images:
           version: 1.7.4
       source:
         registry_url: quay.io/cidverse/applicationinspector
+    - image: quay.io/cidverse/bandit:1.7.4
+      provides:
+        - binary: bandit
+          version: 1.7.4
+      source:
+        registry_url: quay.io/cidverse/bandit
     - image: quay.io/cidverse/codeql:2.12.2
       provides:
         - binary: codeql
@@ -1586,7 +1653,7 @@ images:
         - binary: cosign
           version: 1.3.12
       cache:
-        - id: docker-auth
+        - id: registry-auth
           dir: /app/.docker
       source:
         registry_url: quay.io/cidverse/cosign
@@ -1595,7 +1662,7 @@ images:
         - binary: cosign
           version: 1.9.0
       cache:
-        - id: docker-auth
+        - id: registry-auth
           dir: /app/.docker
       source:
         registry_url: quay.io/cidverse/cosign
@@ -1604,7 +1671,7 @@ images:
         - binary: cosign
           version: 1.10.0
       cache:
-        - id: docker-auth
+        - id: registry-auth
           dir: /app/.docker
       source:
         registry_url: quay.io/cidverse/cosign
@@ -1613,7 +1680,7 @@ images:
         - binary: cosign
           version: 1.10.1
       cache:
-        - id: docker-auth
+        - id: registry-auth
           dir: /app/.docker
       source:
         registry_url: quay.io/cidverse/cosign
@@ -1622,7 +1689,7 @@ images:
         - binary: cosign
           version: 1.11.0
       cache:
-        - id: docker-auth
+        - id: registry-auth
           dir: /app/.docker
       source:
         registry_url: quay.io/cidverse/cosign
@@ -1631,7 +1698,7 @@ images:
         - binary: cosign
           version: 1.11.1
       cache:
-        - id: docker-auth
+        - id: registry-auth
           dir: /app/.docker
       source:
         registry_url: quay.io/cidverse/cosign
@@ -1640,7 +1707,7 @@ images:
         - binary: cosign
           version: 1.12.0
       cache:
-        - id: docker-auth
+        - id: registry-auth
           dir: /app/.docker
       source:
         registry_url: quay.io/cidverse/cosign
@@ -1649,7 +1716,7 @@ images:
         - binary: cosign
           version: 1.12.1
       cache:
-        - id: docker-auth
+        - id: registry-auth
           dir: /app/.docker
       source:
         registry_url: quay.io/cidverse/cosign
@@ -1658,7 +1725,7 @@ images:
         - binary: cosign
           version: 1.13.0
       cache:
-        - id: docker-auth
+        - id: registry-auth
           dir: /app/.docker
       source:
         registry_url: quay.io/cidverse/cosign
@@ -1667,7 +1734,7 @@ images:
         - binary: cosign
           version: 1.13.1
       cache:
-        - id: docker-auth
+        - id: registry-auth
           dir: /app/.docker
       source:
         registry_url: quay.io/cidverse/cosign
@@ -1676,7 +1743,7 @@ images:
         - binary: cosign
           version: 2.0.0
       cache:
-        - id: docker-auth
+        - id: registry-auth
           dir: /app/.docker
       source:
         registry_url: quay.io/cidverse/cosign
@@ -2138,6 +2205,12 @@ images:
           version: 0.74.0
       source:
         registry_url: quay.io/cidverse/syft
+    - image: quay.io/cidverse/syft:0.75.0
+      provides:
+        - binary: syft
+          version: 0.75.0
+      source:
+        registry_url: quay.io/cidverse/syft
     - image: quay.io/cidverse/scorecard:4.10.2
       provides:
         - binary: scorecard
@@ -2284,7 +2357,6 @@ workflows:
           actions:
             - id: cid/go-test
             - id: cid/java-test
-            - id: cid/helm-test
         - name: package
           actions:
             - id: cid/upx-optimize
@@ -2306,6 +2378,7 @@ workflows:
           actions:
             - id: cid/buildah-publish
             - id: cid/helm-publish-nexus
+            - id: cid/helm-publish-registry
             - id: cid/techdocs-publish
             - id: cid/changelog-generate
             - id: cid/github-release-publish
