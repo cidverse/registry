@@ -1,0 +1,11 @@
+images:
+  - image: quay.io/cidverse/minioclient:${{TAG}}
+    provides:
+      - binary: mc
+        version: ${{VERSION}}
+    cache:
+      - id: minio-config
+        dir: /app/.mc
+    source:
+      registry_url: quay.io/cidverse/minioclient
+

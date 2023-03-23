@@ -451,6 +451,17 @@ images:
           dir: /app/.cache/pipenv
       source:
         registry_url: quay.io/cidverse/pipenv
+    - image: quay.io/cidverse/pipenv:2023.3.18
+      provides:
+        - binary: pipenv
+          version: 2023.3.18
+      cache:
+        - id: pipenv-virtualenvs
+          dir: /app/.local/share/virtualenvs
+        - id: pipenv-cache
+          dir: /app/.cache/pipenv
+      source:
+        registry_url: quay.io/cidverse/pipenv
     - image: quay.io/cidverse/poetry:1.2.2
       provides:
         - binary: poetry
@@ -580,6 +591,15 @@ images:
           dir: /app/.config/glab-cli
       source:
         registry_url: quay.io/cidverse/glab
+    - image: quay.io/cidverse/minioclient:2023.03.20
+      provides:
+        - binary: mc
+          version: 2023.03.20
+      cache:
+        - id: minio-config
+          dir: /app/.mc
+      source:
+        registry_url: quay.io/cidverse/minioclient
     - image: quay.io/cidverse/runpodctl:1.7.0
       provides:
         - binary: runpodctl
@@ -876,6 +896,12 @@ images:
           version: 1.26.2
       source:
         registry_url: quay.io/cidverse/kubectl
+    - image: quay.io/cidverse/kubectl:1.26.3
+      provides:
+        - binary: kubectl
+          version: 1.26.3
+      source:
+        registry_url: quay.io/cidverse/kubectl
     - image: quay.io/cidverse/oras:0.16.0
       provides:
         - binary: oras
@@ -967,6 +993,8 @@ images:
       provides:
         - binary: java
           version: 8.352.08.1
+        - binary: java-exec
+          version: 8.352.08.1
       cache:
         - id: java-gradle
           dir: /root/.gradle
@@ -977,6 +1005,8 @@ images:
     - image: quay.io/cidverse/base-coretto-8:8.362.08.1
       provides:
         - binary: java
+          version: 8.362.08.1
+        - binary: java-exec
           version: 8.362.08.1
       cache:
         - id: java-gradle
@@ -989,6 +1019,8 @@ images:
       provides:
         - binary: java
           version: 11.0.16.8.1
+        - binary: java-exec
+          version: 11.0.16.8.1
       cache:
         - id: java-gradle
           dir: /root/.gradle
@@ -999,6 +1031,8 @@ images:
     - image: quay.io/cidverse/base-coretto-11:11.0.16.9.1
       provides:
         - binary: java
+          version: 11.0.16.9.1
+        - binary: java-exec
           version: 11.0.16.9.1
       cache:
         - id: java-gradle
@@ -1011,6 +1045,8 @@ images:
       provides:
         - binary: java
           version: 11.0.17.8.1
+        - binary: java-exec
+          version: 11.0.17.8.1
       cache:
         - id: java-gradle
           dir: /root/.gradle
@@ -1021,6 +1057,8 @@ images:
     - image: quay.io/cidverse/base-coretto-11:11.0.18.10.1
       provides:
         - binary: java
+          version: 11.0.18.10.1
+        - binary: java-exec
           version: 11.0.18.10.1
       cache:
         - id: java-gradle
@@ -1033,6 +1071,8 @@ images:
       provides:
         - binary: java
           version: 17.0.4.8.1
+        - binary: java-exec
+          version: 17.0.4.8.1
       cache:
         - id: java-gradle
           dir: /root/.gradle
@@ -1043,6 +1083,8 @@ images:
     - image: quay.io/cidverse/base-coretto-17:17.0.4.9.1
       provides:
         - binary: java
+          version: 17.0.4.9.1
+        - binary: java-exec
           version: 17.0.4.9.1
       cache:
         - id: java-gradle
@@ -1055,6 +1097,8 @@ images:
       provides:
         - binary: java
           version: 17.0.5.8.1
+        - binary: java-exec
+          version: 17.0.5.8.1
       cache:
         - id: java-gradle
           dir: /root/.gradle
@@ -1065,6 +1109,8 @@ images:
     - image: quay.io/cidverse/base-coretto-17:17.0.6.10.1
       provides:
         - binary: java
+          version: 17.0.6.10.1
+        - binary: java-exec
           version: 17.0.6.10.1
       cache:
         - id: java-gradle

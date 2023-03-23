@@ -3,6 +3,8 @@ images:
     provides:
       - binary: java
         version: ${{VERSION}}
+      - binary: java-exec
+        version: ${{VERSION}}
     cache:
       - id: java-gradle
         dir: /root/.gradle
@@ -14,6 +16,8 @@ images:
     provides:
       - binary: java
         version: ${{VERSION}}
+      - binary: java-exec
+        version: ${{VERSION}}
     cache:
       - id: java-gradle
         dir: /root/.gradle
@@ -24,6 +28,8 @@ images:
   - image: quay.io/cidverse/base-coretto-17:${{TAG}}
     provides:
       - binary: java
+        version: ${{VERSION}}
+      - binary: java-exec
         version: ${{VERSION}}
     cache:
       - id: java-gradle
