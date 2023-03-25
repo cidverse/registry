@@ -1268,6 +1268,12 @@ images:
           dir: /root/.config/yarn
       source:
         registry_url: quay.io/cidverse/base-node
+    - image: quay.io/cidverse/mockery:2.23.1
+      provides:
+        - binary: mockery
+          version: 2.23.1
+      source:
+        registry_url: quay.io/cidverse/mockery
     - image: quay.io/cidverse/rekor:0.10.0
       provides:
         - binary: rekor

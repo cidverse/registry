@@ -8,4 +8,3 @@ images:
         dir: /app/.mc
     source:
       registry_url: quay.io/cidverse/minioclient
-
