@@ -473,6 +473,17 @@ images:
           dir: /app/.cache/pipenv
       source:
         registry_url: quay.io/cidverse/pipenv
+    - image: quay.io/cidverse/pipenv:2023.4.20
+      provides:
+        - binary: pipenv
+          version: 2023.4.20
+      cache:
+        - id: pipenv-virtualenvs
+          dir: /app/.local/share/virtualenvs
+        - id: pipenv-cache
+          dir: /app/.cache/pipenv
+      source:
+        registry_url: quay.io/cidverse/pipenv
     - image: quay.io/cidverse/poetry:1.2.2
       provides:
         - binary: poetry
@@ -957,6 +968,12 @@ images:
           version: 1.27.0
       source:
         registry_url: quay.io/cidverse/kubectl
+    - image: quay.io/cidverse/kubectl:1.27.1
+      provides:
+        - binary: kubectl
+          version: 1.27.1
+      source:
+        registry_url: quay.io/cidverse/kubectl
     - image: quay.io/cidverse/oras:0.16.0
       provides:
         - binary: oras
@@ -1071,6 +1088,12 @@ images:
           version: 4.21.0
       source:
         registry_url: quay.io/cidverse/liquibase
+    - image: quay.io/cidverse/liquibase:4.21.1
+      provides:
+        - binary: liquibase
+          version: 4.21.1
+      source:
+        registry_url: quay.io/cidverse/liquibase
     - image: quay.io/cidverse/build-go:1.19.3
       provides:
         - binary: go
@@ -1108,6 +1131,19 @@ images:
           version: 8.362.08.1
         - binary: java-exec
           version: 8.362.08.1
+      cache:
+        - id: java-gradle
+          dir: /root/.gradle
+        - id: java-maven
+          dir: /root/.m2
+      source:
+        registry_url: quay.io/cidverse/base-coretto-8
+    - image: quay.io/cidverse/base-coretto-8:8.372.07.1
+      provides:
+        - binary: java
+          version: 8.372.07.1
+        - binary: java-exec
+          version: 8.372.07.1
       cache:
         - id: java-gradle
           dir: /root/.gradle
@@ -1167,6 +1203,19 @@ images:
           dir: /root/.m2
       source:
         registry_url: quay.io/cidverse/base-coretto-11
+    - image: quay.io/cidverse/base-coretto-11:11.0.19.7.1
+      provides:
+        - binary: java
+          version: 11.0.19.7.1
+        - binary: java-exec
+          version: 11.0.19.7.1
+      cache:
+        - id: java-gradle
+          dir: /root/.gradle
+        - id: java-maven
+          dir: /root/.m2
+      source:
+        registry_url: quay.io/cidverse/base-coretto-11
     - image: quay.io/cidverse/base-coretto-17:17.0.4.8.1
       provides:
         - binary: java
@@ -1212,6 +1261,19 @@ images:
           version: 17.0.6.10.1
         - binary: java-exec
           version: 17.0.6.10.1
+      cache:
+        - id: java-gradle
+          dir: /root/.gradle
+        - id: java-maven
+          dir: /root/.m2
+      source:
+        registry_url: quay.io/cidverse/base-coretto-17
+    - image: quay.io/cidverse/base-coretto-17:17.0.7.7.1
+      provides:
+        - binary: java
+          version: 17.0.7.7.1
+        - binary: java-exec
+          version: 17.0.7.7.1
       cache:
         - id: java-gradle
           dir: /root/.gradle
@@ -1381,10 +1443,29 @@ images:
           dir: /root/.config/yarn
       source:
         registry_url: quay.io/cidverse/base-node
+    - image: quay.io/cidverse/base-node:20.0.0
+      provides:
+        - binary: node
+          version: 20.0.0
+      cache:
+        - id: node-npm
+          dir: /root/.npm
+        - id: node-yarn-cache-v6
+          dir: /usr/local/share/.cache/yarn/v6
+        - id: node-yarn-config
+          dir: /root/.config/yarn
+      source:
+        registry_url: quay.io/cidverse/base-node
     - image: quay.io/cidverse/mockery:2.23.1
       provides:
         - binary: mockery
           version: 2.23.1
+      source:
+        registry_url: quay.io/cidverse/mockery
+    - image: quay.io/cidverse/mockery:2.25.1
+      provides:
+        - binary: mockery
+          version: 2.25.1
       source:
         registry_url: quay.io/cidverse/mockery
     - image: quay.io/cidverse/rekor:0.10.0
@@ -1672,6 +1753,12 @@ images:
           version: 8.16.1
       source:
         registry_url: quay.io/cidverse/gitleaks
+    - image: quay.io/cidverse/gitleaks:8.16.3
+      provides:
+        - binary: gitleaks
+          version: 8.16.3
+      source:
+        registry_url: quay.io/cidverse/gitleaks
     - image: quay.io/cidverse/gosec:2.14.0
       provides:
         - binary: gosec
@@ -1789,6 +1876,15 @@ images:
           dir: /app/.cache/semgrep-cache
       source:
         registry_url: quay.io/cidverse/semgrep
+    - image: quay.io/cidverse/semgrep:1.18.0
+      provides:
+        - binary: semgrep
+          version: 1.18.0
+      cache:
+        - id: semgrep-cache
+          dir: /app/.cache/semgrep-cache
+      source:
+        registry_url: quay.io/cidverse/semgrep
     - image: quay.io/cidverse/applicationinspector:1.5.13
       provides:
         - binary: appinspector
@@ -1847,6 +1943,12 @@ images:
       provides:
         - binary: appinspector
           version: 1.7.4
+      source:
+        registry_url: quay.io/cidverse/applicationinspector
+    - image: quay.io/cidverse/applicationinspector:1.8.5
+      provides:
+        - binary: appinspector
+          version: 1.8.5
       source:
         registry_url: quay.io/cidverse/applicationinspector
     - image: quay.io/cidverse/bandit:1.7.4
@@ -2071,6 +2173,12 @@ images:
           version: 3.7.5
       source:
         registry_url: quay.io/cidverse/fossacli
+    - image: quay.io/cidverse/fossacli:3.7.6
+      provides:
+        - binary: fossa
+          version: 3.7.6
+      source:
+        registry_url: quay.io/cidverse/fossacli
     - image: quay.io/cidverse/grype:0.43.0
       provides:
         - binary: grype
@@ -2279,6 +2387,12 @@ images:
           version: 0.8.0
       source:
         registry_url: quay.io/cidverse/shellcheck
+    - image: quay.io/cidverse/shellcheck:0.9.0
+      provides:
+        - binary: shellcheck
+          version: 0.9.0
+      source:
+        registry_url: quay.io/cidverse/shellcheck
     - image: quay.io/cidverse/sonarscannercli:4.7.0.2747
       provides:
         - binary: sonar-scanner
@@ -2475,16 +2589,34 @@ images:
           version: 0.77.0
       source:
         registry_url: quay.io/cidverse/syft
+    - image: quay.io/cidverse/syft:0.78.0
+      provides:
+        - binary: syft
+          version: 0.78.0
+      source:
+        registry_url: quay.io/cidverse/syft
     - image: quay.io/cidverse/scorecard:4.10.2
       provides:
         - binary: scorecard
           version: 4.10.2
       source:
         registry_url: quay.io/cidverse/scorecard
+    - image: quay.io/cidverse/scorecard:4.10.5
+      provides:
+        - binary: scorecard
+          version: 4.10.5
+      source:
+        registry_url: quay.io/cidverse/scorecard
     - image: quay.io/cidverse/slsa-verifier:2.0.1
       provides:
         - binary: slsa-verifier
           version: 2.0.1
+      source:
+        registry_url: quay.io/cidverse/slsa-verifier
+    - image: quay.io/cidverse/slsa-verifier:2.2.0
+      provides:
+        - binary: slsa-verifier
+          version: 2.2.0
       source:
         registry_url: quay.io/cidverse/slsa-verifier
     - image: quay.io/cidverse/hugo:0.101.0
