@@ -601,6 +601,12 @@ images:
           version: 2.26.1
       source:
         registry_url: quay.io/cidverse/githubcli
+    - image: quay.io/cidverse/githubcli:2.28.0
+      provides:
+        - binary: gh
+          version: 2.28.0
+      source:
+        registry_url: quay.io/cidverse/githubcli
     - image: quay.io/cidverse/glab:1.22.0
       provides:
         - binary: glab
@@ -1585,6 +1591,15 @@ images:
           dir: /root/.twitch-cli
       source:
         registry_url: quay.io/cidverse/twitchcli
+    - image: quay.io/cidverse/twitchcli:1.1.19
+      provides:
+        - binary: twitch
+          version: 1.1.19
+      cache:
+        - id: twitchcli-config
+          dir: /root/.twitch-cli
+      source:
+        registry_url: quay.io/cidverse/twitchcli
     - image: quay.io/cidverse/upx:3.96
       provides:
         - binary: upx
@@ -1649,6 +1664,12 @@ images:
       provides:
         - binary: ggshield
           version: 1.14.5
+      source:
+        registry_url: quay.io/cidverse/ggshield
+    - image: quay.io/cidverse/ggshield:1.15.0
+      provides:
+        - binary: ggshield
+          version: 1.15.0
       source:
         registry_url: quay.io/cidverse/ggshield
     - image: quay.io/cidverse/gitleaks:8.8.12
@@ -1885,6 +1906,15 @@ images:
           dir: /app/.cache/semgrep-cache
       source:
         registry_url: quay.io/cidverse/semgrep
+    - image: quay.io/cidverse/semgrep:1.19.0
+      provides:
+        - binary: semgrep
+          version: 1.19.0
+      cache:
+        - id: semgrep-cache
+          dir: /app/.cache/semgrep-cache
+      source:
+        registry_url: quay.io/cidverse/semgrep
     - image: quay.io/cidverse/applicationinspector:1.5.13
       provides:
         - binary: appinspector
@@ -2071,6 +2101,15 @@ images:
           dir: /app/.docker
       source:
         registry_url: quay.io/cidverse/cosign
+    - image: quay.io/cidverse/cosign:2.0.2
+      provides:
+        - binary: cosign
+          version: 2.0.2
+      cache:
+        - id: registry-auth
+          dir: /app/.docker
+      source:
+        registry_url: quay.io/cidverse/cosign
     - image: quay.io/cidverse/fossacli:2.7.2
       provides:
         - binary: fossa
@@ -2177,6 +2216,12 @@ images:
       provides:
         - binary: fossa
           version: 3.7.6
+      source:
+        registry_url: quay.io/cidverse/fossacli
+    - image: quay.io/cidverse/fossacli:3.7.8
+      provides:
+        - binary: fossa
+          version: 3.7.8
       source:
         registry_url: quay.io/cidverse/fossacli
     - image: quay.io/cidverse/grype:0.43.0
@@ -2327,6 +2372,15 @@ images:
       provides:
         - binary: grype
           version: 0.61.0
+      cache:
+        - id: grype-cache
+          dir: /app/.cache/grype
+      source:
+        registry_url: quay.io/cidverse/grype
+    - image: quay.io/cidverse/grype:0.61.1
+      provides:
+        - binary: grype
+          version: 0.61.1
       cache:
         - id: grype-cache
           dir: /app/.cache/grype
@@ -2593,6 +2647,12 @@ images:
       provides:
         - binary: syft
           version: 0.78.0
+      source:
+        registry_url: quay.io/cidverse/syft
+    - image: quay.io/cidverse/syft:0.79.0
+      provides:
+        - binary: syft
+          version: 0.79.0
       source:
         registry_url: quay.io/cidverse/syft
     - image: quay.io/cidverse/scorecard:4.10.2
