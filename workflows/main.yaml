@@ -36,7 +36,7 @@ workflows:
               rebuild: true
       - name: scan
         actions:
-          - id: cid/python-lint
+          #- id: cid/python-lint
           - id: cid/helm-lint
           #- id: cid/ossf-scorecard-scan
           #- id: cid/gitleaks-scan

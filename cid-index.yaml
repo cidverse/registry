@@ -2787,6 +2787,12 @@ images:
           version: 1.2.4
       source:
         registry_url: quay.io/cidverse/techdocscli
+    - image: quay.io/cidverse/techdocscli:1.4.1
+      provides:
+        - binary: techdocs-cli
+          version: 1.4.1
+      source:
+        registry_url: quay.io/cidverse/techdocscli
 workflows:
     - name: main
       version: 0.1.0
@@ -2823,7 +2829,6 @@ workflows:
                 squash: true
         - name: scan
           actions:
-            - id: cid/python-lint
             - id: cid/helm-lint
             - id: cid/semgrep-scan
             - id: cid/sonarqube-scan
