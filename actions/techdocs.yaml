@@ -26,3 +26,6 @@ actions:
     rules:
       - type: cel
         expression: MODULE_BUILD_SYSTEM == "mkdocs" && MODULE_BUILD_SYSTEM_SYNTAX == "mkdocs-techdocs"
+    access:
+      env:
+      - TECHDOCS_.*

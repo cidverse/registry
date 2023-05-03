@@ -3,5 +3,8 @@ images:
     provides:
       - binary: techdocs-cli
         version: ${{VERSION}}
+    certs:
+      - type: ca-bundle
+        dir: /etc/pki/tls/certs/ca-bundle.crt
     source:
       registry_url: quay.io/cidverse/techdocscli
