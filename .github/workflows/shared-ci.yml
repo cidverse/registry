@@ -17,6 +17,11 @@ on:
         required: false
         type: boolean
         default: false
+      cid-loglevel:
+        description: 'Log level'
+        required: false
+        default: 'info'
+        type: string
     secrets:
       # qodana
       QODANA_TOKEN:
@@ -91,8 +96,9 @@ jobs:
       - name: build
         env:
           CID_WORKFLOW: ${{ inputs.cid-workflow }}
+          CID_LOGLEVEL: ${{ inputs.cid-loglevel }}
         run: |
-          cid workflow run "$CID_WORKFLOW" --stage build
+          cid --log-level=$CID_LOGLEVEL workflow run "$CID_WORKFLOW" --stage build
       - name: upload artifacts
         uses: actions/upload-artifact@v3.1.2
         with:
@@ -122,8 +128,9 @@ jobs:
       - name: test
         env:
           CID_WORKFLOW: ${{ inputs.cid-workflow }}
+          CID_LOGLEVEL: ${{ inputs.cid-loglevel }}
         run: |
-          cid workflow run "$CID_WORKFLOW" --stage test
+          cid --log-level=$CID_LOGLEVEL workflow run "$CID_WORKFLOW" --stage test
       - name: upload artifacts
         uses: actions/upload-artifact@v3.1.2
         with:
@@ -163,13 +170,14 @@ jobs:
       - name: scan
         env:
           CID_WORKFLOW: ${{ inputs.cid-workflow }}
+          CID_LOGLEVEL: ${{ inputs.cid-loglevel }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           QODANA_TOKEN: ${{ secrets.QODANA_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_ORGANIZATION: ${{ secrets.SONAR_ORGANIZATION }}
         run: |
-          cid workflow run "$CID_WORKFLOW" --stage scan
+          cid --log-level=$CID_LOGLEVEL workflow run "$CID_WORKFLOW" --stage scan
 
   # package
   package:
@@ -196,8 +204,9 @@ jobs:
       - name: package
         env:
           CID_WORKFLOW: ${{ inputs.cid-workflow }}
+          CID_LOGLEVEL: ${{ inputs.cid-loglevel }}
         run: |
-          cid workflow run "$CID_WORKFLOW" --stage package
+          cid --log-level=$CID_LOGLEVEL workflow run "$CID_WORKFLOW" --stage package
       - name: upload artifacts
         uses: actions/upload-artifact@v3.1.2
         with:
@@ -239,9 +248,10 @@ jobs:
       - name: publish
         env:
           CID_WORKFLOW: ${{ inputs.cid-workflow }}
+          CID_LOGLEVEL: ${{ inputs.cid-loglevel }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          cid workflow run "$CID_WORKFLOW" --stage publish
+          cid --log-level=$CID_LOGLEVEL workflow run "$CID_WORKFLOW" --stage publish
 
   # Pages
   pages:
