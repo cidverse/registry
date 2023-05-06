@@ -235,13 +235,7 @@ jobs:
         uses: actions/checkout@v3.5.2
         with:
           fetch-depth: 0
-      - name: download artifacts > build
-        uses: actions/download-artifact@v3.0.2
-        with:
-          name: build-${{ github.run_id }}
-          path: .dist
-        continue-on-error: true
-      - name: download artifacts > build
+      - name: download artifacts > package
         uses: actions/download-artifact@v3.0.2
         with:
           name: package-${{ github.run_id }}
