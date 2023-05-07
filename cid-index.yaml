@@ -1943,6 +1943,15 @@ images:
           dir: /app/.cache/semgrep-cache
       source:
         registry_url: quay.io/cidverse/semgrep
+    - image: quay.io/cidverse/semgrep:1.21.0
+      provides:
+        - binary: semgrep
+          version: 1.21.0
+      cache:
+        - id: semgrep-cache
+          dir: /app/.cache/semgrep-cache
+      source:
+        registry_url: quay.io/cidverse/semgrep
     - image: quay.io/cidverse/applicationinspector:1.5.13
       provides:
         - binary: appinspector
@@ -2013,6 +2022,12 @@ images:
       provides:
         - binary: appinspector
           version: 1.8.6
+      source:
+        registry_url: quay.io/cidverse/applicationinspector
+    - image: quay.io/cidverse/applicationinspector:1.8.7
+      provides:
+        - binary: appinspector
+          version: 1.8.7
       source:
         registry_url: quay.io/cidverse/applicationinspector
     - image: quay.io/cidverse/bandit:1.7.4
@@ -2687,6 +2702,12 @@ images:
       provides:
         - binary: syft
           version: 0.79.0
+      source:
+        registry_url: quay.io/cidverse/syft
+    - image: quay.io/cidverse/syft:0.80.0
+      provides:
+        - binary: syft
+          version: 0.80.0
       source:
         registry_url: quay.io/cidverse/syft
     - image: quay.io/cidverse/scorecard:4.10.2

@@ -8,19 +8,29 @@ on:
       cid-workflow:
         required: true
         type: string
-        default: "main"
+        default: main
       cid-version:
         required: true
         type: string
-        default: "0.1.0"
+        default: 0.1.0
       job-pages:
         required: false
         type: boolean
         default: false
       cid-loglevel:
-        description: 'Log level'
+        description: Log level
         required: false
-        default: 'info'
+        default: info
+        type: string
+      env-production:
+        description: name of the github environment for production releases
+        required: false
+        default: production
+        type: string
+      env-development:
+        description: name of the github environment for development releases
+        required: false
+        default: development
         type: string
     secrets:
       # qodana
@@ -226,6 +236,8 @@ jobs:
       # create release
       contents: write
     if: github.event.name != 'pull_request'
+    environment:
+      name: ${{ github.ref == 'refs/tags/v*' && inputs.env-production || inputs.env-development }}
     steps:
       - name: prepare environment
         uses: cidverse/ghact-cid-setup@main
