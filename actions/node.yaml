@@ -1,5 +1,7 @@
 actions:
   - name: node-build
+    description: |
+      Builds the node project using npm, generated assets are stored for later publication.
     type: container
     container:
       image: quay.io/cidverse/cid-actions-go:latest
@@ -9,6 +11,8 @@ actions:
       - type: cel
         expression: MODULE_BUILD_SYSTEM == "npm"
   - name: node-test
+    description: |
+      Runs all tests in your node project.
     type: container
     container:
       image: quay.io/cidverse/cid-actions-go:latest

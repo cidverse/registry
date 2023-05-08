@@ -1,5 +1,7 @@
 actions:
   - name: helm-build
+    description: |
+      Builds the helm chart using helm cli.
     type: container
     container:
       image: quay.io/cidverse/cid-actions-go:latest
@@ -9,6 +11,8 @@ actions:
       - type: cel
         expression: MODULE_BUILD_SYSTEM == "helm"
   - name: helm-lint
+    description: |
+      Runs the helm lint tool on your helm chart.
     type: container
     container:
       image: quay.io/cidverse/cid-actions-go:latest
@@ -18,6 +22,8 @@ actions:
       - type: cel
         expression: MODULE_BUILD_SYSTEM == "helm"
   - name: helm-publish-nexus
+    description: |
+      Publishes the helm chart into a nexus repository server.
     type: container
     container:
       image: quay.io/cidverse/cid-actions-go:latest
@@ -26,7 +32,27 @@ actions:
     rules:
       - type: cel
         expression: MODULE_BUILD_SYSTEM == "helm" && ENV["HELM_NEXUS_URL"] != ""
+    access:
+      env:
+        - value: HELM_NEXUS_URL
+          description: |
+            The url of the nexus server.
+          required: true
+        - value: HELM_NEXUS_REPOSITORY
+          description: |
+            The name of the nexus repository.
+          required: true
+        - value: HELM_NEXUS_USERNAME
+          description: |
+            The username to use for authentication.
+          required: true
+        - value: HELM_NEXUS_PASSWORD
+          description: |
+            The password to use for authentication.
+          required: true
   - name: helm-publish-registry
+    description: |
+      Publishes the helm chart into a OCI registry.
     type: container
     container:
       image: quay.io/cidverse/cid-actions-go:latest
@@ -35,3 +61,9 @@ actions:
     rules:
       - type: cel
         expression: MODULE_BUILD_SYSTEM == "helm" && ENV["HELM_OCI_REPOSITORY"] != ""
+    access:
+      env:
+        - value: HELM_OCI_REPOSITORY
+          description: |
+            The url of the OCI registry for the chart publication.
+          required: true

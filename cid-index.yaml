@@ -4,6 +4,11 @@ actions:
       container:
         image: quay.io/cidverse/cid-actions-go:latest
         command: central run changelog-generate
+      description: |
+        Generates a changelog based on the commit history.
+
+        The default regex expression supports parsing semantic commit messages.
+        The following types are supported: `build`, `ci`, `docs`, `feat`, `fix`, `perf`, `refactor`, `style`, `test`, `chore`.
       scope: project
       rules:
         - type: cel
@@ -13,6 +18,12 @@ actions:
       container:
         image: quay.io/cidverse/cid-actions-go:latest
         command: central run buildah-build
+      description: |
+        Builds the oci container image (and manifest if required) using buildah.
+
+        The following comments are supported in the Dockerfile, these allow you to set the image repository and platforms to build:
+        - `# platforms=linux/amd64,linux/s390x,linux/ppc64le`
+        - `# image=quay.io/username/imagename`
       scope: module
       rules:
         - type: cel
@@ -22,6 +33,8 @@ actions:
       container:
         image: quay.io/cidverse/cid-actions-go:latest
         command: central run buildah-publish
+      description: |
+        Publishes the container image or manifest using skopeo and stores the image digest for later use in image signing and attestation.
       scope: module
       rules:
         - type: cel
@@ -31,43 +44,71 @@ actions:
       container:
         image: quay.io/cidverse/cid-actions-go:latest
         command: central run github-release-publish
+      description: |
+        Publishes a new release on GitHub, including the release notes and artifacts.
       scope: project
       rules:
         - type: cel
           expression: NCI_COMMIT_REF_TYPE == "tag" && hasPrefix(ENV["NCI_REPOSITORY_REMOTE"], "https://github.com/")
       access:
         env:
-            - GITHUB_TOKEN
+            - value: GITHUB_TOKEN
+              pattern: false
+              description: |
+                The GitHub token to use for creating the release.
+              required: true
+              internal: false
     - name: github-sarif-upload
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
         command: central run github-sarif-upload
+      description: |
+        Uploads the SARIF file to GitHub CodeScanning.
       scope: project
       rules:
         - type: cel
           expression: hasPrefix(ENV["NCI_REPOSITORY_REMOTE"], "https://github.com/")
       access:
         env:
-            - GITHUB_TOKEN
+            - value: GITHUB_TOKEN
+              pattern: false
+              description: |
+                The GitHub token to use for uploading the SARIF file.
+              required: true
+              internal: false
     - name: gitlab-release-publish
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
         command: central run gitlab-release-publish
+      description: |
+        Publishes a new release on GitLab, including the release notes and artifacts.
       scope: project
       rules:
         - type: cel
           expression: NCI_COMMIT_REF_TYPE == "tag" && hasPrefix(ENV["NCI_REPOSITORY_REMOTE"], "https://gitlab.com/")
       access:
         env:
-            - GITLAB_TOKEN
-            - GITLAB_BOT_TOKEN
+            - value: GITLAB_TOKEN
+              pattern: false
+              description: |
+                The GitLab token to use for creating the release when using a personal access token.
+              required: false
+              internal: false
+            - value: GITLAB_BOT_TOKEN
+              pattern: false
+              description: |
+                The GitLab token to use for creating the release when using a project bot account.
+              required: false
+              internal: false
     - name: go-build
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
         command: central run go-build
+      description: |
+        Builds the go project using go mod, generated binaries are stored for later publication.
       scope: module
       rules:
         - type: cel
@@ -77,6 +118,8 @@ actions:
       container:
         image: quay.io/cidverse/cid-actions-go:latest
         command: central run go-test
+      description: |
+        Runs all tests in your go project.
       scope: module
       rules:
         - type: cel
@@ -86,6 +129,8 @@ actions:
       container:
         image: quay.io/cidverse/cid-actions-go:latest
         command: central run go-lint
+      description: |
+        Runs the golangci-lint tool on your go project.
       scope: module
       rules:
         - type: cel
@@ -95,6 +140,8 @@ actions:
       container:
         image: quay.io/cidverse/cid-actions-go:latest
         command: central run helm-build
+      description: |
+        Builds the helm chart using helm cli.
       scope: module
       rules:
         - type: cel
@@ -104,6 +151,8 @@ actions:
       container:
         image: quay.io/cidverse/cid-actions-go:latest
         command: central run helm-lint
+      description: |
+        Runs the helm lint tool on your helm chart.
       scope: module
       rules:
         - type: cel
@@ -113,24 +162,64 @@ actions:
       container:
         image: quay.io/cidverse/cid-actions-go:latest
         command: central run helm-publish-nexus
+      description: |
+        Publishes the helm chart into a nexus repository server.
       scope: module
       rules:
         - type: cel
           expression: MODULE_BUILD_SYSTEM == "helm" && ENV["HELM_NEXUS_URL"] != ""
+      access:
+        env:
+            - value: HELM_NEXUS_URL
+              pattern: false
+              description: |
+                The url of the nexus server.
+              required: true
+              internal: false
+            - value: HELM_NEXUS_REPOSITORY
+              pattern: false
+              description: |
+                The name of the nexus repository.
+              required: true
+              internal: false
+            - value: HELM_NEXUS_USERNAME
+              pattern: false
+              description: |
+                The username to use for authentication.
+              required: true
+              internal: false
+            - value: HELM_NEXUS_PASSWORD
+              pattern: false
+              description: |
+                The password to use for authentication.
+              required: true
+              internal: false
     - name: helm-publish-registry
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
         command: central run helm-publish-registry
+      description: |
+        Publishes the helm chart into a OCI registry.
       scope: module
       rules:
         - type: cel
           expression: MODULE_BUILD_SYSTEM == "helm" && ENV["HELM_OCI_REPOSITORY"] != ""
+      access:
+        env:
+            - value: HELM_OCI_REPOSITORY
+              pattern: false
+              description: |
+                The url of the OCI registry for the chart publication.
+              required: true
+              internal: false
     - name: hugo-start
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
         command: central run hugo-start
+      description: |
+        Starts the hugo server for local development.
       scope: module
       rules:
         - type: cel
@@ -140,6 +229,8 @@ actions:
       container:
         image: quay.io/cidverse/cid-actions-go:latest
         command: central run hugo-build
+      description: |
+        Builds the hugo project and stores the generated static files for later publication.
       scope: module
       rules:
         - type: cel
@@ -149,6 +240,8 @@ actions:
       container:
         image: quay.io/cidverse/cid-actions-go:latest
         command: central run java-build
+      description: |
+        Builds the java module using the configured build system.
       scope: module
       rules:
         - type: cel
@@ -160,6 +253,8 @@ actions:
       container:
         image: quay.io/cidverse/cid-actions-go:latest
         command: central run java-test
+      description: |
+        Tests the java module using the configured build system.
       scope: module
       rules:
         - type: cel
@@ -171,17 +266,71 @@ actions:
       container:
         image: quay.io/cidverse/cid-actions-go:latest
         command: central run java-publish
+      description: |
+        Publishes the java module to the configured maven repository.
       scope: module
       rules:
         - type: cel
           expression: MODULE_BUILD_SYSTEM == "gradle"
         - type: cel
           expression: MODULE_BUILD_SYSTEM == "maven"
+      access:
+        env:
+            - value: MAVEN_REPO_URL
+              pattern: false
+              description: |
+                The URL of the maven repository to publish to.
+              required: false
+              internal: false
+            - value: MAVEN_REPO_USERNAME
+              pattern: false
+              description: |
+                The username to use for authentication with the maven repository.
+              required: false
+              internal: false
+            - value: MAVEN_REPO_PASSWORD
+              pattern: false
+              description: |
+                The password to use for authentication with the maven repository.
+              required: false
+              internal: false
+            - value: GPG_SIGN_KEYID
+              pattern: false
+              description: |
+                The GPG key ID to use for signing the artifacts.
+              required: false
+              internal: false
+            - value: GPG_SIGN_PRIVATEKEY
+              pattern: false
+              description: |
+                The GPG private key to use for signing the artifacts.
+              required: false
+              internal: false
+            - value: GPG_SIGN_PASSWORD
+              pattern: false
+              description: |
+                The GPG password to use for signing the artifacts.
+              required: false
+              internal: false
+            - value: GITHUB_ACTOR
+              pattern: false
+              description: |
+                The GitHub actor to use for pushing the artifacts to a maven repository on GitHub Packages (https://maven.pkg.github.com/).
+              required: false
+              internal: true
+            - value: GITHUB_TOKEN
+              pattern: false
+              description: |
+                The GitHub token to use for pushing the artifacts to a maven repository on GitHub Packages (https://maven.pkg.github.com/).
+              required: false
+              internal: true
     - name: mkdocs-start
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
         command: central run mkdocs-start
+      description: |
+        Starts the mkdocs server for local development.
       scope: module
       rules:
         - type: cel
@@ -191,6 +340,8 @@ actions:
       container:
         image: quay.io/cidverse/cid-actions-go:latest
         command: central run mkdocs-build
+      description: |
+        Builds the mkdocs project and stores the generated static files for later publication.
       scope: module
       rules:
         - type: cel
@@ -200,6 +351,8 @@ actions:
       container:
         image: quay.io/cidverse/cid-actions-go:latest
         command: central run node-build
+      description: |
+        Builds the node project using npm, generated assets are stored for later publication.
       scope: module
       rules:
         - type: cel
@@ -209,6 +362,8 @@ actions:
       container:
         image: quay.io/cidverse/cid-actions-go:latest
         command: central run node-test
+      description: |
+        Runs all tests in your node project.
       scope: module
       rules:
         - type: cel
@@ -218,6 +373,12 @@ actions:
       container:
         image: quay.io/cidverse/cid-actions-go:latest
         command: central run upx-optimize
+      description: |
+        Optimizes the binary size using upx.
+
+        Notes:
+        - This action requires the UPX_ENABLED environment variable to be set to true.
+        - `upx` requires a lot of compute resources and runs for a long time, only use this action if you have enough resources available (public ci providers have limits).
       scope: module
       rules:
         - type: cel
@@ -227,6 +388,8 @@ actions:
       container:
         image: quay.io/cidverse/cid-actions-go:latest
         command: central run python-build
+      description: |
+        Builds the python project.
       scope: module
       rules:
         - type: cel
@@ -240,6 +403,8 @@ actions:
       container:
         image: quay.io/cidverse/cid-actions-go:latest
         command: central run python-test
+      description: |
+        Runs all tests in your python project.
       scope: module
       rules:
         - type: cel
@@ -253,6 +418,8 @@ actions:
       container:
         image: quay.io/cidverse/cid-actions-go:latest
         command: central run python-lint
+      description: |
+        Runs the flake8 tool to lint your python project.
       scope: module
       rules:
         - type: cel
@@ -266,24 +433,35 @@ actions:
       container:
         image: quay.io/cidverse/cid-actions-go:latest
         command: central run ggshield-scan
+      description: |
+        Scans the repository for secrets using GitGuardian.
       scope: project
       rules:
         - type: cel
           expression: ENV["GITGUARDIAN_API_KEY"] != "" && NCI_COMMIT_REF_TYPE == "branch"
       access:
         env:
-            - GITGUARDIAN_.*
+            - value: GITGUARDIAN_.*
+              pattern: true
+              description: |
+                The GitGuardian API key and other properties to use for scanning.
+              required: false
+              internal: false
     - name: gitleaks-scan
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
         command: central run gitleaks-scan
+      description: |
+        Scans the repository for secrets using Gitleaks.
       scope: project
     - name: gosec-scan
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
         command: central run gosec-scan
+      description: |
+        Scans the repository for security issues using gosec.
       scope: module
       rules:
         - type: cel
@@ -293,10 +471,17 @@ actions:
       container:
         image: quay.io/cidverse/cid-actions-go:latest
         command: central run semgrep-scan
+      description: |
+        Scans the repository for security issues using semgrep.
       scope: project
       access:
         env:
-            - SEMGREP_.*
+            - value: SEMGREP_.*
+              pattern: true
+              description: |
+                The SemGrep properties to use for scanning.
+              required: false
+              internal: false
     - name: sonarqube-scan
       type: container
       container:
@@ -311,9 +496,24 @@ actions:
           expression: ENV["SONAR_TOKEN"] != "" && NCI_COMMIT_REF_TYPE == "branch"
       access:
         env:
-            - SONAR_.*
-            - NCI_PROJECT_.*
-            - NCI_COMMIT_.*
+            - value: SONAR_.*
+              pattern: true
+              description: |
+                The SonarQube authentication properties to use for scanning.
+              required: false
+              internal: false
+            - value: NCI_PROJECT_.*
+              pattern: true
+              description: |
+                The project properties sonar needs to identify the repository.
+              required: false
+              internal: true
+            - value: NCI_COMMIT_.*
+              pattern: true
+              description: |
+                The commit properties sonar needs to identify the revision.
+              required: false
+              internal: true
     - name: qodana-scan
       type: container
       container:
@@ -325,9 +525,24 @@ actions:
           expression: ENV["QODANA_TOKEN"] != "" && NCI_COMMIT_REF_TYPE == "branch"
       access:
         env:
-            - QODANA_TOKEN
-            - NCI_REPOSITORY_.*
-            - NCI_COMMIT_.*
+            - value: QODANA_TOKEN
+              pattern: false
+              description: |
+                The Qodana authentication token.
+              required: false
+              internal: false
+            - value: NCI_REPOSITORY_.*
+              pattern: true
+              description: |
+                The project properties sonar needs to identify the repository.
+              required: false
+              internal: true
+            - value: NCI_COMMIT_.*
+              pattern: true
+              description: |
+                The commit properties sonar needs to identify the revision.
+              required: false
+              internal: true
     - name: applicationinspector-scan
       type: container
       container:
@@ -336,70 +551,143 @@ actions:
       scope: project
       access:
         env:
-            - NCI_REPOSITORY_.*
-            - NCI_COMMIT_.*
+            - value: NCI_REPOSITORY_.*
+              pattern: true
+              description: |
+                The project properties to identify the repository.
+              required: false
+              internal: true
+            - value: NCI_COMMIT_.*
+              pattern: true
+              description: |
+                The commit properties to identify the revision.
+              required: false
+              internal: true
     - name: ossf-scorecard-scan
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
         command: central run ossf-scorecard-scan
+      description: |
+        Scorecard is an automated tool that assesses a number of important heuristics ("checks") associated with software security and assigns each check a score of 0-10.
+        You can use these scores to understand specific areas to improve in order to strengthen the security posture of your project.
+
+        This action will evaluate your project using the scorecard tool and store the result as sarif report.
       scope: project
       rules:
         - type: cel
           expression: NCI_REPOSITORY_HOST_TYPE == "github"
       access:
         env:
-            - GITHUB_TOKEN
+            - value: GITHUB_TOKEN
+              pattern: false
+              description: |
+                The GitHub token to use when querying project information from the GitHub API.
+              required: false
+              internal: false
     - name: cosign-container-sign
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
         command: central run cosign-container-sign
+      description: |
+        Cosign is a tool that enables container image signing, verification, and storage in an OCI registry.
+        It supports various signing methods, including keyless signing using a public good certificate authority and transparency log, hardware and KMS signing, and bring-your-own PKI.
+        With Cosign, you can sign your container images to ensure their authenticity and integrity, and store them in a trusted registry.
+        The signed images can then be verified by others to ensure that they have not been tampered with.
       scope: module
       rules:
         - type: cel
           expression: MODULE_BUILD_SYSTEM == "container" && getMapValue(ENV, "COSIGN_KEY") != "" && getMapValue(ENV, "COSIGN_PASSWORD") != ""
       access:
         env:
-            - COSIGN_.*
+            - value: COSIGN_MODE
+              pattern: false
+              description: |
+                The cosign mode, either "KEYLESS" or "PRIVATEKEY".
+              required: false
+              internal: false
+            - value: COSIGN_KEY
+              pattern: false
+              description: |
+                The cosign key, base64 encoded.
+              required: false
+              internal: false
+            - value: COSIGN_PASSWORD
+              pattern: false
+              description: |
+                The password for the cosign key.
+              required: false
+              internal: false
+            - value: COSIGN_TLOG_DISABLE
+              pattern: false
+              description: |
+                Disable using the public rekor transparency log.
+              required: false
+              internal: false
     - name: cosign-container-sbom-attach
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
         command: central run cosign-container-sbom-attach
+      description: |
+        Cosign allows to attach SBOMs to a container image.
       scope: module
       rules:
         - type: cel
           expression: MODULE_BUILD_SYSTEM == "container" && getMapValue(ENV, "COSIGN_KEY") != "" && getMapValue(ENV, "COSIGN_PASSWORD") != ""
       access:
         env:
-            - COSIGN_.*
+            - value: COSIGN_MODE
+              pattern: false
+              description: |
+                The cosign mode, either "KEYLESS" or "PRIVATEKEY".
+              required: false
+              internal: false
+            - value: COSIGN_KEY
+              pattern: false
+              description: |
+                The cosign key, base64 encoded.
+              required: false
+              internal: false
+            - value: COSIGN_PASSWORD
+              pattern: false
+              description: |
+                The password for the cosign key.
+              required: false
+              internal: false
+            - value: COSIGN_TLOG_DISABLE
+              pattern: false
+              description: |
+                Disable using the public rekor transparency log.
+              required: false
+              internal: false
     - name: syft-container-sbom-generate
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
         command: central run syft-container-sbom-generate
+      description: |
+        Syft is a tool that generates SBOMs for container images.
       scope: module
       rules:
         - type: cel
           expression: MODULE_BUILD_SYSTEM == "container"
-      access:
-        env:
-            - SYFT_.*
     - name: syft-artifact-sbom-generate
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
         command: central run syft-artifact-sbom-generate
+      description: |
+        Syft is a tool that generates SBOMs for software artifacts.
       scope: module
-      access:
-        env:
-            - SYFT_.*
     - name: techdocs-start
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
         command: central run techdocs-start
+      description: |
+        Starts the techdocs development server locally.
       scope: module
       rules:
         - type: cel
@@ -409,6 +697,8 @@ actions:
       container:
         image: quay.io/cidverse/cid-actions-go:latest
         command: central run techdocs-build
+      description: |
+        Builds the techdocs documentation assets.
       scope: module
       rules:
         - type: cel
@@ -418,18 +708,69 @@ actions:
       container:
         image: quay.io/cidverse/cid-actions-go:latest
         command: central run techdocs-publish
+      description: |
+        Publishes the generated documentation to the target location.
       scope: module
       rules:
         - type: cel
           expression: MODULE_BUILD_SYSTEM == "mkdocs" && MODULE_BUILD_SYSTEM_SYNTAX == "mkdocs-techdocs"
       access:
         env:
-            - TECHDOCS_.*
+            - value: TECHDOCS_ENTITY
+              pattern: false
+              description: |
+                The entity to publish the documentation for.
+              required: false
+              internal: false
+            - value: TECHDOCS_PUBLISH_TARGET
+              pattern: false
+              description: |
+                The target to publish the documentation to. (awsS3, ...)
+              required: false
+              internal: false
+            - value: TECHDOCS_S3_ENDPOINT
+              pattern: false
+              description: |
+                The S3 endpoint url.
+              required: false
+              internal: false
+            - value: TECHDOCS_S3_REGION
+              pattern: false
+              description: |
+                The S3 bucket region.
+              required: false
+              internal: false
+            - value: TECHDOCS_S3_BUCKET
+              pattern: false
+              description: |
+                The S3 bucket name.
+              required: false
+              internal: false
+            - value: TECHDOCS_S3_ACCESS_KEY
+              pattern: false
+              description: |
+                The S3 Access Key.
+              required: false
+              internal: false
+            - value: TECHDOCS_S3_SECRET_KEY
+              pattern: false
+              description: |
+                The S3 Secret Key.
+              required: false
+              internal: false
+            - value: TECHDOCS_S3_FORCE_PATH_STYLE
+              pattern: false
+              description: |
+                Use s3 path style to address the bucket, required for ie. minio.
+              required: false
+              internal: false
     - name: kotlin-hello
       type: container
       container:
         image: quay.io/cidverse/cid-actions-kotlin:latest
         command: cid-actions-kotlin kotlin-hello
+      description: |
+        en example ...
       scope: project
 images:
     - image: quay.io/cidverse/pipenv:2022.11.30
@@ -2868,6 +3209,10 @@ images:
         registry_url: quay.io/cidverse/techdocscli
 workflows:
     - name: main
+      description: |
+        The `main` workflow is the default workflow in `CID` if no workflow name is provided.
+
+        It contains the following stages, with conditional actions based on the project type.
       version: 0.1.0
       stages:
         - name: build

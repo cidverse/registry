@@ -2,6 +2,8 @@
 actions:
   # gitlab release
   - name: gitlab-release-publish
+    description: |
+      Publishes a new release on GitLab, including the release notes and artifacts.
     type: container
     container:
       image: quay.io/cidverse/cid-actions-go:latest
@@ -12,5 +14,9 @@ actions:
         expression: NCI_COMMIT_REF_TYPE == "tag" && hasPrefix(ENV["NCI_REPOSITORY_REMOTE"], "https://gitlab.com/")
     access:
       env:
-        - GITLAB_TOKEN
-        - GITLAB_BOT_TOKEN
+        - value: GITLAB_TOKEN
+          description: |
+            The GitLab token to use for creating the release when using a personal access token.
+        - value: GITLAB_BOT_TOKEN
+          description: |
+            The GitLab token to use for creating the release when using a project bot account.

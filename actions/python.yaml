@@ -1,5 +1,7 @@
 actions:
   - name: python-build
+    description: |
+      Builds the python project.
     type: container
     container:
       image: quay.io/cidverse/cid-actions-go:latest
@@ -13,6 +15,8 @@ actions:
       - type: cel
         expression: MODULE_BUILD_SYSTEM == "setup.py"
   - name: python-test
+    description: |
+      Runs all tests in your python project.
     type: container
     container:
       image: quay.io/cidverse/cid-actions-go:latest
@@ -26,6 +30,8 @@ actions:
       - type: cel
         expression: MODULE_BUILD_SYSTEM == "setup.py"
   - name: python-lint
+    description: |
+      Runs the flake8 tool to lint your python project.
     type: container
     container:
       image: quay.io/cidverse/cid-actions-go:latest

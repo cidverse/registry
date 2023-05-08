@@ -3,6 +3,11 @@ actions:
   # changelog
   - name: changelog-generate
     type: container
+    description: |
+      Generates a changelog based on the commit history.
+
+      The default regex expression supports parsing semantic commit messages.
+      The following types are supported: `build`, `ci`, `docs`, `feat`, `fix`, `perf`, `refactor`, `style`, `test`, `chore`.
     container:
       image: quay.io/cidverse/cid-actions-go:latest
       command: central run changelog-generate

@@ -1,5 +1,7 @@
 actions:
   - name: hugo-start
+    description: |
+      Starts the hugo server for local development.
     type: container
     container:
       image: quay.io/cidverse/cid-actions-go:latest
@@ -9,6 +11,8 @@ actions:
       - type: cel
         expression: MODULE_BUILD_SYSTEM == "hugo"
   - name: hugo-build
+    description: |
+      Builds the hugo project and stores the generated static files for later publication.
     type: container
     container:
       image: quay.io/cidverse/cid-actions-go:latest

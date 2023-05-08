@@ -1,5 +1,11 @@
 actions:
   - name: upx-optimize
+    description: |
+      Optimizes the binary size using upx.
+
+      Notes:
+      - This action requires the UPX_ENABLED environment variable to be set to true.
+      - `upx` requires a lot of compute resources and runs for a long time, only use this action if you have enough resources available (public ci providers have limits).
     type: container
     container:
       image: quay.io/cidverse/cid-actions-go:latest

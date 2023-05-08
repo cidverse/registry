@@ -1,6 +1,8 @@
 actions:
   # kotlin - hello world
   - name: kotlin-hello
+    description: |
+      en example ...
     type: container
     container:
       image: quay.io/cidverse/cid-actions-kotlin:latest

@@ -2,6 +2,8 @@
 actions:
   # github release
   - name: github-release-publish
+    description: |
+      Publishes a new release on GitHub, including the release notes and artifacts.
     type: container
     container:
       image: quay.io/cidverse/cid-actions-go:latest
@@ -12,9 +14,14 @@ actions:
         expression: NCI_COMMIT_REF_TYPE == "tag" && hasPrefix(ENV["NCI_REPOSITORY_REMOTE"], "https://github.com/")
     access:
       env:
-        - GITHUB_TOKEN
+        - value: GITHUB_TOKEN
+          description: |
+            The GitHub token to use for creating the release.
+          required: true
   # github sarif upload
   - name: github-sarif-upload
+    description: |
+      Uploads the SARIF file to GitHub CodeScanning.
     type: container
     container:
       image: quay.io/cidverse/cid-actions-go:latest
@@ -25,4 +32,7 @@ actions:
         expression: hasPrefix(ENV["NCI_REPOSITORY_REMOTE"], "https://github.com/")
     access:
       env:
-        - GITHUB_TOKEN
+        - value: GITHUB_TOKEN
+          description: |
+            The GitHub token to use for uploading the SARIF file.
+          required: true

@@ -1,5 +1,7 @@
 actions:
   - name: techdocs-start
+    description: |
+      Starts the techdocs development server locally.
     type: container
     container:
       image: quay.io/cidverse/cid-actions-go:latest
@@ -9,6 +11,8 @@ actions:
       - type: cel
         expression: MODULE_BUILD_SYSTEM == "mkdocs" && MODULE_BUILD_SYSTEM_SYNTAX == "mkdocs-techdocs"
   - name: techdocs-build
+    description: |
+      Builds the techdocs documentation assets.
     type: container
     container:
       image: quay.io/cidverse/cid-actions-go:latest
@@ -18,6 +22,8 @@ actions:
       - type: cel
         expression: MODULE_BUILD_SYSTEM == "mkdocs" && MODULE_BUILD_SYSTEM_SYNTAX == "mkdocs-techdocs"
   - name: techdocs-publish
+    description: |
+      Publishes the generated documentation to the target location.
     type: container
     container:
       image: quay.io/cidverse/cid-actions-go:latest
@@ -28,4 +34,27 @@ actions:
         expression: MODULE_BUILD_SYSTEM == "mkdocs" && MODULE_BUILD_SYSTEM_SYNTAX == "mkdocs-techdocs"
     access:
       env:
-      - TECHDOCS_.*
+        - value: TECHDOCS_ENTITY
+          description: |
+            The entity to publish the documentation for.
+        - value: TECHDOCS_PUBLISH_TARGET
+          description: |
+            The target to publish the documentation to. (awsS3, ...)
+        - value: TECHDOCS_S3_ENDPOINT
+          description: |
+            The S3 endpoint url.
+        - value: TECHDOCS_S3_REGION
+          description: |
+            The S3 bucket region.
+        - value: TECHDOCS_S3_BUCKET
+          description: |
+            The S3 bucket name.
+        - value: TECHDOCS_S3_ACCESS_KEY
+          description: |
+            The S3 Access Key.
+        - value: TECHDOCS_S3_SECRET_KEY
+          description: |
+            The S3 Secret Key.
+        - value: TECHDOCS_S3_FORCE_PATH_STYLE
+          description: |
+            Use s3 path style to address the bucket, required for ie. minio.

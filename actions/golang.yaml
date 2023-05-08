@@ -1,5 +1,7 @@
   actions:
     - name: go-build
+      description: |
+        Builds the go project using go mod, generated binaries are stored for later publication.
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
@@ -9,6 +11,8 @@
         - type: cel
           expression: MODULE_BUILD_SYSTEM == "gomod"
     - name: go-test
+      description: |
+        Runs all tests in your go project.
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
@@ -18,6 +22,8 @@
         - type: cel
           expression: MODULE_BUILD_SYSTEM == "gomod"
     - name: go-lint
+      description: |
+        Runs the golangci-lint tool on your go project.
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
