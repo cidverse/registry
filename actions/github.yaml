@@ -23,7 +23,7 @@ actions:
   - name: github-sarif-upload
     category: sast
     description: |
-      Uploads the SARIF file to GitHub CodeScanning.
+      Uploads all SARIF reports to GitHub CodeScanning. Supports merge requests.
     type: container
     container:
       image: quay.io/cidverse/cid-actions-go:latest

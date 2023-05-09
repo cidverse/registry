@@ -56,7 +56,7 @@ workflows:
           # container - publish to registry
           - id: cid/buildah-publish
           # java library - publish
-          #- id: cid/java-publish
+          - id: cid/java-publish
           # container - sign image
           #- id: cid/cosign-container-sign
           # container - attach and sign sbom

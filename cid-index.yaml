@@ -69,7 +69,7 @@ actions:
         image: quay.io/cidverse/cid-actions-go:latest
         command: central run github-sarif-upload
       description: |
-        Uploads the SARIF file to GitHub CodeScanning.
+        Uploads all SARIF reports to GitHub CodeScanning. Supports merge requests.
       scope: project
       rules:
         - type: cel
@@ -289,16 +289,16 @@ actions:
       scope: module
       rules:
         - type: cel
-          expression: MODULE_BUILD_SYSTEM == "gradle"
+          expression: MODULE_BUILD_SYSTEM == "gradle" && getMapValue(ENV, "MAVEN_REPO_URL") != ""
         - type: cel
-          expression: MODULE_BUILD_SYSTEM == "maven"
+          expression: MODULE_BUILD_SYSTEM == "maven" && getMapValue(ENV, "MAVEN_REPO_URL") != ""
       access:
         env:
             - value: MAVEN_REPO_URL
               pattern: false
               description: |
                 The URL of the maven repository to publish to.
-              required: false
+              required: true
               internal: false
             - value: MAVEN_REPO_USERNAME
               pattern: false
@@ -3304,6 +3304,7 @@ workflows:
         - name: publish
           actions:
             - id: cid/buildah-publish
+            - id: cid/java-publish
             - id: cid/helm-publish-nexus
             - id: cid/helm-publish-registry
             - id: cid/techdocs-publish
