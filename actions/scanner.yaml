@@ -1,6 +1,7 @@
 actions:
   # gitguardian
   - name: gitguardian-scan
+    category: sast
     description: |
       Scans the repository for secrets using GitGuardian.
     type: container
@@ -18,8 +19,8 @@ actions:
           description: |
             The GitGuardian API key and other properties to use for scanning.
   # gitleaks
-  - repository: central
-    name: gitleaks-scan
+  - name: gitleaks-scan
+    category: sast
     description: |
       Scans the repository for secrets using Gitleaks.
     type: container
@@ -29,6 +30,7 @@ actions:
     scope: project
   # gosec
   - name: gosec-scan
+    category: sast
     description: |
       Scans the repository for security issues using gosec.
     type: container
@@ -41,6 +43,7 @@ actions:
         expression: MODULE_BUILD_SYSTEM == "gomod"
   # semgrep
   - name: semgrep-scan
+    category: sast
     description: |
       Scans the repository for security issues using semgrep.
     type: container
@@ -56,6 +59,9 @@ actions:
             The SemGrep properties to use for scanning.
   # sonarqube
   - name: sonarqube-scan
+    category: sast
+    description: |
+      Scans the repository for security issues using SonarQube.
     type: container
     container:
       image: quay.io/cidverse/cid-actions-go:latest
@@ -85,6 +91,9 @@ actions:
           internal: true
   # qodana
   - name: qodana-scan
+    category: sast
+    description: |
+      Scans the repository for security issues using JetBrains Qodana.
     type: container
     container:
       image: quay.io/cidverse/cid-actions-go:latest
@@ -110,6 +119,9 @@ actions:
           internal: true
   # applicationinspector
   - name: applicationinspector-scan
+    category: sast
+    description: |
+      Scans the repository for used features using Microsoft Application Inspector.
     type: container
     container:
       image: quay.io/cidverse/cid-actions-go:latest

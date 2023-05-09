@@ -1,5 +1,6 @@
 actions:
   - name: buildah-build
+    category: build
     type: container
     description: |
       Builds the oci container image (and manifest if required) using buildah.
@@ -15,6 +16,7 @@ actions:
       - type: cel
         expression: MODULE_BUILD_SYSTEM == "container" && (MODULE_BUILD_SYSTEM_SYNTAX == "buildah-script" || MODULE_BUILD_SYSTEM_SYNTAX == "containerfile")
   - name: buildah-publish
+    category: publish
     description: |
       Publishes the container image or manifest using skopeo and stores the image digest for later use in image signing and attestation.
     type: container

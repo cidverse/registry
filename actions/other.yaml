@@ -1,5 +1,6 @@
 actions:
   - name: upx-optimize
+    category: optimize
     description: |
       Optimizes the binary size using upx.
 

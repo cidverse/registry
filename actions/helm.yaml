@@ -1,5 +1,6 @@
 actions:
   - name: helm-build
+    category: build
     description: |
       Builds the helm chart using helm cli.
     type: container
@@ -11,6 +12,7 @@ actions:
       - type: cel
         expression: MODULE_BUILD_SYSTEM == "helm"
   - name: helm-lint
+    category: sast
     description: |
       Runs the helm lint tool on your helm chart.
     type: container
@@ -22,6 +24,7 @@ actions:
       - type: cel
         expression: MODULE_BUILD_SYSTEM == "helm"
   - name: helm-publish-nexus
+    category: publish
     description: |
       Publishes the helm chart into a nexus repository server.
     type: container
@@ -51,6 +54,7 @@ actions:
             The password to use for authentication.
           required: true
   - name: helm-publish-registry
+    category: publish
     description: |
       Publishes the helm chart into a OCI registry.
     type: container

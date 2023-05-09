@@ -1,5 +1,6 @@
 actions:
   - name: techdocs-start
+    category: dev
     description: |
       Starts the techdocs development server locally.
     type: container
@@ -11,6 +12,7 @@ actions:
       - type: cel
         expression: MODULE_BUILD_SYSTEM == "mkdocs" && MODULE_BUILD_SYSTEM_SYNTAX == "mkdocs-techdocs"
   - name: techdocs-build
+    category: build
     description: |
       Builds the techdocs documentation assets.
     type: container
@@ -22,6 +24,7 @@ actions:
       - type: cel
         expression: MODULE_BUILD_SYSTEM == "mkdocs" && MODULE_BUILD_SYSTEM_SYNTAX == "mkdocs-techdocs"
   - name: techdocs-publish
+    category: publish
     description: |
       Publishes the generated documentation to the target location.
     type: container

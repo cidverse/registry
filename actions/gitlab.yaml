@@ -2,6 +2,7 @@
 actions:
   # gitlab release
   - name: gitlab-release-publish
+    category: publish
     description: |
       Publishes a new release on GitLab, including the release notes and artifacts.
     type: container

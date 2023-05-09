@@ -1,5 +1,6 @@
 actions:
   - name: hugo-start
+    category: dev
     description: |
       Starts the hugo server for local development.
     type: container
@@ -11,6 +12,7 @@ actions:
       - type: cel
         expression: MODULE_BUILD_SYSTEM == "hugo"
   - name: hugo-build
+    category: build
     description: |
       Builds the hugo project and stores the generated static files for later publication.
     type: container

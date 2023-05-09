@@ -2,6 +2,7 @@
 actions:
   # changelog
   - name: changelog-generate
+    category: changelog
     type: container
     description: |
       Generates a changelog based on the commit history.

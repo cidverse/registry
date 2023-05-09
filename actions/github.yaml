@@ -2,6 +2,7 @@
 actions:
   # github release
   - name: github-release-publish
+    category: publish
     description: |
       Publishes a new release on GitHub, including the release notes and artifacts.
     type: container
@@ -20,6 +21,7 @@ actions:
           required: true
   # github sarif upload
   - name: github-sarif-upload
+    category: sast
     description: |
       Uploads the SARIF file to GitHub CodeScanning.
     type: container

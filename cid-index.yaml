@@ -1,5 +1,6 @@
 actions:
     - name: changelog-generate
+      category: changelog
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
@@ -14,6 +15,7 @@ actions:
         - type: cel
           expression: NCI_COMMIT_REF_TYPE == "tag"
     - name: buildah-build
+      category: build
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
@@ -29,6 +31,7 @@ actions:
         - type: cel
           expression: MODULE_BUILD_SYSTEM == "container" && (MODULE_BUILD_SYSTEM_SYNTAX == "buildah-script" || MODULE_BUILD_SYSTEM_SYNTAX == "containerfile")
     - name: buildah-publish
+      category: publish
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
@@ -40,6 +43,7 @@ actions:
         - type: cel
           expression: MODULE_BUILD_SYSTEM == "container" && (MODULE_BUILD_SYSTEM_SYNTAX == "buildah-script" || MODULE_BUILD_SYSTEM_SYNTAX == "containerfile")
     - name: github-release-publish
+      category: publish
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
@@ -59,6 +63,7 @@ actions:
               required: true
               internal: false
     - name: github-sarif-upload
+      category: sast
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
@@ -78,6 +83,7 @@ actions:
               required: true
               internal: false
     - name: gitlab-release-publish
+      category: publish
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
@@ -103,6 +109,7 @@ actions:
               required: false
               internal: false
     - name: go-build
+      category: build
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
@@ -114,6 +121,7 @@ actions:
         - type: cel
           expression: MODULE_BUILD_SYSTEM == "gomod"
     - name: go-test
+      category: test
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
@@ -125,6 +133,7 @@ actions:
         - type: cel
           expression: MODULE_BUILD_SYSTEM == "gomod"
     - name: go-lint
+      category: sast
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
@@ -136,6 +145,7 @@ actions:
         - type: cel
           expression: MODULE_BUILD_SYSTEM == "gomod"
     - name: helm-build
+      category: build
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
@@ -147,6 +157,7 @@ actions:
         - type: cel
           expression: MODULE_BUILD_SYSTEM == "helm"
     - name: helm-lint
+      category: sast
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
@@ -158,6 +169,7 @@ actions:
         - type: cel
           expression: MODULE_BUILD_SYSTEM == "helm"
     - name: helm-publish-nexus
+      category: publish
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
@@ -195,6 +207,7 @@ actions:
               required: true
               internal: false
     - name: helm-publish-registry
+      category: publish
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
@@ -214,6 +227,7 @@ actions:
               required: true
               internal: false
     - name: hugo-start
+      category: dev
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
@@ -225,6 +239,7 @@ actions:
         - type: cel
           expression: MODULE_BUILD_SYSTEM == "hugo"
     - name: hugo-build
+      category: build
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
@@ -236,6 +251,7 @@ actions:
         - type: cel
           expression: MODULE_BUILD_SYSTEM == "hugo"
     - name: java-build
+      category: build
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
@@ -249,6 +265,7 @@ actions:
         - type: cel
           expression: MODULE_BUILD_SYSTEM == "maven"
     - name: java-test
+      category: test
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
@@ -262,6 +279,7 @@ actions:
         - type: cel
           expression: MODULE_BUILD_SYSTEM == "maven"
     - name: java-publish
+      category: publish
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
@@ -325,6 +343,7 @@ actions:
               required: false
               internal: true
     - name: mkdocs-start
+      category: dev
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
@@ -336,6 +355,7 @@ actions:
         - type: cel
           expression: MODULE_BUILD_SYSTEM == "mkdocs" && MODULE_BUILD_SYSTEM_SYNTAX == "default"
     - name: mkdocs-build
+      category: build
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
@@ -347,6 +367,7 @@ actions:
         - type: cel
           expression: MODULE_BUILD_SYSTEM == "mkdocs" && MODULE_BUILD_SYSTEM_SYNTAX == "default"
     - name: node-build
+      category: build
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
@@ -358,6 +379,7 @@ actions:
         - type: cel
           expression: MODULE_BUILD_SYSTEM == "npm"
     - name: node-test
+      category: test
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
@@ -369,6 +391,7 @@ actions:
         - type: cel
           expression: MODULE_BUILD_SYSTEM == "npm"
     - name: upx-optimize
+      category: optimize
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
@@ -384,6 +407,7 @@ actions:
         - type: cel
           expression: ENV["UPX_ENABLED"] == "true"
     - name: python-build
+      category: build
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
@@ -399,6 +423,7 @@ actions:
         - type: cel
           expression: MODULE_BUILD_SYSTEM == "setup.py"
     - name: python-test
+      category: test
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
@@ -414,6 +439,7 @@ actions:
         - type: cel
           expression: MODULE_BUILD_SYSTEM == "setup.py"
     - name: python-lint
+      category: lint
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
@@ -429,6 +455,7 @@ actions:
         - type: cel
           expression: MODULE_BUILD_SYSTEM == "setup.py"
     - name: gitguardian-scan
+      category: sast
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
@@ -448,6 +475,7 @@ actions:
               required: false
               internal: false
     - name: gitleaks-scan
+      category: sast
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
@@ -456,6 +484,7 @@ actions:
         Scans the repository for secrets using Gitleaks.
       scope: project
     - name: gosec-scan
+      category: sast
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
@@ -467,6 +496,7 @@ actions:
         - type: cel
           expression: MODULE_BUILD_SYSTEM == "gomod"
     - name: semgrep-scan
+      category: sast
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
@@ -483,6 +513,7 @@ actions:
               required: false
               internal: false
     - name: sonarqube-scan
+      category: sast
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
@@ -490,6 +521,8 @@ actions:
         certs:
             - type: ca-bundle
               dir: /etc/ssl/certs/ca-certificates.crt
+      description: |
+        Scans the repository for security issues using SonarQube.
       scope: project
       rules:
         - type: cel
@@ -515,10 +548,13 @@ actions:
               required: false
               internal: true
     - name: qodana-scan
+      category: sast
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
         command: central run qodana-scan
+      description: |
+        Scans the repository for security issues using JetBrains Qodana.
       scope: module
       rules:
         - type: cel
@@ -544,10 +580,13 @@ actions:
               required: false
               internal: true
     - name: applicationinspector-scan
+      category: sast
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
         command: central run applicationinspector-scan
+      description: |
+        Scans the repository for used features using Microsoft Application Inspector.
       scope: project
       access:
         env:
@@ -564,6 +603,7 @@ actions:
               required: false
               internal: true
     - name: ossf-scorecard-scan
+      category: security
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
@@ -586,6 +626,7 @@ actions:
               required: false
               internal: false
     - name: cosign-container-sign
+      category: security
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
@@ -626,6 +667,7 @@ actions:
               required: false
               internal: false
     - name: cosign-container-sbom-attach
+      category: security
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
@@ -663,6 +705,7 @@ actions:
               required: false
               internal: false
     - name: syft-container-sbom-generate
+      category: security
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
@@ -674,6 +717,7 @@ actions:
         - type: cel
           expression: MODULE_BUILD_SYSTEM == "container"
     - name: syft-artifact-sbom-generate
+      category: security
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
@@ -682,6 +726,7 @@ actions:
         Syft is a tool that generates SBOMs for software artifacts.
       scope: module
     - name: techdocs-start
+      category: dev
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
@@ -693,6 +738,7 @@ actions:
         - type: cel
           expression: MODULE_BUILD_SYSTEM == "mkdocs" && MODULE_BUILD_SYSTEM_SYNTAX == "mkdocs-techdocs"
     - name: techdocs-build
+      category: build
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
@@ -704,6 +750,7 @@ actions:
         - type: cel
           expression: MODULE_BUILD_SYSTEM == "mkdocs" && MODULE_BUILD_SYSTEM_SYNTAX == "mkdocs-techdocs"
     - name: techdocs-publish
+      category: publish
       type: container
       container:
         image: quay.io/cidverse/cid-actions-go:latest
@@ -765,12 +812,13 @@ actions:
               required: false
               internal: false
     - name: kotlin-hello
+      category: examples
       type: container
       container:
         image: quay.io/cidverse/cid-actions-kotlin:latest
         command: cid-actions-kotlin kotlin-hello
       description: |
-        en example ...
+        A simple kotlin hello world example.
       scope: project
 images:
     - image: quay.io/cidverse/pipenv:2022.11.30

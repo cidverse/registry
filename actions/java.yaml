@@ -1,5 +1,6 @@
 actions:
   - name: java-build
+    category: build
     description: |
       Builds the java module using the configured build system.
     type: container
@@ -13,6 +14,7 @@ actions:
       - type: cel
         expression: MODULE_BUILD_SYSTEM == "maven"
   - name: java-test
+    category: test
     description: |
       Tests the java module using the configured build system.
     type: container
@@ -26,6 +28,7 @@ actions:
       - type: cel
         expression: MODULE_BUILD_SYSTEM == "maven"
   - name: java-publish
+    category: publish
     description: |
       Publishes the java module to the configured maven repository.
     type: container

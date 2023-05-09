@@ -1,6 +1,7 @@
 actions:
   # ossf - scorecard
   - name: ossf-scorecard-scan
+    category: security
     description: |
       Scorecard is an automated tool that assesses a number of important heuristics ("checks") associated with software security and assigns each check a score of 0-10.
       You can use these scores to understand specific areas to improve in order to strengthen the security posture of your project.
@@ -21,6 +22,7 @@ actions:
             The GitHub token to use when querying project information from the GitHub API.
   # container - cosign
   - name: cosign-container-sign
+    category: security
     description: |
       Cosign is a tool that enables container image signing, verification, and storage in an OCI registry.
       It supports various signing methods, including keyless signing using a public good certificate authority and transparency log, hardware and KMS signing, and bring-your-own PKI.
@@ -49,6 +51,7 @@ actions:
           description: |
             Disable using the public rekor transparency log.
   - name: cosign-container-sbom-attach
+    category: security
     description: |
       Cosign allows to attach SBOMs to a container image.
     type: container
@@ -75,6 +78,7 @@ actions:
             Disable using the public rekor transparency log.
   # container - syft - sbom
   - name: syft-container-sbom-generate
+    category: security
     description: |
       Syft is a tool that generates SBOMs for container images.
     type: container
@@ -93,6 +97,7 @@ actions:
     #        SYFT properties
   # artifact - syft - sbom
   - name: syft-artifact-sbom-generate
+    category: security
     description: |
       Syft is a tool that generates SBOMs for software artifacts.
     type: container
