@@ -235,6 +235,8 @@ jobs:
     permissions:
       # create release
       contents: write
+      # publish packages
+      packages: write
     if: github.event.name != 'pull_request'
     environment:
       name: ${{ github.ref == 'refs/tags/v*' && inputs.env-production || inputs.env-development }}
