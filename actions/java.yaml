@@ -30,7 +30,27 @@ actions:
   - name: java-publish
     category: publish
     description: |
-      Publishes the java module to the configured maven repository.
+      This action publishes maven artifacts.
+
+      **Publication**
+
+      Username and password are not required when publishing to GitHub Packages. (`https://maven.pkg.github.com/<your_username>/<your_repository>`)
+
+      **Signing**
+
+      To sign the artifacts, `MAVEN_GPG_SIGN_PRIVATEKEY` and `MAVEN_GPG_SIGN_PASSWORD` must be set.
+      You can generate a private key using the gpg command line tools:
+
+      ``` bash
+      gpg --full-generate-key
+      // When asked for the key type, select `RSA (sign only)`.
+      // For the key size, select `4096`.
+      // For the expiration date, select `0` to make the key never expire.
+      // The Key-ID will appear in the output, it will look something like this `A1B2C3D4E5F6G7H8`.
+      // Use a strong password to protect the key, store it in the `MAVEN_GPG_SIGN_PASSWORD` secret.
+      gpg --armor --export-secret-keys A1B2C3D4E5F6G7H8 | base64 -w0
+      // Now store the secret key in the `MAVEN_GPG_SIGN_PRIVATEKEY`
+      ```
     type: container
     container:
       image: quay.io/cidverse/cid-actions-go:latest
@@ -53,15 +73,15 @@ actions:
       - value: MAVEN_REPO_PASSWORD
         description: |
           The password to use for authentication with the maven repository.
-      - value: GPG_SIGN_KEYID
+      - value: MAVEN_GPG_SIGN_PRIVATEKEY
         description: |
-          The GPG key ID to use for signing the artifacts.
-      - value: GPG_SIGN_PRIVATEKEY
+          The ASCII-armored private key (base64 encoded).
+      - value: MAVEN_GPG_SIGN_PASSWORD
         description: |
-          The GPG private key to use for signing the artifacts.
-      - value: GPG_SIGN_PASSWORD
+          The password for the private key.
+      - value: MAVEN_GPG_SIGN_KEYID
         description: |
-          The GPG password to use for signing the artifacts.
+          The GPG key ID, only required when using sub keys.
       - value: GITHUB_ACTOR
         description: |
           The GitHub actor to use for pushing the artifacts to a maven repository on GitHub Packages (https://maven.pkg.github.com/).
