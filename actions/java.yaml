@@ -63,6 +63,10 @@ actions:
         expression: MODULE_BUILD_SYSTEM == "maven" && getMapValue(ENV, "MAVEN_REPO_URL") != ""
     access:
       env:
+      - value: MAVEN_VERSION
+        description: |
+          Overwrites the version of the maven artifact to publish, defaults to the git tag or branch name.
+        required: false
       - value: MAVEN_REPO_URL
         description: |
           The URL of the maven repository to publish to.

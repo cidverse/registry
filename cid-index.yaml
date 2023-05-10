@@ -314,6 +314,12 @@ actions:
           expression: MODULE_BUILD_SYSTEM == "maven" && getMapValue(ENV, "MAVEN_REPO_URL") != ""
       access:
         env:
+            - value: MAVEN_VERSION
+              pattern: false
+              description: |
+                Overwrites the version of the maven artifact to publish, defaults to the git tag or branch name.
+              required: false
+              internal: false
             - value: MAVEN_REPO_URL
               pattern: false
               description: |
@@ -3119,6 +3125,20 @@ images:
           version: 0.80.0
       source:
         registry_url: quay.io/cidverse/syft
+    - image: quay.io/cidverse/sarifrs:0.3.7
+      provides:
+        - binary: shellcheck-sarif
+          version: 0.3.7
+        - binary: sarif-fmt
+          version: 0.3.7
+        - binary: hadolint-sarif
+          version: 0.3.7
+        - binary: clippy-sarif
+          version: 0.3.7
+        - binary: clang-tidy-sarif
+          version: 0.3.7
+      source:
+        registry_url: quay.io/cidverse/sarifrs
     - image: quay.io/cidverse/scorecard:4.10.2
       provides:
         - binary: scorecard
