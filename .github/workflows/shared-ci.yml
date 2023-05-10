@@ -50,6 +50,12 @@ on:
         required: false
       MAVEN_REPO_PASSWORD:
         required: false
+      MAVEN_GPG_SIGN_PRIVATEKEY:
+        required: false
+      MAVEN_GPG_SIGN_PASSWORD:
+        required: false
+      MAVEN_GPG_SIGN_KEYID:
+        required: false
 
 # permissions, see https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#permissions and https://docs.github.com/en/rest/overview/permissions-required-for-github-apps
 permissions:
@@ -270,6 +276,9 @@ jobs:
           MAVEN_REPO_URL: ${{ secrets.MAVEN_REPO_URL }}
           MAVEN_REPO_USERNAME: ${{ secrets.MAVEN_REPO_USERNAME }}
           MAVEN_REPO_PASSWORD: ${{ secrets.MAVEN_REPO_PASSWORD }}
+          MAVEN_GPG_SIGN_PRIVATEKEY: ${{ secrets.MAVEN_GPG_SIGN_PRIVATEKEY }}
+          MAVEN_GPG_SIGN_PASSWORD: ${{ secrets.MAVEN_GPG_SIGN_PASSWORD }}
+          MAVEN_GPG_SIGN_KEYID: ${{ secrets.MAVEN_GPG_SIGN_KEYID }}
         run: |
           cid --log-level=${CID_LOGLEVEL:-info} workflow run "$CID_WORKFLOW" --stage publish
 
