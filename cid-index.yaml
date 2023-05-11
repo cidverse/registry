@@ -585,22 +585,10 @@ actions:
                 The SonarQube authentication token.
               required: false
               internal: false
-            - value: NCI_REPOSITORY_HOST_SERVER
-              pattern: false
-              description: |
-                The repository host server.
-              required: false
-              internal: true
-            - value: NCI_PROJECT_.*
+            - value: NCI_.*
               pattern: true
               description: |
-                The project properties sonar needs to identify the repository.
-              required: false
-              internal: true
-            - value: NCI_COMMIT_.*
-              pattern: true
-              description: |
-                The commit properties sonar needs to identify the revision.
+                The project properties sonar needs to identify the repository, commit, merge request, etc.
               required: false
               internal: true
     - name: qodana-scan
