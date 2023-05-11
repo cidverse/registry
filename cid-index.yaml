@@ -555,12 +555,42 @@ actions:
           expression: ENV["SONAR_TOKEN"] != "" && NCI_COMMIT_REF_TYPE == "branch"
       access:
         env:
-            - value: SONAR_.*
-              pattern: true
+            - value: SONAR_HOST_URL
+              pattern: false
               description: |
-                The SonarQube authentication properties to use for scanning.
+                The SonarQube host URL.
               required: false
               internal: false
+            - value: SONAR_ORGANIZATION
+              pattern: false
+              description: |
+                The SonarQube organization.
+              required: false
+              internal: false
+            - value: SONAR_PROJECTKEY
+              pattern: false
+              description: |
+                The SonarQube project key.
+              required: false
+              internal: false
+            - value: SONAR_DEFAULT_BRANCH
+              pattern: false
+              description: |
+                The SonarQube default branch.
+              required: false
+              internal: false
+            - value: SONAR_TOKEN
+              pattern: false
+              description: |
+                The SonarQube authentication token.
+              required: false
+              internal: false
+            - value: NCI_REPOSITORY_HOST_SERVER
+              pattern: false
+              description: |
+                The repository host server.
+              required: false
+              internal: true
             - value: NCI_PROJECT_.*
               pattern: true
               description: |
@@ -1289,6 +1319,23 @@ images:
       provides:
         - binary: helm
           version: 3.11.3
+      cache:
+        - id: registry-auth
+          dir: /app/.config/helm/registry
+        - id: helm-config
+          dir: /app/.config/helm
+        - id: helm-cache
+          dir: /app/.cache/helm/cache
+        - id: helm-plugins
+          dir: /app/.cache/helm/plugins
+        - id: helm-repository
+          dir: /app/.cache/helm/repository
+      source:
+        registry_url: quay.io/cidverse/helm
+    - image: quay.io/cidverse/helm:3.12.0
+      provides:
+        - binary: helm
+          version: 3.12.0
       cache:
         - id: registry-auth
           dir: /app/.config/helm/registry

@@ -75,10 +75,25 @@ actions:
         expression: ENV["SONAR_TOKEN"] != "" && NCI_COMMIT_REF_TYPE == "branch"
     access:
       env:
-        - value: SONAR_.*
-          pattern: true
+        - value: SONAR_HOST_URL
           description: |
-            The SonarQube authentication properties to use for scanning.
+            The SonarQube host URL.
+        - value: SONAR_ORGANIZATION
+          description: |
+            The SonarQube organization.
+        - value: SONAR_PROJECTKEY
+          description: |
+            The SonarQube project key.
+        - value: SONAR_DEFAULT_BRANCH
+          description: |
+            The SonarQube default branch.
+        - value: SONAR_TOKEN
+          description: |
+            The SonarQube authentication token.
+        - value: NCI_REPOSITORY_HOST_SERVER
+          description: |
+            The repository host server.
+          internal: true
         - value: NCI_PROJECT_.*
           pattern: true
           description: |
