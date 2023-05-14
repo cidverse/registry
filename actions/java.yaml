@@ -27,6 +27,22 @@ actions:
         expression: MODULE_BUILD_SYSTEM == "gradle"
       - type: cel
         expression: MODULE_BUILD_SYSTEM == "maven"
+  - name: java-gradle-wrapper-scan
+    category: scan
+    description: |
+      Verifies the integrity of the gradle-wrapper.
+
+      - queries information from https://services.gradle.org/versions/all
+      - verifies the distribution hash in the gradle-wrapper.properties file against `checksumUrl`
+      - verifies the gradle-wrapper.jar hash against `wrapperChecksumUrl`
+    type: container
+    container:
+      image: quay.io/cidverse/cid-actions-go:latest
+      command: central run java-gradle-wrapper-scan
+    scope: module
+    rules:
+      - type: cel
+        expression: MODULE_BUILD_SYSTEM == "gradle"
   - name: java-publish
     category: publish
     description: |

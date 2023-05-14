@@ -278,6 +278,22 @@ actions:
           expression: MODULE_BUILD_SYSTEM == "gradle"
         - type: cel
           expression: MODULE_BUILD_SYSTEM == "maven"
+    - name: java-gradle-wrapper-scan
+      category: scan
+      type: container
+      container:
+        image: quay.io/cidverse/cid-actions-go:latest
+        command: central run java-gradle-wrapper-scan
+      description: |
+        Verifies the integrity of the gradle-wrapper.
+
+        - queries information from https://services.gradle.org/versions/all
+        - verifies the distribution hash in the gradle-wrapper.properties file against `checksumUrl`
+        - verifies the gradle-wrapper.jar hash against `wrapperChecksumUrl`
+      scope: module
+      rules:
+        - type: cel
+          expression: MODULE_BUILD_SYSTEM == "gradle"
     - name: java-publish
       category: publish
       type: container
@@ -1559,6 +1575,12 @@ images:
           version: 4.21.1
       source:
         registry_url: quay.io/cidverse/liquibase
+    - image: quay.io/cidverse/liquibase:4.22.0
+      provides:
+        - binary: liquibase
+          version: 4.22.0
+      source:
+        registry_url: quay.io/cidverse/liquibase
     - image: quay.io/cidverse/build-go:1.19.3
       provides:
         - binary: go
@@ -2609,6 +2631,12 @@ images:
           dir: /app/.docker
       source:
         registry_url: quay.io/cidverse/cosign
+    - image: quay.io/cidverse/flake8:6.0.0
+      provides:
+        - binary: flake8
+          version: 6.0.0
+      source:
+        registry_url: quay.io/cidverse/flake8
     - image: quay.io/cidverse/fossacli:2.7.2
       provides:
         - binary: fossa
@@ -3370,6 +3398,7 @@ workflows:
                 squash: true
         - name: scan
           actions:
+            - id: cid/java-gradle-wrapper-scan
             - id: cid/helm-lint
             - id: cid/semgrep-scan
             - id: cid/sonarqube-scan

@@ -40,6 +40,7 @@ workflows:
               rebuild: true
       - name: scan
         actions:
+          - id: cid/java-gradle-wrapper-scan
           #- id: cid/python-lint
           - id: cid/helm-lint
           #- id: cid/ossf-scorecard-scan
