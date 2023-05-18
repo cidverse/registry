@@ -95,6 +95,10 @@ actions:
           description: |
             The project properties sonar needs to identify the repository, commit, merge request, etc.
           internal: true
+        - value: GITHUB_TOKEN
+          description: |
+            The GitHub authentication token.
+          internal: true
   # qodana
   - name: qodana-scan
     category: sast
