@@ -250,7 +250,7 @@ jobs:
       contents: write
       # publish packages
       packages: write
-    if: github.event.name != 'pull_request'
+    if: startsWith(github.ref, 'refs/pull/') == false
     environment:
       name: ${{ github.ref == 'refs/tags/v*' && inputs.env-production || inputs.env-development }}
     steps:
@@ -290,7 +290,7 @@ jobs:
     permissions:
       pages: write
       id-token: write
-    if: github.event.name != 'pull_request' && inputs.job-pages == true
+    if: startsWith(github.ref, 'refs/pull/') == false && inputs.job-pages == true
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
