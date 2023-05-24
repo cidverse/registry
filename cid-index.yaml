@@ -607,12 +607,6 @@ actions:
                 The project properties sonar needs to identify the repository, commit, merge request, etc.
               required: false
               internal: true
-            - value: GITHUB_TOKEN
-              pattern: false
-              description: |
-                The GitHub authentication token.
-              required: false
-              internal: true
     - name: qodana-scan
       category: sast
       type: container
@@ -935,6 +929,17 @@ images:
       provides:
         - binary: pipenv
           version: 2023.4.20
+      cache:
+        - id: pipenv-virtualenvs
+          dir: /app/.local/share/virtualenvs
+        - id: pipenv-cache
+          dir: /app/.cache/pipenv
+      source:
+        registry_url: quay.io/cidverse/pipenv
+    - image: quay.io/cidverse/pipenv:2023.5.19
+      provides:
+        - binary: pipenv
+          version: 2023.5.19
       cache:
         - id: pipenv-virtualenvs
           dir: /app/.local/share/virtualenvs
@@ -1455,6 +1460,12 @@ images:
           version: 1.27.1
       source:
         registry_url: quay.io/cidverse/kubectl
+    - image: quay.io/cidverse/kubectl:1.27.2
+      provides:
+        - binary: kubectl
+          version: 1.27.2
+      source:
+        registry_url: quay.io/cidverse/kubectl
     - image: quay.io/cidverse/oras:0.16.0
       provides:
         - binary: oras
@@ -1600,6 +1611,15 @@ images:
       provides:
         - binary: go
           version: "1.20"
+      cache:
+        - id: go-pkg
+          dir: /go/pkg
+      source:
+        registry_url: quay.io/cidverse/build-go
+    - image: quay.io/cidverse/build-go:1.20.4
+      provides:
+        - binary: go
+          version: 1.20.4
       cache:
         - id: go-pkg
           dir: /go/pkg
@@ -1972,6 +1992,18 @@ images:
       provides:
         - binary: mockery
           version: 2.25.1
+      source:
+        registry_url: quay.io/cidverse/mockery
+    - image: quay.io/cidverse/mockery:2.28.0
+      provides:
+        - binary: mockery
+          version: 2.28.0
+      source:
+        registry_url: quay.io/cidverse/mockery
+    - image: quay.io/cidverse/mockery:2.28.1
+      provides:
+        - binary: mockery
+          version: 2.28.1
       source:
         registry_url: quay.io/cidverse/mockery
     - image: quay.io/cidverse/rekor:0.10.0
@@ -2430,6 +2462,15 @@ images:
           dir: /app/.cache/semgrep-cache
       source:
         registry_url: quay.io/cidverse/semgrep
+    - image: quay.io/cidverse/semgrep:1.23.0
+      provides:
+        - binary: semgrep
+          version: 1.23.0
+      cache:
+        - id: semgrep-cache
+          dir: /app/.cache/semgrep-cache
+      source:
+        registry_url: quay.io/cidverse/semgrep
     - image: quay.io/cidverse/applicationinspector:1.5.13
       provides:
         - binary: appinspector
@@ -2506,6 +2547,12 @@ images:
       provides:
         - binary: appinspector
           version: 1.8.7
+      source:
+        registry_url: quay.io/cidverse/applicationinspector
+    - image: quay.io/cidverse/applicationinspector:1.8.8
+      provides:
+        - binary: appinspector
+          version: 1.8.8
       source:
         registry_url: quay.io/cidverse/applicationinspector
     - image: quay.io/cidverse/bandit:1.7.4
@@ -2919,6 +2966,24 @@ images:
           dir: /app/.cache/grype
       source:
         registry_url: quay.io/cidverse/grype
+    - image: quay.io/cidverse/grype:0.62.0
+      provides:
+        - binary: grype
+          version: 0.62.0
+      cache:
+        - id: grype-cache
+          dir: /app/.cache/grype
+      source:
+        registry_url: quay.io/cidverse/grype
+    - image: quay.io/cidverse/grype:0.62.1
+      provides:
+        - binary: grype
+          version: 0.62.1
+      cache:
+        - id: grype-cache
+          dir: /app/.cache/grype
+      source:
+        registry_url: quay.io/cidverse/grype
     - image: docker.io/jetbrains/qodana-jvm:latest
       provides:
         - binary: qodana
@@ -3194,6 +3259,18 @@ images:
           version: 0.80.0
       source:
         registry_url: quay.io/cidverse/syft
+    - image: quay.io/cidverse/syft:0.81.0
+      provides:
+        - binary: syft
+          version: 0.81.0
+      source:
+        registry_url: quay.io/cidverse/syft
+    - image: quay.io/cidverse/syft:0.82.0
+      provides:
+        - binary: syft
+          version: 0.82.0
+      source:
+        registry_url: quay.io/cidverse/syft
     - image: quay.io/cidverse/sarifrs:0.3.7
       provides:
         - binary: shellcheck-sarif
@@ -3310,6 +3387,18 @@ images:
           version: 0.111.1
       source:
         registry_url: quay.io/cidverse/hugo
+    - image: quay.io/cidverse/hugo:0.112.1
+      provides:
+        - binary: hugo
+          version: 0.112.1
+      source:
+        registry_url: quay.io/cidverse/hugo
+    - image: quay.io/cidverse/hugo:0.112.3
+      provides:
+        - binary: hugo
+          version: 0.112.3
+      source:
+        registry_url: quay.io/cidverse/hugo
     - image: quay.io/cidverse/mkdocs:1.3.1
       provides:
         - binary: mkdocs
@@ -3359,6 +3448,15 @@ images:
       provides:
         - binary: techdocs-cli
           version: 1.4.1
+      certs:
+        - type: ca-bundle
+          dir: /etc/pki/tls/certs/ca-bundle.crt
+      source:
+        registry_url: quay.io/cidverse/techdocscli
+    - image: quay.io/cidverse/techdocscli:1.4.2
+      provides:
+        - binary: techdocs-cli
+          version: 1.4.2
       certs:
         - type: ca-bundle
           dir: /etc/pki/tls/certs/ca-bundle.crt
