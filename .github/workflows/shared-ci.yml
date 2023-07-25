@@ -22,6 +22,10 @@ on:
         required: false
         default: info
         type: string
+      cid-timeout:
+        required: true
+        type: string
+        default: 30
       env-production:
         description: name of the github environment for production releases
         required: false
@@ -33,9 +37,6 @@ on:
         default: development
         type: string
     secrets:
-      # qodana
-      QODANA_TOKEN:
-        required: false
       # sonarcloud
       SONAR_HOST_URL:
         required: false
@@ -83,6 +84,7 @@ jobs:
   info:
     name: Info
     runs-on: ubuntu-latest
+    timeout-minutes: ${{ inputs.cid-timeout }}
     steps:
       - name: prepare environment
         uses: cidverse/ghact-cid-setup@main
@@ -109,6 +111,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       id-token: write # provenance signing
+    timeout-minutes: ${{ inputs.cid-timeout }}
     steps:
       - name: prepare environment
         uses: cidverse/ghact-cid-setup@main
@@ -141,6 +144,7 @@ jobs:
   test:
     name: Test
     runs-on: ubuntu-latest
+    timeout-minutes: ${{ inputs.cid-timeout }}
     steps:
       - name: prepare environment
         uses: cidverse/ghact-cid-setup@main
@@ -171,6 +175,7 @@ jobs:
     needs: [build, test]
     permissions:
       security-events: write
+    timeout-minutes: ${{ inputs.cid-timeout }}
     steps:
       - name: prepare environment
         uses: cidverse/ghact-cid-setup@main
@@ -211,6 +216,7 @@ jobs:
     needs: [build]
     permissions:
       id-token: write # provenance signing
+    timeout-minutes: ${{ inputs.cid-timeout }}
     steps:
       - name: prepare environment
         uses: cidverse/ghact-cid-setup@main
@@ -253,6 +259,7 @@ jobs:
     if: startsWith(github.ref, 'refs/pull/') == false
     environment:
       name: ${{ github.ref == 'refs/tags/v*' && inputs.env-production || inputs.env-development }}
+    timeout-minutes: ${{ inputs.cid-timeout }}
     steps:
       - name: prepare environment
         uses: cidverse/ghact-cid-setup@main
@@ -294,6 +301,7 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+    timeout-minutes: ${{ inputs.cid-timeout }}
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
