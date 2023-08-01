@@ -1,4 +1,3 @@
-
 actions:
   # changelog
   - name: changelog-generate
