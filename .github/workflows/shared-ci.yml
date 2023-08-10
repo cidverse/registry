@@ -91,7 +91,7 @@ jobs:
         with:
           version: ${{ inputs.cid-version }}
       - name: checkout
-        uses: actions/checkout@v3.5.3
+        uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
         with:
           fetch-depth: 0
       - name: info
@@ -118,7 +118,7 @@ jobs:
         with:
           version: ${{ inputs.cid-version }}
       - name: checkout
-        uses: actions/checkout@v3.5.3
+        uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
         with:
           fetch-depth: 0
       - name: build
@@ -128,7 +128,7 @@ jobs:
         run: |
           cid --log-level=${CID_LOGLEVEL:-info} workflow run "$CID_WORKFLOW" --stage build
       - name: upload artifacts
-        uses: actions/upload-artifact@v3.1.2
+        uses: actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce # v3.1.2
         with:
           name: build-${{ github.run_id }}
           path: .dist
@@ -143,7 +143,7 @@ jobs:
           echo "::set-output name=repo_name::$repo_name"
       - name: github pages artifact
         if: inputs.job-pages == true
-        uses: actions/upload-pages-artifact@v2
+        uses: actions/upload-pages-artifact@a753861a5debcf57bf8b404356158c8e1e33150c # v2.0.0
         with:
           path: .dist/${{ steps.extract_repo_name.outputs.repo_name }}/html/docs/ 
 
@@ -158,7 +158,7 @@ jobs:
         with:
           version: ${{ inputs.cid-version }}
       - name: checkout
-        uses: actions/checkout@v3.5.3
+        uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
         with:
           fetch-depth: 0
       - name: test
@@ -168,7 +168,7 @@ jobs:
         run: |
           cid --log-level=${CID_LOGLEVEL:-info} workflow run "$CID_WORKFLOW" --stage test
       - name: upload artifacts
-        uses: actions/upload-artifact@v3.1.2
+        uses: actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce # v3.1.2
         with:
           name: test-${{ github.run_id }}
           path: .dist
@@ -189,17 +189,17 @@ jobs:
         with:
           version: ${{ inputs.cid-version }}
       - name: checkout
-        uses: actions/checkout@v3.5.3
+        uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
         with:
           fetch-depth: 0
       - name: download artifacts > build
-        uses: actions/download-artifact@v3.0.2
+        uses: actions/download-artifact@9bc31d5ccc31df68ecc42ccf4149144866c47d8a # v3.0.2
         with:
           name: build-${{ github.run_id }}
           path: .dist
         continue-on-error: true
       - name: download artifacts > test
-        uses: actions/download-artifact@v3.0.2
+        uses: actions/download-artifact@9bc31d5ccc31df68ecc42ccf4149144866c47d8a # v3.0.2
         with:
           name: test-${{ github.run_id }}
           path: .dist
@@ -230,11 +230,11 @@ jobs:
         with:
           version: ${{ inputs.cid-version }}
       - name: checkout
-        uses: actions/checkout@v3.5.3
+        uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
         with:
           fetch-depth: 0
       - name: download artifacts > build
-        uses: actions/download-artifact@v3.0.2
+        uses: actions/download-artifact@9bc31d5ccc31df68ecc42ccf4149144866c47d8a # v3.0.2
         with:
           name: build-${{ github.run_id }}
           path: .dist
@@ -246,7 +246,7 @@ jobs:
         run: |
           cid --log-level=${CID_LOGLEVEL:-info} workflow run "$CID_WORKFLOW" --stage package
       - name: upload artifacts
-        uses: actions/upload-artifact@v3.1.2
+        uses: actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce # v3.1.2
         with:
           name: package-${{ github.run_id }}
           path: .dist
@@ -273,11 +273,11 @@ jobs:
         with:
           version: ${{ inputs.cid-version }}
       - name: checkout
-        uses: actions/checkout@v3.5.3
+        uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
         with:
           fetch-depth: 0
       - name: download artifacts > package
-        uses: actions/download-artifact@v3.0.2
+        uses: actions/download-artifact@9bc31d5ccc31df68ecc42ccf4149144866c47d8a # v3.0.2
         with:
           name: package-${{ github.run_id }}
           path: .dist
@@ -312,4 +312,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v2.0.4
+        uses: actions/deploy-pages@9dbe3824824f8a1377b8e298bafde1a50ede43e5 # v2.0.4
