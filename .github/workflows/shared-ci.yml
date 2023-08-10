@@ -26,6 +26,59 @@ on:
         required: false
         type: string
         default: 30
+      egress-policy:
+        required: false
+        type: string
+        description: Allowed modes are 'block' and 'audit'. Using https://github.com/step-security/harden-runner to harden the runner.
+        default: block
+      egress-allowed-endpoints:
+        required: false
+        type: string
+        description: Allowed endpoints for egress traffic if egress-policy is set to 'block'.
+        default: >-
+          api.github.com:443
+          github.com:443
+          objects.githubusercontent.com:443
+          raw.githubusercontent.com:443
+          quay.io:443
+          cdn01.quay.io:443
+          cdn02.quay.io:443
+          cdn03.quay.io:443
+          plugins.gradle.org:443
+          plugins-artifacts.gradle.org:443
+          services.gradle.org:443
+          downloads.gradle.org:443
+          repo.maven.apache.org:443
+          repo1.maven.org:443
+          jcenter.bintray.com:443
+      egress-allowed-endpoints-build:
+        required: false
+        type: string
+        description: Allowed endpoints for egress traffic if egress-policy is set to 'block'.
+        default: ""
+      egress-allowed-endpoints-test:
+        required: false
+        type: string
+        description: Allowed endpoints for egress traffic if egress-policy is set to 'block'.
+        default: ""
+      egress-allowed-endpoints-scan:
+        required: false
+        type: string
+        description: Allowed endpoints for egress traffic if egress-policy is set to 'block'.
+        default: >-
+          scanner.sonarcloud.io:443
+          semgrep.dev:443
+          sonarcloud.io:443
+      egress-allowed-endpoints-package:
+        required: false
+        type: string
+        description: Allowed endpoints for egress traffic if egress-policy is set to 'block'.
+        default: ""
+      egress-allowed-endpoints-publish:
+        required: false
+        type: string
+        description: Allowed endpoints for egress traffic if egress-policy is set to 'block'.
+        default: ""
       env-production:
         description: name of the github environment for production releases
         required: false
@@ -60,7 +113,7 @@ on:
 
 # permissions, see https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#permissions and https://docs.github.com/en/rest/overview/permissions-required-for-github-apps
 permissions:
-  actions: none
+  actions: read # detection of GitHub Actions environment
   checks: none
   contents: read
   deployments: none
@@ -86,6 +139,13 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: ${{ fromJSON(inputs.cid-timeout) }}
     steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@8ca2b8b2ece13480cda6dacd3511b49857a23c09 # v2.5.1
+        with:
+          disable-sudo: true
+          egress-policy: ${{ inputs.egress-policy }}
+          allowed-endpoints: >
+            ${{ inputs.egress-allowed-endpoints }}
       - name: prepare environment
         uses: cidverse/ghact-cid-setup@main
         with:
@@ -113,6 +173,12 @@ jobs:
       id-token: write # provenance signing
     timeout-minutes: ${{ fromJSON(inputs.cid-timeout) }}
     steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@8ca2b8b2ece13480cda6dacd3511b49857a23c09 # v2.5.1
+        with:
+          disable-sudo: true
+          egress-policy: ${{ inputs.egress-policy }}
+          allowed-endpoints: ${{ inputs.egress-allowed-endpoints }} ${{ inputs.egress-allowed-endpoints-build }}
       - name: prepare environment
         uses: cidverse/ghact-cid-setup@main
         with:
@@ -153,6 +219,12 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: ${{ fromJSON(inputs.cid-timeout) }}
     steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@8ca2b8b2ece13480cda6dacd3511b49857a23c09 # v2.5.1
+        with:
+          disable-sudo: true
+          egress-policy: ${{ inputs.egress-policy }}
+          allowed-endpoints: ${{ inputs.egress-allowed-endpoints }} ${{ inputs.egress-allowed-endpoints-test }}
       - name: prepare environment
         uses: cidverse/ghact-cid-setup@main
         with:
@@ -184,6 +256,12 @@ jobs:
       security-events: write
     timeout-minutes: ${{ fromJSON(inputs.cid-timeout) }}
     steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@8ca2b8b2ece13480cda6dacd3511b49857a23c09 # v2.5.1
+        with:
+          disable-sudo: true
+          egress-policy: ${{ inputs.egress-policy }}
+          allowed-endpoints: ${{ inputs.egress-allowed-endpoints }} ${{ inputs.egress-allowed-endpoints-scan }}
       - name: prepare environment
         uses: cidverse/ghact-cid-setup@main
         with:
@@ -225,6 +303,12 @@ jobs:
       id-token: write # provenance signing
     timeout-minutes: ${{ fromJSON(inputs.cid-timeout) }}
     steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@8ca2b8b2ece13480cda6dacd3511b49857a23c09 # v2.5.1
+        with:
+          disable-sudo: true
+          egress-policy: ${{ inputs.egress-policy }}
+          allowed-endpoints: ${{ inputs.egress-allowed-endpoints }} ${{ inputs.egress-allowed-endpoints-package }}
       - name: prepare environment
         uses: cidverse/ghact-cid-setup@main
         with:
@@ -268,6 +352,13 @@ jobs:
       name: ${{ github.ref == 'refs/tags/v*' && inputs.env-production || inputs.env-development }}
     timeout-minutes: ${{ fromJSON(inputs.cid-timeout) }}
     steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@8ca2b8b2ece13480cda6dacd3511b49857a23c09 # v2.5.1
+        with:
+          disable-sudo: true
+          egress-policy: ${{ inputs.egress-policy }}
+          allowed-endpoints: >
+            ${{ inputs.egress-allowed-endpoints }} ${{ inputs.egress-allowed-endpoints-publish }}
       - name: prepare environment
         uses: cidverse/ghact-cid-setup@main
         with:
@@ -310,6 +401,12 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     timeout-minutes: ${{ fromJSON(inputs.cid-timeout) }}
     steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@8ca2b8b2ece13480cda6dacd3511b49857a23c09 # v2.5.1
+        with:
+          disable-sudo: true
+          egress-policy: ${{ inputs.egress-policy }}
+          allowed-endpoints: ${{ inputs.egress-allowed-endpoints }} ${{ inputs.egress-allowed-endpoints-publish }}
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@9dbe3824824f8a1377b8e298bafde1a50ede43e5 # v2.0.4
