@@ -51,6 +51,8 @@ on:
           repo.maven.apache.org:443
           repo1.maven.org:443
           jcenter.bintray.com:443
+          proxy.golang.org:443
+          storage.googleapis.com:443
       egress-allowed-endpoints-build:
         required: false
         type: string

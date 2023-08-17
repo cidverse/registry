@@ -1672,6 +1672,12 @@ images:
           version: 1.27.4
       source:
         registry_url: quay.io/cidverse/kubectl
+    - image: quay.io/cidverse/kubectl:1.28.0
+      provides:
+        - binary: kubectl
+          version: 1.28.0
+      source:
+        registry_url: quay.io/cidverse/kubectl
     - image: quay.io/cidverse/oras:0.16.0
       provides:
         - binary: oras
@@ -2572,6 +2578,12 @@ images:
           version: 1.17.3
       source:
         registry_url: quay.io/cidverse/ggshield
+    - image: quay.io/cidverse/ggshield:1.18.0
+      provides:
+        - binary: ggshield
+          version: 1.18.0
+      source:
+        registry_url: quay.io/cidverse/ggshield
     - image: quay.io/cidverse/gitleaks:8.8.12
       provides:
         - binary: gitleaks
@@ -2912,6 +2924,15 @@ images:
       provides:
         - binary: semgrep
           version: 1.35.0
+      cache:
+        - id: semgrep-cache
+          dir: /app/.cache/semgrep-cache
+      source:
+        registry_url: quay.io/cidverse/semgrep
+    - image: quay.io/cidverse/semgrep:1.36.0
+      provides:
+        - binary: semgrep
+          version: 1.36.0
       cache:
         - id: semgrep-cache
           dir: /app/.cache/semgrep-cache
@@ -3843,6 +3864,12 @@ images:
       provides:
         - binary: syft
           version: 0.86.1
+      source:
+        registry_url: quay.io/cidverse/syft
+    - image: quay.io/cidverse/syft:0.87.0
+      provides:
+        - binary: syft
+          version: 0.87.0
       source:
         registry_url: quay.io/cidverse/syft
     - image: quay.io/cidverse/sarifrs:0.3.7
