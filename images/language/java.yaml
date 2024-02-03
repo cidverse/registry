@@ -38,3 +38,16 @@ images:
         dir: /root/.m2
     source:
       registry_url: quay.io/cidverse/base-coretto-17
+  - image: quay.io/cidverse/base-coretto-21:${{TAG}}
+    provides:
+      - binary: java
+        version: ${{VERSION}}
+      - binary: java-exec
+        version: ${{VERSION}}
+    cache:
+      - id: java-gradle
+        dir: /root/.gradle
+      - id: java-maven
+        dir: /root/.m2
+    source:
+      registry_url: quay.io/cidverse/base-coretto-21

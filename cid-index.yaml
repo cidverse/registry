@@ -1291,10 +1291,12 @@ images:
           version: 1.11.0
       source:
         registry_url: quay.io/cidverse/runpodctl
-    - image: ghcr.io/primelib/primecodegen:0.0.1
+    - image: quay.io/cidverse/runpodctl:1.12.0
       provides:
-        - binary: primecodegen
-          version: 0.0.1
+        - binary: runpodctl
+          version: 1.12.0
+      source:
+        registry_url: quay.io/cidverse/runpodctl
     - image: quay.io/cidverse/buildah:1.29.0
       provides:
         - binary: buildah
@@ -2408,6 +2410,19 @@ images:
           dir: /root/.m2
       source:
         registry_url: quay.io/cidverse/base-coretto-17
+    - image: quay.io/cidverse/base-coretto-21:21.0.2.13.1
+      provides:
+        - binary: java
+          version: 21.0.2.13.1
+        - binary: java-exec
+          version: 21.0.2.13.1
+      cache:
+        - id: java-gradle
+          dir: /root/.gradle
+        - id: java-maven
+          dir: /root/.m2
+      source:
+        registry_url: quay.io/cidverse/base-coretto-21
     - image: quay.io/cidverse/native-image:22.3.0
       provides:
         - binary: native-image
@@ -2796,6 +2811,12 @@ images:
       provides:
         - binary: rekor
           version: 1.3.3
+      source:
+        registry_url: quay.io/cidverse/rekor
+    - image: quay.io/cidverse/rekor:1.3.5
+      provides:
+        - binary: rekor
+          version: 1.3.5
       source:
         registry_url: quay.io/cidverse/rekor
     - image: quay.io/cidverse/reposync:0.2.0
@@ -3429,6 +3450,15 @@ images:
       provides:
         - binary: semgrep
           version: 1.59.0
+      cache:
+        - id: semgrep-cache
+          dir: /app/.cache/semgrep-cache
+      source:
+        registry_url: quay.io/cidverse/semgrep
+    - image: quay.io/cidverse/semgrep:1.59.1
+      provides:
+        - binary: semgrep
+          version: 1.59.1
       cache:
         - id: semgrep-cache
           dir: /app/.cache/semgrep-cache
