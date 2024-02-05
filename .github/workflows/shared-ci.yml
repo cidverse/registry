@@ -273,13 +273,13 @@ jobs:
         with:
           fetch-depth: 0
       - name: download artifacts > build
-        uses: actions/download-artifact@6b208ae046db98c579e8a3aa621ab581ff575935 # v4.1.1
+        uses: actions/download-artifact@eaceaf801fd36c7dee90939fad912460b18a1ffe # v4.1.2
         with:
           name: build-${{ github.run_id }}
           path: .dist
         continue-on-error: true
       - name: download artifacts > test
-        uses: actions/download-artifact@6b208ae046db98c579e8a3aa621ab581ff575935 # v4.1.1
+        uses: actions/download-artifact@eaceaf801fd36c7dee90939fad912460b18a1ffe # v4.1.2
         with:
           name: test-${{ github.run_id }}
           path: .dist
@@ -320,7 +320,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: download artifacts > build
-        uses: actions/download-artifact@6b208ae046db98c579e8a3aa621ab581ff575935 # v4.1.1
+        uses: actions/download-artifact@eaceaf801fd36c7dee90939fad912460b18a1ffe # v4.1.2
         with:
           name: build-${{ github.run_id }}
           path: .dist
@@ -370,7 +370,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: download artifacts > package
-        uses: actions/download-artifact@6b208ae046db98c579e8a3aa621ab581ff575935 # v4.1.1
+        uses: actions/download-artifact@eaceaf801fd36c7dee90939fad912460b18a1ffe # v4.1.2
         with:
           name: package-${{ github.run_id }}
           path: .dist
