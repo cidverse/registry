@@ -10,6 +10,9 @@ images:
         dir: /root/.gradle
       - id: java-maven
         dir: /root/.m2
+    certs:
+      - type: java-keystore
+        dir: /usr/lib/jvm/coretto/lib/security/cacerts
     source:
       registry_url: quay.io/cidverse/base-coretto-8
   - image: quay.io/cidverse/base-coretto-11:${{TAG}}
@@ -23,6 +26,9 @@ images:
         dir: /root/.gradle
       - id: java-maven
         dir: /root/.m2
+    certs:
+      - type: java-keystore
+        dir: /usr/lib/jvm/coretto/lib/security/cacerts
     source:
       registry_url: quay.io/cidverse/base-coretto-11
   - image: quay.io/cidverse/base-coretto-17:${{TAG}}
@@ -36,6 +42,9 @@ images:
         dir: /root/.gradle
       - id: java-maven
         dir: /root/.m2
+    certs:
+      - type: java-keystore
+        dir: /usr/lib/jvm/coretto/lib/security/cacerts
     source:
       registry_url: quay.io/cidverse/base-coretto-17
   - image: quay.io/cidverse/base-coretto-21:${{TAG}}
@@ -49,5 +58,8 @@ images:
         dir: /root/.gradle
       - id: java-maven
         dir: /root/.m2
+    certs:
+      - type: java-keystore
+        dir: /usr/lib/jvm/coretto/lib/security/cacerts
     source:
       registry_url: quay.io/cidverse/base-coretto-21
