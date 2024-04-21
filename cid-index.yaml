@@ -1753,6 +1753,23 @@ images:
           dir: /app/.cache/helm/repository
       source:
         registry_url: quay.io/cidverse/helm
+    - image: quay.io/cidverse/helm:3.14.4
+      provides:
+        - binary: helm
+          version: 3.14.4
+      cache:
+        - id: registry-auth
+          dir: /app/.config/helm/registry
+        - id: helm-config
+          dir: /app/.config/helm
+        - id: helm-cache
+          dir: /app/.cache/helm/cache
+        - id: helm-plugins
+          dir: /app/.cache/helm/plugins
+        - id: helm-repository
+          dir: /app/.cache/helm/repository
+      source:
+        registry_url: quay.io/cidverse/helm
     - image: quay.io/cidverse/kubectl:1.23.8
       provides:
         - binary: kubectl
@@ -2171,6 +2188,15 @@ images:
       provides:
         - binary: go
           version: 1.21.4
+      cache:
+        - id: go-pkg
+          dir: /go/pkg
+      source:
+        registry_url: quay.io/cidverse/build-go
+    - image: quay.io/cidverse/build-go:1.22.0
+      provides:
+        - binary: go
+          version: 1.22.0
       cache:
         - id: go-pkg
           dir: /go/pkg
