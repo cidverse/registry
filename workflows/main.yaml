@@ -10,15 +10,6 @@ workflows:
       - name: build
         actions:
           - id: cid/go-build
-            config:
-              # cross-platform build
-              platform:
-                - goos: windows
-                  goarch: amd64
-                - goos: linux
-                  goarch: amd64
-                - goos: darwin
-                  goarch: amd64
           - id: cid/java-build
           - id: cid/python-build
           - id: cid/node-build
