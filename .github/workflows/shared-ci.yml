@@ -68,9 +68,10 @@ on:
         type: string
         description: Allowed endpoints for egress traffic if egress-policy is set to 'block'.
         default: >-
-          scanner.sonarcloud.io:443
           semgrep.dev:443
           sonarcloud.io:443
+          api.sonarcloud.io:443
+          scanner.sonarcloud.io:443
       egress-allowed-endpoints-package:
         required: false
         type: string
