@@ -1248,6 +1248,12 @@ images:
           version: 2.53.0
       source:
         registry_url: quay.io/cidverse/githubcli
+    - image: quay.io/cidverse/githubcli:2.54.0
+      provides:
+        - binary: gh
+          version: 2.54.0
+      source:
+        registry_url: quay.io/cidverse/githubcli
     - image: quay.io/cidverse/glab:1.22.0
       provides:
         - binary: glab
@@ -1315,6 +1321,15 @@ images:
       provides:
         - binary: glab
           version: 1.44.1
+      cache:
+        - id: glab-auth
+          dir: /app/.config/glab-cli
+      source:
+        registry_url: quay.io/cidverse/glab
+    - image: quay.io/cidverse/glab:1.45.0
+      provides:
+        - binary: glab
+          version: 1.45.0
       cache:
         - id: glab-auth
           dir: /app/.config/glab-cli
@@ -1962,6 +1977,23 @@ images:
           dir: /app/.cache/helm/repository
       source:
         registry_url: quay.io/cidverse/helmfile
+    - image: quay.io/cidverse/helmfile:0.167.0
+      provides:
+        - binary: helm
+          version: 0.167.0
+      cache:
+        - id: registry-auth
+          dir: /app/.config/helm/registry
+        - id: helm-config
+          dir: /app/.config/helm
+        - id: helm-cache
+          dir: /app/.cache/helm/cache
+        - id: helm-plugins
+          dir: /app/.cache/helm/plugins
+        - id: helm-repository
+          dir: /app/.cache/helm/repository
+      source:
+        registry_url: quay.io/cidverse/helmfile
     - image: quay.io/cidverse/kubectl:1.23.8
       provides:
         - binary: kubectl
@@ -2328,6 +2360,15 @@ images:
           dir: /app/.docker
       source:
         registry_url: quay.io/cidverse/skopeo
+    - image: quay.io/cidverse/skopeo:1.16.0
+      provides:
+        - binary: skopeo
+          version: 1.16.0
+      cache:
+        - id: registry-auth
+          dir: /app/.docker
+      source:
+        registry_url: quay.io/cidverse/skopeo
     - image: quay.io/cidverse/liquibase:4.19.0
       provides:
         - binary: liquibase
@@ -2380,6 +2421,12 @@ images:
       provides:
         - binary: liquibase
           version: 4.29.0
+      source:
+        registry_url: quay.io/cidverse/liquibase
+    - image: quay.io/cidverse/liquibase:4.29.1
+      provides:
+        - binary: liquibase
+          version: 4.29.1
       source:
         registry_url: quay.io/cidverse/liquibase
     - image: quay.io/cidverse/build-go:1.19.3
@@ -3189,6 +3236,12 @@ images:
           version: 2.42.3
       source:
         registry_url: quay.io/cidverse/mockery
+    - image: quay.io/cidverse/mockery:2.44.1
+      provides:
+        - binary: mockery
+          version: 2.44.1
+      source:
+        registry_url: quay.io/cidverse/mockery
     - image: quay.io/cidverse/rekor:0.10.0
       provides:
         - binary: rekor
@@ -3499,6 +3552,12 @@ images:
       provides:
         - binary: ggshield
           version: 1.28.0
+      source:
+        registry_url: quay.io/cidverse/ggshield
+    - image: quay.io/cidverse/ggshield:1.30.1
+      provides:
+        - binary: ggshield
+          version: 1.30.1
       source:
         registry_url: quay.io/cidverse/ggshield
     - image: quay.io/cidverse/gitleaks:8.10.1
@@ -3991,6 +4050,15 @@ images:
       provides:
         - binary: semgrep
           version: 1.81.0
+      cache:
+        - id: semgrep-cache
+          dir: /app/.cache/semgrep-cache
+      source:
+        registry_url: quay.io/cidverse/semgrep
+    - image: quay.io/cidverse/semgrep:1.83.0
+      provides:
+        - binary: semgrep
+          version: 1.83.0
       cache:
         - id: semgrep-cache
           dir: /app/.cache/semgrep-cache
@@ -4791,6 +4859,15 @@ images:
           dir: /app/.cache/grype
       source:
         registry_url: quay.io/cidverse/grype
+    - image: quay.io/cidverse/grype:0.79.4
+      provides:
+        - binary: grype
+          version: 0.79.4
+      cache:
+        - id: grype-cache
+          dir: /app/.cache/grype
+      source:
+        registry_url: quay.io/cidverse/grype
     - image: docker.io/jetbrains/qodana-jvm:latest
       provides:
         - binary: qodana
@@ -5184,6 +5261,12 @@ images:
           version: 0.97.1
       source:
         registry_url: quay.io/cidverse/syft
+    - image: quay.io/cidverse/syft:1.10.0
+      provides:
+        - binary: syft
+          version: 1.10.0
+      source:
+        registry_url: quay.io/cidverse/syft
     - image: quay.io/cidverse/syft:1.2.0
       provides:
         - binary: syft
@@ -5250,6 +5333,12 @@ images:
       provides:
         - binary: scorecard
           version: 4.12.0
+      source:
+        registry_url: quay.io/cidverse/scorecard
+    - image: quay.io/cidverse/scorecard:5.0.0
+      provides:
+        - binary: scorecard
+          version: 5.0.0
       source:
         registry_url: quay.io/cidverse/scorecard
     - image: quay.io/cidverse/slsa-verifier:2.0.1
@@ -5466,6 +5555,12 @@ images:
       provides:
         - binary: hugo
           version: 0.129.0
+      source:
+        registry_url: quay.io/cidverse/hugo
+    - image: quay.io/cidverse/hugo:0.131.0
+      provides:
+        - binary: hugo
+          version: 0.131.0
       source:
         registry_url: quay.io/cidverse/hugo
     - image: quay.io/cidverse/mkdocs:1.3.1
