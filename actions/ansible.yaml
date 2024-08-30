@@ -1,0 +1,13 @@
+actions:
+  - name: ansible-lint
+    category: sast
+    description: |
+      Lint the ansible playbooks using ansible-lint.
+    type: container
+    container:
+      image: quay.io/cidverse/cid-actions-go:latest
+      command: central run ansible-lint
+    scope: module
+    rules:
+      - type: cel
+        expression: MODULE_BUILD_SYSTEM == "ansible"
