@@ -6062,6 +6062,10 @@ workflows:
           actions:
             - id: cid/go-test
             - id: cid/java-test
+        - name: lint
+          actions:
+            - id: cid/ansible-lint
+            - id: cid/helm-lint
         - name: package
           actions:
             - id: cid/upx-optimize
@@ -6073,8 +6077,6 @@ workflows:
         - name: scan
           actions:
             - id: cid/java-gradle-wrapper-scan
-            - id: cid/ansible-lint
-            - id: cid/helm-lint
             - id: cid/semgrep-scan
             - id: cid/sonarqube-scan
             - id: cid/qodana-scan
