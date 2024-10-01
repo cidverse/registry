@@ -5659,6 +5659,34 @@ images:
           dir: /app/sonarscanner/jre/lib/security/cacerts
       source:
         registry_url: quay.io/cidverse/sonarscannercli
+    - image: quay.io/cidverse/sonarscannercli:6.2.0.4584
+      provides:
+        - binary: sonar-scanner
+          version: 6.2.0.4584
+      cache:
+        - id: sonarscanner-cache
+          dir: /app/.sonar/cache
+      certs:
+        - type: ca-bundle
+          dir: /etc/ssl/certs/ca-certificates.crt
+        - type: java-keystore
+          dir: /app/sonarscanner/jre/lib/security/cacerts
+      source:
+        registry_url: quay.io/cidverse/sonarscannercli
+    - image: quay.io/cidverse/sonarscannercli:6.2.1.4610
+      provides:
+        - binary: sonar-scanner
+          version: 6.2.1.4610
+      cache:
+        - id: sonarscanner-cache
+          dir: /app/.sonar/cache
+      certs:
+        - type: ca-bundle
+          dir: /etc/ssl/certs/ca-certificates.crt
+        - type: java-keystore
+          dir: /app/sonarscanner/jre/lib/security/cacerts
+      source:
+        registry_url: quay.io/cidverse/sonarscannercli
     - image: quay.io/cidverse/syft:0.100.0
       provides:
         - binary: syft
