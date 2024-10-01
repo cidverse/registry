@@ -2904,6 +2904,15 @@ images:
           dir: /go/pkg
       source:
         registry_url: quay.io/cidverse/build-go
+    - image: quay.io/cidverse/build-go:1.23.2
+      provides:
+        - binary: go
+          version: 1.23.2
+      cache:
+        - id: go-pkg
+          dir: /go/pkg
+      source:
+        registry_url: quay.io/cidverse/build-go
     - image: quay.io/cidverse/base-coretto-8:8.352.08.1
       provides:
         - binary: java
