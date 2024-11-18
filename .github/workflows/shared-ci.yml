@@ -146,7 +146,7 @@ jobs:
     timeout-minutes: ${{ fromJSON(inputs.cid-timeout) }}
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@91182cccc01eb5e619899d80e4e971d6181294a7 # v2.10.1
+        uses: step-security/harden-runner@0080882f6c36860b6ba35c610c98ce87d4e2f26f # v2.10.2
         with:
           disable-sudo: true
           egress-policy: ${{ inputs.egress-policy }}
@@ -180,7 +180,7 @@ jobs:
     timeout-minutes: ${{ fromJSON(inputs.cid-timeout) }}
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@91182cccc01eb5e619899d80e4e971d6181294a7 # v2.10.1
+        uses: step-security/harden-runner@0080882f6c36860b6ba35c610c98ce87d4e2f26f # v2.10.2
         with:
           disable-sudo: true
           egress-policy: ${{ inputs.egress-policy }}
@@ -226,7 +226,7 @@ jobs:
     timeout-minutes: ${{ fromJSON(inputs.cid-timeout) }}
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@91182cccc01eb5e619899d80e4e971d6181294a7 # v2.10.1
+        uses: step-security/harden-runner@0080882f6c36860b6ba35c610c98ce87d4e2f26f # v2.10.2
         with:
           disable-sudo: true
           egress-policy: ${{ inputs.egress-policy }}
@@ -263,7 +263,7 @@ jobs:
     timeout-minutes: ${{ fromJSON(inputs.cid-timeout) }}
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@91182cccc01eb5e619899d80e4e971d6181294a7 # v2.10.1
+        uses: step-security/harden-runner@0080882f6c36860b6ba35c610c98ce87d4e2f26f # v2.10.2
         with:
           disable-sudo: true
           egress-policy: ${{ inputs.egress-policy }}
@@ -310,7 +310,7 @@ jobs:
     timeout-minutes: ${{ fromJSON(inputs.cid-timeout) }}
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@91182cccc01eb5e619899d80e4e971d6181294a7 # v2.10.1
+        uses: step-security/harden-runner@0080882f6c36860b6ba35c610c98ce87d4e2f26f # v2.10.2
         with:
           disable-sudo: true
           egress-policy: ${{ inputs.egress-policy }}
@@ -359,7 +359,7 @@ jobs:
     timeout-minutes: ${{ fromJSON(inputs.cid-timeout) }}
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@91182cccc01eb5e619899d80e4e971d6181294a7 # v2.10.1
+        uses: step-security/harden-runner@0080882f6c36860b6ba35c610c98ce87d4e2f26f # v2.10.2
         with:
           disable-sudo: true
           egress-policy: ${{ inputs.egress-policy }}
@@ -408,7 +408,7 @@ jobs:
     timeout-minutes: ${{ fromJSON(inputs.cid-timeout) }}
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@91182cccc01eb5e619899d80e4e971d6181294a7 # v2.10.1
+        uses: step-security/harden-runner@0080882f6c36860b6ba35c610c98ce87d4e2f26f # v2.10.2
         with:
           disable-sudo: true
           egress-policy: ${{ inputs.egress-policy }}
