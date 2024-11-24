@@ -66,6 +66,11 @@ on:
         type: string
         description: Allowed endpoints for egress traffic if egress-policy is set to 'block'.
         default: ""
+      egress-allowed-endpoints-lint:
+        required: false
+        type: string
+        description: Allowed endpoints for egress traffic if egress-policy is set to 'block'.
+        default: ""
       egress-allowed-endpoints-scan:
         required: false
         type: string
@@ -253,11 +258,45 @@ jobs:
           retention-days: 1
           if-no-files-found: ignore
 
+  # lint
+  lint:
+    name: Lint
+    runs-on: ubuntu-24.04
+    timeout-minutes: ${{ fromJSON(inputs.cid-timeout) }}
+    steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@0080882f6c36860b6ba35c610c98ce87d4e2f26f # v2.10.2
+        with:
+          disable-sudo: true
+          egress-policy: ${{ inputs.egress-policy }}
+          allowed-endpoints: ${{ inputs.egress-allowed-endpoints }} ${{ inputs.egress-allowed-endpoints-lint }}
+      - name: prepare environment
+        uses: cidverse/ghact-cid-setup@main
+        with:
+          version: ${{ inputs.cid-version }}
+      - name: checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          fetch-depth: 0
+      - name: lint
+        env:
+          CID_WORKFLOW: ${{ inputs.cid-workflow }}
+          CID_LOGLEVEL: ${{ inputs.cid-loglevel }}
+        run: |
+          cid --log-level=${CID_LOGLEVEL:-info} workflow run "$CID_WORKFLOW" --stage lint
+      - name: upload artifacts
+        uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882 # v4.4.3
+        with:
+          name: lint-${{ github.run_id }}
+          path: .dist
+          retention-days: 1
+          if-no-files-found: ignore
+
   # scan
   scan:
     name: Scan
     runs-on: ubuntu-24.04
-    needs: [build, test]
+    needs: [build, test, lint]
     permissions:
       security-events: write
     timeout-minutes: ${{ fromJSON(inputs.cid-timeout) }}

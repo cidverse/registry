@@ -12,7 +12,7 @@ actions:
     scope: project
     rules:
       - type: cel
-        expression: NCI_COMMIT_REF_TYPE == "tag" && hasPrefix(ENV["NCI_REPOSITORY_REMOTE"], "https://github.com/")
+        expression: hasPrefix(ENV["NCI_REPOSITORY_REMOTE"], "https://github.com/") && NCI_COMMIT_REF_TYPE == "tag"
     access:
       env:
         - value: GITHUB_TOKEN
@@ -31,7 +31,7 @@ actions:
     scope: project
     rules:
       - type: cel
-        expression: hasPrefix(ENV["NCI_REPOSITORY_REMOTE"], "https://github.com/")
+        expression: hasPrefix(ENV["NCI_REPOSITORY_REMOTE"], "https://github.com/") && ENV["GITHUB_TOKEN"] != ""
     access:
       env:
         - value: GITHUB_TOKEN

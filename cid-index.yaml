@@ -65,7 +65,7 @@ actions:
       scope: project
       rules:
         - type: cel
-          expression: NCI_COMMIT_REF_TYPE == "tag" && hasPrefix(ENV["NCI_REPOSITORY_REMOTE"], "https://github.com/")
+          expression: hasPrefix(ENV["NCI_REPOSITORY_REMOTE"], "https://github.com/") && NCI_COMMIT_REF_TYPE == "tag"
       access:
         env:
             - value: GITHUB_TOKEN
@@ -85,7 +85,7 @@ actions:
       scope: project
       rules:
         - type: cel
-          expression: hasPrefix(ENV["NCI_REPOSITORY_REMOTE"], "https://github.com/")
+          expression: hasPrefix(ENV["NCI_REPOSITORY_REMOTE"], "https://github.com/") && ENV["GITHUB_TOKEN"] != ""
       access:
         env:
             - value: GITHUB_TOKEN
@@ -508,6 +508,18 @@ actions:
           expression: MODULE_BUILD_SYSTEM == "pipfile"
         - type: cel
           expression: MODULE_BUILD_SYSTEM == "setup.py"
+    - name: renovate-lint
+      category: sast
+      type: container
+      container:
+        image: quay.io/cidverse/cid-actions-go:latest
+        command: central run renovate-lint
+      description: |
+        Lints the renovate configuration file.
+      scope: module
+      rules:
+        - type: cel
+          expression: MODULE_TYPE == "spec" && MODULE_SPECIFICATION_TYPE == "renovate"
     - name: gitguardian-scan
       category: sast
       type: container
@@ -6821,6 +6833,7 @@ workflows:
           actions:
             - id: cid/ansible-lint
             - id: cid/helm-lint
+            - id: cid/renovate-lint
         - name: package
           actions:
             - id: cid/upx-optimize
@@ -6832,58 +6845,6 @@ workflows:
         - name: scan
           actions:
             - id: cid/java-gradle-wrapper-scan
-            - id: cid/semgrep-scan
-            - id: cid/sonarqube-scan
-            - id: cid/qodana-scan
-            - id: cid/syft-container-sbom-generate
-            - id: cid/github-sarif-upload
-        - name: publish
-          actions:
-            - id: cid/buildah-publish
-            - id: cid/java-publish
-            - id: cid/helm-publish-nexus
-            - id: cid/helm-publish-registry
-            - id: cid/techdocs-publish
-            - id: cid/changelog-generate
-            - id: cid/github-release-publish
-    - name: unix
-      description: |
-        Temporary workflow that does not build go binaries on windows.
-      version: 0.1.0
-      stages:
-        - name: build
-          actions:
-            - id: cid/go-build
-              config:
-                platform:
-                    - goarch: amd64
-                      goos: linux
-                    - goarch: amd64
-                      goos: darwin
-            - id: cid/java-build
-            - id: cid/python-build
-            - id: cid/node-build
-            - id: cid/hugo-build
-            - id: cid/helm-build
-            - id: cid/mkdocs-build
-            - id: cid/techdocs-build
-        - name: test
-          actions:
-            - id: cid/go-test
-            - id: cid/java-test
-        - name: package
-          actions:
-            - id: cid/upx-optimize
-            - id: cid/buildah-build
-              config:
-                no-cache: false
-                rebuild: true
-                squash: true
-        - name: scan
-          actions:
-            - id: cid/java-gradle-wrapper-scan
-            - id: cid/ansible-lint
-            - id: cid/helm-lint
             - id: cid/semgrep-scan
             - id: cid/sonarqube-scan
             - id: cid/qodana-scan
