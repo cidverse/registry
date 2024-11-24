@@ -1467,6 +1467,12 @@ images:
           version: 3.87.0
       source:
         registry_url: quay.io/cidverse/wrangler
+    - image: quay.io/cidverse/wrangler:3.90.0
+      provides:
+        - binary: wrangler
+          version: 3.90.0
+      source:
+        registry_url: quay.io/cidverse/wrangler
     - image: quay.io/cidverse/buildah:1.29.0
       provides:
         - binary: buildah
@@ -2425,6 +2431,12 @@ images:
       provides:
         - binary: kubectl
           version: 1.31.2
+      source:
+        registry_url: quay.io/cidverse/kubectl
+    - image: quay.io/cidverse/kubectl:1.31.3
+      provides:
+        - binary: kubectl
+          version: 1.31.3
       source:
         registry_url: quay.io/cidverse/kubectl
     - image: quay.io/cidverse/oras:0.16.0
@@ -3945,6 +3957,12 @@ images:
           version: 2.46.3
       source:
         registry_url: quay.io/cidverse/mockery
+    - image: quay.io/cidverse/mockery:2.49.0
+      provides:
+        - binary: mockery
+          version: 2.49.0
+      source:
+        registry_url: quay.io/cidverse/mockery
     - image: quay.io/cidverse/rekor:0.10.0
       provides:
         - binary: rekor
@@ -4039,6 +4057,18 @@ images:
       provides:
         - binary: renovate-config-validator
           version: 39.17.0
+      source:
+        registry_url: quay.io/cidverse/renovate-config-validator
+    - image: quay.io/cidverse/renovate-config-validator:39.25.3
+      provides:
+        - binary: renovate-config-validator
+          version: 39.25.3
+      source:
+        registry_url: quay.io/cidverse/renovate-config-validator
+    - image: quay.io/cidverse/renovate-config-validator:39.26.2
+      provides:
+        - binary: renovate-config-validator
+          version: 39.26.2
       source:
         registry_url: quay.io/cidverse/renovate-config-validator
     - image: quay.io/cidverse/reposync:0.2.0
@@ -4930,6 +4960,15 @@ images:
       provides:
         - binary: semgrep
           version: 1.96.0
+      cache:
+        - id: semgrep-cache
+          dir: /app/.cache/semgrep-cache
+      source:
+        registry_url: quay.io/cidverse/semgrep
+    - image: quay.io/cidverse/semgrep:1.97.0
+      provides:
+        - binary: semgrep
+          version: 1.97.0
       cache:
         - id: semgrep-cache
           dir: /app/.cache/semgrep-cache
@@ -5853,6 +5892,15 @@ images:
           dir: /app/.cache/grype
       source:
         registry_url: quay.io/cidverse/grype
+    - image: quay.io/cidverse/grype:0.85.0
+      provides:
+        - binary: grype
+          version: 0.85.0
+      cache:
+        - id: grype-cache
+          dir: /app/.cache/grype
+      source:
+        registry_url: quay.io/cidverse/grype
     - image: docker.io/jetbrains/qodana-jvm:latest
       provides:
         - binary: qodana
@@ -6316,6 +6364,12 @@ images:
           version: 1.16.0
       source:
         registry_url: quay.io/cidverse/syft
+    - image: quay.io/cidverse/syft:1.17.0
+      provides:
+        - binary: syft
+          version: 1.17.0
+      source:
+        registry_url: quay.io/cidverse/syft
     - image: quay.io/cidverse/syft:1.2.0
       provides:
         - binary: syft
@@ -6664,6 +6718,12 @@ images:
       provides:
         - binary: hugo
           version: 0.138.0
+      source:
+        registry_url: quay.io/cidverse/hugo
+    - image: quay.io/cidverse/hugo:0.139.2
+      provides:
+        - binary: hugo
+          version: 0.139.2
       source:
         registry_url: quay.io/cidverse/hugo
     - image: quay.io/cidverse/mkdocs:1.3.1
