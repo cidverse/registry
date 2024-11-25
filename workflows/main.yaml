@@ -66,3 +66,6 @@ workflows:
           - id: cid/changelog-generate
           # release - github
           - id: cid/github-release-publish
+      - name: deploy
+        actions:
+          - id: cid/ansible-deploy

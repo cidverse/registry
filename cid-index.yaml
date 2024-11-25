@@ -11,6 +11,33 @@ actions:
       rules:
         - type: cel
           expression: MODULE_BUILD_SYSTEM == "ansible"
+    - name: ansible-deploy
+      category: deploy
+      type: container
+      container:
+        image: quay.io/cidverse/cid-actions-go:latest
+        command: central run ansible-deploy
+      description: |
+        Deploys the ansible playbook using ansible-playbook.
+      scope: module
+      rules:
+        - type: cel
+          expression: MODULE_BUILD_SYSTEM == "ansible"
+      access:
+        env:
+            - value: ANSIBLE_PLAYBOOK
+              pattern: false
+              description: |
+                The ansible playbook to deploy.
+              required: false
+              internal: false
+            - value: ANSIBLE_INVENTORY
+              pattern: false
+              description: |
+                The ansible inventory to use.
+                Defaults to "inventory".
+              required: false
+              internal: false
     - name: changelog-generate
       category: changelog
       type: container
@@ -2739,6 +2766,15 @@ images:
           version: 4.30.0
       source:
         registry_url: quay.io/cidverse/liquibase
+    - image: quay.io/cidverse/ansible-lint:24.10.0
+      provides:
+        - binary: ansible-lint
+          version: 24.10.0
+      cache:
+        - id: ansible
+          dir: /app/.ansible
+      source:
+        registry_url: quay.io/cidverse/ansible-lint
     - image: quay.io/cidverse/ansible-lint:24.7.0
       provides:
         - binary: ansible-lint
@@ -6859,3 +6895,6 @@ workflows:
             - id: cid/techdocs-publish
             - id: cid/changelog-generate
             - id: cid/github-release-publish
+        - name: deploy
+          actions:
+            - id: cid/ansible-deploy
