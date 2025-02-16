@@ -1,7 +1,0 @@
-images:
-  - image: quay.io/cidverse/upx:${{TAG}}
-    provides:
-      - binary: upx
-        version: ${{VERSION}}
-    source:
-      registry_url: quay.io/cidverse/upx

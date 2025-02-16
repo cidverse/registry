@@ -1,7 +1,0 @@
-images:
-  - image: quay.io/cidverse/gitleaks:${{TAG}}
-    provides:
-      - binary: gitleaks
-        version: ${{VERSION}}
-    source:
-      registry_url: quay.io/cidverse/gitleaks

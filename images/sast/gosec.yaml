@@ -1,7 +1,0 @@
-images:
-  - image: quay.io/cidverse/gosec:${{TAG}}
-    provides:
-      - binary: gosec
-        version: ${{VERSION}}
-    source:
-      registry_url: quay.io/cidverse/gosec

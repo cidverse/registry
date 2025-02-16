@@ -1,7 +1,0 @@
-images:
-  - image: quay.io/cidverse/reposync:${{TAG}}
-    provides:
-      - binary: reposync
-        version: ${{VERSION}}
-    source:
-      registry_url: quay.io/cidverse/reposync

@@ -1,7 +1,0 @@
-images:
-  - image: quay.io/cidverse/runpodctl:${{TAG}}
-    provides:
-      - binary: runpodctl
-        version: ${{VERSION}}
-    source:
-      registry_url: quay.io/cidverse/runpodctl

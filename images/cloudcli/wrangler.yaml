@@ -1,7 +1,0 @@
-images:
-  - image: quay.io/cidverse/wrangler:${{TAG}}
-    provides:
-      - binary: wrangler
-        version: ${{VERSION}}
-    source:
-      registry_url: quay.io/cidverse/wrangler

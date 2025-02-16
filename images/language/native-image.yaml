@@ -1,7 +1,0 @@
-images:
-  - image: quay.io/cidverse/native-image:${{TAG}}
-    provides:
-      - binary: native-image
-        version: ${{VERSION}}
-    source:
-      registry_url: quay.io/cidverse/native-image

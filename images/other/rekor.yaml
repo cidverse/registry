@@ -1,7 +1,0 @@
-images:
-  - image: quay.io/cidverse/rekor:${{TAG}}
-    provides:
-      - binary: rekor
-        version: ${{VERSION}}
-    source:
-      registry_url: quay.io/cidverse/rekor

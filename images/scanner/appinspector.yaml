@@ -1,7 +1,0 @@
-images:
-  - image: quay.io/cidverse/applicationinspector:${{TAG}}
-    provides:
-      - binary: appinspector
-        version: ${{VERSION}}
-    source:
-      registry_url: quay.io/cidverse/applicationinspector

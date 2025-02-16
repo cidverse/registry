@@ -1,7 +1,0 @@
-images:
-  - image: quay.io/cidverse/renovate-config-validator:${{TAG}}
-    provides:
-      - binary: renovate-config-validator
-        version: ${{VERSION}}
-    source:
-      registry_url: quay.io/cidverse/renovate-config-validator

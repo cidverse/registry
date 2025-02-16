@@ -1,7 +1,0 @@
-images:
-  - image: quay.io/cidverse/kubectl:${{TAG}}
-    provides:
-      - binary: kubectl
-        version: ${{VERSION}}
-    source:
-      registry_url: quay.io/cidverse/kubectl

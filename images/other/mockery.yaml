@@ -1,7 +1,0 @@
-images:
-  - image: quay.io/cidverse/mockery:${{TAG}}
-    provides:
-      - binary: mockery
-        version: ${{VERSION}}
-    source:
-      registry_url: quay.io/cidverse/mockery

@@ -1,7 +1,0 @@
-images:
-  - image: quay.io/cidverse/syft:${{TAG}}
-    provides:
-      - binary: syft
-        version: ${{VERSION}}
-    source:
-      registry_url: quay.io/cidverse/syft

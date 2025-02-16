@@ -9,63 +9,66 @@ workflows:
     stages:
       - name: build
         actions:
-          - id: cid/go-build
-          - id: cid/java-build
-          - id: cid/python-build
-          - id: cid/node-build
-          - id: cid/hugo-build
-          - id: cid/helm-build
-          - id: cid/mkdocs-build
-          - id: cid/techdocs-build
+          - id: cid-actions/go-build
+          - id: cid-actions/java-build
+          - id: cid-actions/dotnet-build
+          - id: cid-actions/python-build
+          - id: cid-actions/node-build
+          - id: cid-actions/hugo-build
+          - id: cid-actions/helm-build
+          - id: cid-actions/mkdocs-build
+          - id: cid-actions/techdocs-build
       - name: test
         actions:
-          - id: cid/go-test
-          - id: cid/java-test
+          - id: cid-actions/go-test
+          - id: cid-actions/java-test
+          - id: cid-actions/dotnet-test
       - name: lint
         actions:
-          - id: cid/ansible-lint
-          #- id: cid/python-lint
-          - id: cid/helm-lint
-          - id: cid/renovate-lint
+          - id: cid-actions/ansible-lint
+          #- id: cid-actions/python-lint
+          - id: cid-actions/helm-lint
+          - id: cid-actions/renovate-lint
       - name: package
         actions:
-          - id: cid/upx-optimize
-          - id: cid/buildah-build
+          - id: cid-actions/upx-optimize
+          - id: cid-actions/buildah-build
             config:
               no-cache: false
               squash: true
               rebuild: true
       - name: scan
         actions:
-          - id: cid/java-gradle-wrapper-scan
-          #- id: cid/ossf-scorecard-scan
-          #- id: cid/gitleaks-scan
-          - id: cid/semgrep-scan
-          #- id: cid/fossa-source-scan
-          - id: cid/sonarqube-scan
-          - id: cid/qodana-scan
-          #- id: cid/syft-artifact-sbom-generate
-          - id: cid/syft-container-sbom-generate
-          - id: cid/github-sarif-upload
+          - id: cid-actions/java-gradle-wrapper-scan
+          #- id: cid-actions/ossf-scorecard-scan
+          #- id: cid-actions/gitleaks-scan
+          - id: cid-actions/semgrep-scan
+          #- id: cid-actions/fossa-source-scan
+          - id: cid-actions/sonarqube-scan
+          - id: cid-actions/qodana-scan
+          #- id: cid-actions/syft-artifact-sbom-generate
+          - id: cid-actions/syft-container-sbom-generate
+          - id: cid-actions/zizmor-scan
+          - id: cid-actions/github-sarif-upload
       - name: publish
         actions:
           # container - publish to registry
-          - id: cid/buildah-publish
+          - id: cid-actions/buildah-publish
           # java library - publish
-          - id: cid/java-publish
+          - id: cid-actions/java-publish
           # container - sign image
-          #- id: cid/cosign-container-sign
+          #- id: cid-actions/cosign-container-sign
           # container - attach and sign sbom
-          #- id: cid/cosign-container-sbom-attach
+          #- id: cid-actions/cosign-container-sbom-attach
           # helm charts
-          - id: cid/helm-publish-nexus
-          - id: cid/helm-publish-registry
+          - id: cid-actions/helm-publish-nexus
+          - id: cid-actions/helm-publish-registry
           # docs - techdocs - publish
-          - id: cid/techdocs-publish
+          - id: cid-actions/techdocs-publish
           # changelog
-          - id: cid/changelog-generate
+          - id: cid-actions/changelog-generate
           # release - github
-          - id: cid/github-release-publish
+          - id: cid-actions/github-release-publish
       - name: deploy
         actions:
-          - id: cid/ansible-deploy
+          - id: cid-actions/ansible-deploy

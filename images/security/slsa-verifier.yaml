@@ -1,8 +1,0 @@
-
-images:
-  - image: quay.io/cidverse/slsa-verifier:${{TAG}}
-    provides:
-      - binary: slsa-verifier
-        version: ${{VERSION}}
-    source:
-      registry_url: quay.io/cidverse/slsa-verifier

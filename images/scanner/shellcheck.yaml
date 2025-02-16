@@ -1,7 +1,0 @@
-images:
-  - image: quay.io/cidverse/shellcheck:${{TAG}}
-    provides:
-      - binary: shellcheck
-        version: ${{VERSION}}
-    source:
-      registry_url: quay.io/cidverse/shellcheck

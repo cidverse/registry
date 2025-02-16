@@ -1,7 +1,0 @@
-images:
-  - image: quay.io/cidverse/liquibase:${{TAG}}
-    provides:
-      - binary: liquibase
-        version: ${{VERSION}}
-    source:
-      registry_url: quay.io/cidverse/liquibase

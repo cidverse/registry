@@ -1,7 +1,0 @@
-images:
-  - image: quay.io/cidverse/githubcli:${{TAG}}
-    provides:
-      - binary: gh
-        version: ${{VERSION}}
-    source:
-      registry_url: quay.io/cidverse/githubcli
